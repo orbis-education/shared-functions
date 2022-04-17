@@ -1,4 +1,6 @@
 
+const componentName = "shared-functions";
+
 export const isEmpty = (value) => {
 
   // * https://stackoverflow.com/questions/4597900/checking-something-isempty-in-javascript -- 03/06/2021 MF

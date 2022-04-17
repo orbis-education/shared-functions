@@ -6,7 +6,7 @@
   "copyrightYear": "2021",
   "repository": {
     "type": "git",
-    "url": "https://github.com/orbis-education/SharedFunctions"
+    "url": "https://github.com/orbis-education/shared-functions"
   },
   "private": true,
   "main": "index.js",
