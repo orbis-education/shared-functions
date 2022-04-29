@@ -1,6 +1,13 @@
 
 const componentName = "shared-functions";
 
+export const noFunctionAvailable = () => {
+
+  console.log(componentName, getDateTime(), "A function wasn't passed as a props when it needed to be.");
+
+};
+
+
 export const isEmpty = (value) => {
 
   // * https://stackoverflow.com/questions/4597900/checking-something-isempty-in-javascript -- 03/06/2021 MF
