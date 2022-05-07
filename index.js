@@ -936,24 +936,56 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 
   // * https://stackoverflow.com/questions/15125920/how-to-get-distinct-values-from-an-array-of-objects-in-javascript -- 05/07/2022 MF
 
-  let uniqueArray = [...new Set(objectArray.map(item => item[uniqueProperty]))];
+  let uniqueArray = [...objectArray];
 
-  uniqueArray.sort();
+  if (Array.isArray(uniqueArray) === true) {
+
+    uniqueArray = [...new Set(objectArray.map(item => item[uniqueProperty]))];
+
+    if (typeof uniqueArray[0] === "number") {
+
+      uniqueArray.sort();
+
+    } else {
+
+      uniqueArray.sort(function (a, b) { return a - b; });
+
+    };
+
+  };
 
   return uniqueArray;
 
 };
 
 
-export const sortObjectArrayByProperty = (objectArray, sortProperty) => {
+export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) => {
 
   // * https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/ -- 05/07/2022 MF
 
-  // ? ASC, DESC? -- 05/07/2022 MF
-
   // ? Additional properties? -- 05/07/2022 MF
 
-  let sortedArray = objectArray.sort((a, b) => (a[sortProperty] > b[sortProperty]) ? -1 : 1);
+  let sortedArray = [...objectArray];
+
+  if (Array.isArray(sortedArray) === true) {
+
+    if (typeof sortedArray[0][sortProperty] === "number") {
+
+      sortedArray.sort((a, b) => a[sortProperty] - b[sortProperty]);
+
+    } else {
+
+      sortedArray.sort((a, b) => (a[sortProperty] > b[sortProperty]) ? -1 : 1);
+
+    };
+
+  };
+
+  if (formatLowerCase(direction) === "desc") {
+
+    sortedArray.reverse();
+
+  };
 
   return sortedArray;
 
