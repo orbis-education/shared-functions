@@ -938,6 +938,8 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 
   let uniqueArray = [...new Set(objectArray.map(item => item[uniqueProperty]))];
 
+  uniqueArray.sort();
+
   return uniqueArray;
 
 };
