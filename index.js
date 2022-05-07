@@ -944,11 +944,11 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 
     if (typeof uniqueArray[0] === "number") {
 
-      uniqueArray.sort();
+      uniqueArray.sort(function (a, b) { return a - b; });
 
     } else {
 
-      uniqueArray.sort(function (a, b) { return a - b; });
+      uniqueArray.sort();
 
     };
 
