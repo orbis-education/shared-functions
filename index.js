@@ -932,6 +932,32 @@ export const randomizeItems = (items, randomize) => {
 };
 
 
+export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
+
+  // * https://stackoverflow.com/questions/15125920/how-to-get-distinct-values-from-an-array-of-objects-in-javascript -- 05/07/2022 MF
+
+  let uniqueArray = [...new Set(objectArray.map(item => item[uniqueProperty]))];
+
+  return uniqueArray;
+
+};
+
+
+export const sortObjectArrayByProperty = (objectArray, sortProperty) => {
+
+  // * https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/ -- 05/07/2022 MF
+
+  // ? ASC, DESC? -- 05/07/2022 MF
+
+  // ? Additional properties? -- 05/07/2022 MF
+
+  let sortedArray = objectArray.sort((a, b) => (a[sortProperty] > b[sortProperty]) ? -1 : 1);
+
+  return sortedArray;
+
+};
+
+
 export const groupObjectArrayByProperties = (objectArray, ...keys) => {
 
   // * From https://gist.github.com/robmathers/1830ce09695f759bf2c4df15c29dd22d?permalink_comment_id=3646957#gistcomment-3646957 -- 04/04/2022 KH
