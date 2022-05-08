@@ -975,7 +975,7 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
     } else {
 
-      sortedArray.sort((a, b) => (a[sortProperty] > b[sortProperty]) ? -1 : 1);
+      sortedArray.sort((a, b) => (a[sortProperty] > b[sortProperty]) ? 1 : -1);
 
     };
 
