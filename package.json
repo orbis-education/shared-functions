@@ -1,6 +1,6 @@
 {
   "name": "shared-functions",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Contains common functions that could apply to all applications developed.",
   "author": "Orbis Education",
   "copyrightYear": "2021",
