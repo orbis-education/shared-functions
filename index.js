@@ -959,6 +959,21 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 };
 
 
+const compareItemsForSorting = (itemOne, itemTwo) => {
+
+  if (typeof itemOne === "number") {
+
+    return itemOne - itemTwo;
+
+  } else {
+
+    return formatLowerCase(itemOne).replace(/^(a\.)/, "").replace(/^(the\.)/, "") > formatLowerCase(itemTwo).replace(/^(a\.)/, "").replace(/^(the\.)/, "");
+
+  };
+
+};
+
+
 export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) => {
 
   // * https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/ -- 05/07/2022 MF
