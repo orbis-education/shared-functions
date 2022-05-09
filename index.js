@@ -989,7 +989,7 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
     } else {
 
-      sortedArray.sort((a, b) => (a[sortProperty] > b[sortProperty]) ? 1 : -1);
+      sortedArray.sort((a, b) => (a[sortProperty] > b[sortProperty]) ? -1 : 1);
 
       // sortedArray.sort((a, b) => (formatLowerCase(a[sortProperty]).replace("the ", "").replace("a ", "") > formatLowerCase(b[sortProperty]).replace("the ", "").replace("a ", "")) ? 1 : -1);
 
