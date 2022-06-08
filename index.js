@@ -32,6 +32,21 @@ export const isEmpty = (value) => {
 };
 
 
+export const isNonEmptyArray = (arrayItem) => {
+
+  let nonEmptyArray = false;
+
+  if (Array.isArray(arrayItem) === true && arrayItem.length > 0) {
+
+    nonEmptyArray = true;
+
+  };
+
+  return nonEmptyArray;
+
+};
+
+
 export const displayValue = (variableValue) => {
 
   let displayValue = "";
