@@ -421,6 +421,7 @@ export const daysSince = (dateToCompare) => {
 };
 
 
+// * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures or to see if the object has a property available with a value. -- 06/09/2022 MF
 export const hasNonEmptyProperty = (objectItem, propertyName) => {
 
   let nonEmptyProperty = false;
@@ -440,6 +441,7 @@ export const hasNonEmptyProperty = (objectItem, propertyName) => {
 };
 
 
+// * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 export const hasEqualsProperty = (objectItem, propertyName, value) => {
 
   let equalsProperty = false;
@@ -459,6 +461,7 @@ export const hasEqualsProperty = (objectItem, propertyName, value) => {
 };
 
 
+// * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 export const hasTrueProperty = (objectItem, propertyName) => {
 
   let trueProperty = false;
@@ -478,6 +481,7 @@ export const hasTrueProperty = (objectItem, propertyName) => {
 };
 
 
+// * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 export const hasFalseProperty = (objectItem, propertyName) => {
 
   let falseProperty = false;
