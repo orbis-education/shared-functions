@@ -1188,3 +1188,19 @@ export const removeHTML = (text) => {
 
 };
 
+
+export const removeNonAlphanumericCharacters = (text) => {
+
+  // * Removes all characters that aren't letters, numbers, spaces or a period. -- 05/12/2022 MF
+
+  let formatedText = "";
+
+  if (isEmpty(text) === false) {
+
+    formatedText = text.replace(/[^a-zA-Z0-9\. ]/g, "");
+
+  };
+
+  return formatedText;
+
+};
