@@ -47,6 +47,21 @@ export const isNonEmptyArray = (arrayItem) => {
 };
 
 
+export const getFirstItem = (arrayItem) => {
+
+  let firstItem = null;
+
+  if (isEmpty(arrayItem) === false && isEmpty(arrayItem[0]) === false) {
+
+    firstItem = arrayItem[0];
+
+  };
+
+  return firstItem;
+
+};
+
+
 export const displayValue = (variableValue) => {
 
   let displayValue = "";
