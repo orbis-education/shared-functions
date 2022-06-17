@@ -1219,3 +1219,23 @@ export const removeNonAlphanumericCharacters = (text) => {
   return formatedText;
 
 };
+
+
+export const replaceSmartCharacters = (jsonData) => {
+
+  let newJSON = jsonData;
+
+  newJSON = newJSON.replaceAll("’", "'");
+
+  // newJSON = newJSON.replaceAll("–", "--");
+  newJSON = newJSON.replaceAll("–", "-");
+
+  newJSON = newJSON.replaceAll(" ", " ");
+
+  newJSON = newJSON.replaceAll("“", "\"");
+  newJSON = newJSON.replaceAll("”", "\"");
+
+  return newJSON;
+
+};
+
