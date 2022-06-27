@@ -32,6 +32,22 @@ export const isEmpty = (value) => {
 };
 
 
+export const getDateTime = () => {
+
+  // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
+  // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
+
+  // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
+  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+
+  // return new Date().toLocaleString();
+  // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
+  // return new Date().toISOString().slice(0, 19).replace("T", " ");
+  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ");
+
+};
+
+
 export const isNonEmptyArray = (arrayItem) => {
 
   let nonEmptyArray = false;
@@ -286,22 +302,6 @@ export const displayObjectDataXML = (ObjectData) => {
   };
 
   return (objectDataString);
-
-};
-
-
-export const getDateTime = () => {
-
-  // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
-  // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
-
-  // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
-  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
-
-  // return new Date().toLocaleString();
-  // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
-  // return new Date().toISOString().slice(0, 19).replace("T", " ");
-  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ");
 
 };
 
