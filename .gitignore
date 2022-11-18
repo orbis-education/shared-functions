@@ -131,7 +131,7 @@ ehthumbs_vista.db
 # dotenv environment variables file
 .env
 
-# Downloaded Code
+# Archive Files
 *.zip
 
 # postcss compiled file
