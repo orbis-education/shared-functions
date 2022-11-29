@@ -159,6 +159,7 @@ export const tryParseJSON = (jsonString) => {
       return jsonData;
 
     };
+
   }
   catch (error) {
     // ! Don't display this error in the console. This function is already returning false if the JSON file is not in the correct format. -- 03/06/2021 MF
@@ -1076,7 +1077,7 @@ export const groupObjectArrayByProperties = (objectArray, ...keys) => {
 
 export const formatLowerCase = (value) => {
 
-  let lowerCaseValue = value;
+  let lowerCaseValue = "";
 
   if (isEmpty(value) === false) {
 
@@ -1091,7 +1092,7 @@ export const formatLowerCase = (value) => {
 
 export const formatUpperCase = (value) => {
 
-  let upperCaseValue = value;
+  let upperCaseValue = "";
 
   if (isEmpty(value) === false) {
 
@@ -1106,7 +1107,7 @@ export const formatUpperCase = (value) => {
 
 export const formatTrim = (value) => {
 
-  let trimValue = value;
+  let trimValue = "";
 
   if (isEmpty(value) === false) {
 
@@ -1121,7 +1122,7 @@ export const formatTrim = (value) => {
 
 export const formatToString = (value) => {
 
-  let toStringValue = value;
+  let toStringValue = "";
 
   if (isEmpty(value) === false) {
 
@@ -1136,15 +1137,11 @@ export const formatToString = (value) => {
 
 export const formatInt = (value) => {
 
-  let formatedInt = value;
+  let formatedInt = "";
 
   if (isEmpty(value) === false) {
 
     formatedInt = parseInt(formatTrim(value.replaceAll(",", ""))).toLocaleString();
-
-  } else {
-
-    formatedInt = "";
 
   };
 
@@ -1155,15 +1152,11 @@ export const formatInt = (value) => {
 
 export const formatFloat = (value) => {
 
-  let formatedFloat = value;
+  let formatedFloat = "";
 
   if (isEmpty(value) === false) {
 
     formatedFloat = parseFloat(formatTrim(value.replaceAll(",", ""))).toLocaleString();
-
-  } else {
-
-    formatedFloat = "";
 
   };
 
@@ -1174,7 +1167,7 @@ export const formatFloat = (value) => {
 
 export const formatSearchInput = (value) => {
 
-  let formatedSearchInput = value;
+  let formatedSearchInput = "";
 
   if (isEmpty(value) === false) {
 
@@ -1191,7 +1184,7 @@ export const removeHTML = (text) => {
 
   // * https://www.geeksforgeeks.org/how-to-strip-out-html-tags-from-a-string-using-javascript/ -- 02/08/2022 MF
 
-  let displayText = text;
+  let displayText = "";
 
   if (isEmpty(text) === false) {
 
