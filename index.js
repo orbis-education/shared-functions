@@ -996,26 +996,18 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 
 export const myConsoleLog = (itemComponentName, itemName, itemValue) => {
 
-  // ! The line number that the console log occurs on in the console display is lost. -- 05/23/2022 MF
+  // * The line number that the console log occurs on in the console display is lost. -- 05/23/2022 MF
 
-  if (showDevelopment(null) === true) {
-
-    console.log(itemComponentName, getDateTime(), itemName, itemValue);
-
-  };
+  console.log(itemComponentName, getDateTime(), itemName, itemValue);
 
 };
 
 
 export const myConsoleLogError = (itemComponentName, itemName, itemValue) => {
 
-  // ! The line number that the console error occurs on in the console display is lost. -- 05/23/2022 MF
+  // * The line number that the console error occurs on in the console display is lost. -- 05/23/2022 MF
 
-  if (showDevelopment(null) === true) {
-
-    console.error(itemComponentName, getDateTime(), itemName, itemValue);
-
-  };
+  console.error(itemComponentName, getDateTime(), itemName, itemValue);
 
 };
 
