@@ -1140,6 +1140,81 @@ export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sor
 };
 
 
+export const compareObjectProperties = (originalObject, comparisonObject) => {
+
+  // * https://stackoverflow.com/questions/14368596/how-can-i-check-that-two-objects-have-the-same-set-of-property-names -- 05/18/2022 MF
+  // * The order of the objects in the parameters matters because the comparison is completed based on what does or does not exist in the comparisionObject. -- 05/18/2022 MF
+
+  let originalObjectProperties = Object.keys(originalObject);
+  let comparisonObjectProperties = Object.keys(comparisonObject);
+
+  let newProperties = [];
+  let removedProperties = [];
+  let sameProperties = [];
+
+  // * Checks for object properties have been added. -- 05/16/2022 MF
+  originalObjectProperties.map((property) => {
+
+    if (comparisonObjectProperties.indexOf(property) < 0) {
+
+      newProperties.push(property);
+
+    } else {
+
+      sameProperties.push(property);
+
+    };
+
+  });
+
+  // // * Checks for object properties have been added. -- 05/16/2022 MF
+  // for (let i = 0; i < originalObjectProperties.length; i++) {
+
+  //   if (comparisonObjectProperties.indexOf(originalObjectProperties[i]) < 0) {
+
+  //     newProperties.push(originalObjectProperties[i]);
+
+  //   } else {
+
+  //     sameProperties.push(originalObjectProperties[i]);
+
+  //   };
+
+  // };
+
+  // * Checks for object properties have been removed. -- 05/16/2022 MF
+  comparisonObjectProperties.map((property) => {
+
+    if (originalObjectProperties.indexOf(property) < 0) {
+
+      removedProperties.push(property);
+
+      // } else {
+
+      //   sameProperties.push(property);
+
+    };
+
+  });
+
+  // // * Checks for object properties have been removed. -- 05/16/2022 MF
+  // for (let i = 0; i < comparisonObjectProperties.length; i++) {
+
+  //   if (originalObjectProperties.indexOf(comparisonObjectProperties[i]) < 0) {
+
+  //     newProperties.push(comparisonObjectProperties[i]);
+
+  //     // } else {
+
+  //     //   sameProperties.push(comparisonObjectProperties[i]);
+
+  //   };
+
+  return { newProperties: [...newProperties], removedProperties: [...removedProperties], sameProperties: [...sameProperties] };
+
+};
+
+
 export const groupObjectArrayByProperties = (objectArray, ...keys) => {
 
   // * From https://gist.github.com/robmathers/1830ce09695f759bf2c4df15c29dd22d?permalink_comment_id=3646957#gistcomment-3646957 -- 04/04/2022 KH
