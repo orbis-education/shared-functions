@@ -1020,7 +1020,7 @@ export const myConsoleLogError = (itemComponentName, itemName, itemValue) => {
 };
 
 
-const removeArticlesFromBeginning = (value) => {
+export const removeArticlesFromBeginning = (value) => {
 
   let newValue = value;
 
@@ -1035,7 +1035,7 @@ const removeArticlesFromBeginning = (value) => {
 };
 
 
-const compareItemsForSorting = (itemOne, itemTwo) => {
+export const compareItemsForSorting = (itemOne, itemTwo) => {
 
   if (typeof itemOne === "number") {
 
