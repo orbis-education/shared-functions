@@ -994,24 +994,6 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 };
 
 
-export const myConsoleLog = (itemComponentName, itemName, itemValue) => {
-
-  // * The line number that the console log occurs on in the console display is lost. -- 05/23/2022 MF
-
-  console.log(itemComponentName, getDateTime(), itemName, itemValue);
-
-};
-
-
-export const myConsoleLogError = (itemComponentName, itemName, itemValue) => {
-
-  // * The line number that the console error occurs on in the console display is lost. -- 05/23/2022 MF
-
-  console.error(itemComponentName, getDateTime(), itemName, itemValue);
-
-};
-
-
 export const removeArticlesFromBeginning = (value) => {
 
   let newValue = value;
