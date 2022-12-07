@@ -994,6 +994,47 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 };
 
 
+export const myConsoleLog = (itemComponentName, itemName, itemValue) => {
+
+  // ! The line number that the console log occurs on in the console display is lost. -- 05/23/2022 MF
+
+  if (showDevelopment(null) === true) {
+
+    console.log(itemComponentName, getDateTime(), itemName, itemValue);
+
+  };
+
+};
+
+
+export const myConsoleLogError = (itemComponentName, itemName, itemValue) => {
+
+  // ! The line number that the console error occurs on in the console display is lost. -- 05/23/2022 MF
+
+  if (showDevelopment(null) === true) {
+
+    console.error(itemComponentName, getDateTime(), itemName, itemValue);
+
+  };
+
+};
+
+
+const removeArticlesFromBeginning = (value) => {
+
+  let newValue = value;
+
+  if (isEmpty(value) === false) {
+
+    newValue = formatLowerCase(newValue).replace(/^(a\.)/, "").replace(/^(the\.)/, "");
+
+  };
+
+  return newValue;
+
+};
+
+
 const compareItemsForSorting = (itemOne, itemTwo) => {
 
   if (typeof itemOne === "number") {
@@ -1002,7 +1043,7 @@ const compareItemsForSorting = (itemOne, itemTwo) => {
 
   } else {
 
-    return formatLowerCase(itemOne).replace(/^(a\.)/, "").replace(/^(the\.)/, "") > formatLowerCase(itemTwo).replace(/^(a\.)/, "").replace(/^(the\.)/, "");
+    return removeArticlesFromBeginning(itemOne) > removeArticlesFromBeginning(itemTwo);
 
   };
 
@@ -1029,6 +1070,60 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
       // sortedArray.sort((a, b) => (formatLowerCase(a[sortProperty]).replace("the ", "").replace("a ", "") > formatLowerCase(b[sortProperty]).replace("the ", "").replace("a ", "")) ? 1 : -1);
 
       // sortedArray.sort((a, b) => (formatLowerCase(a[sortProperty]).replace(/^(a\.)/, "").replace(/^(the\.)/, "") > formatLowerCase(b[sortProperty]).replace(/^(a\.)/, "").replace(/^(the\.)/, "") ? 1 : -1));
+
+    };
+
+  };
+
+  if (formatLowerCase(direction) === "desc") {
+
+    sortedArray.reverse();
+
+  };
+
+  return sortedArray;
+
+};
+
+
+export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sortPropertyTwo, direction) => {
+
+  // TODO: The sorting for two object properties isn't working correctly. -- 06/16/2022 MF
+  // * https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/ -- 05/07/2022 MF
+  // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields -- 03/06/2021 MF
+
+  let sortedArray = [...objectArray];
+
+  if (isNonEmptyArray(sortedArray) === true) {
+
+    if (isEmpty(sortPropertyTwo) === false) {
+
+      sortedArray.sort(
+        function (a, b) {
+
+          if (a[sortPropertyOne] === b[sortPropertyOne]) {
+
+            // * sortPropertyTwo is only important when a and b sortPropertyOne are the same -- 03/06/2021 MF
+            return compareItemsForSorting(a[sortPropertyTwo], b[sortPropertyTwo]);
+
+          };
+
+          return compareItemsForSorting(a[sortPropertyOne], b[sortPropertyOne]) ? 1 : -1;
+
+        });
+
+    } else if (isEmpty(sortPropertyOne) === false) {
+
+      // sortedArray.sort((a, b) => (a[sortPropertyOne] > b[sortPropertyOne]) ? 1 : -1);
+
+      sortedArray.sort(
+        function (a, b) {
+
+          return compareItemsForSorting(a[sortPropertyOne], b[sortPropertyOne]) ? 1 : -1;
+
+        }
+
+      );
 
     };
 
