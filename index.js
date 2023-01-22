@@ -1376,3 +1376,31 @@ export const replaceSmartCharacters = (jsonData) => {
 
 };
 
+
+export const getQueryStringData = () => {
+
+  let queryStringData = {};
+
+  // * Retreive the queryString values if there are any. -- 01/22/2023 MF
+  if (typeof window !== "undefined") {
+
+    let queryStrings = new URLSearchParams(window.location.search);
+
+    // * From https://medium.com/swlh/urlsearchparams-in-javascript-df524f705317 -- 01/22/2023 MF
+    queryStrings.forEach(function (value, key) {
+
+      // console.log(componentName, getDateTime(), "key", key);
+      // console.log(componentName, getDateTime(), "value", value);
+
+      queryStringData[key] = value;
+
+    });
+
+  };
+
+  return queryStringData;
+
+};
+
+
+
