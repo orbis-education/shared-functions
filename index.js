@@ -309,21 +309,48 @@ export const displayObjectDataXML = (ObjectData) => {
 
 export const getCurrentDay = () => {
 
-  return new Date().getDate();
+  // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
+  // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
+
+  // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
+  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+
+  // return new Date().toLocaleString();
+  // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
+  // return new Date().toISOString().slice(0, 19).replace("T", " ");
+  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ").getDate();
 
 };
 
 
 export const getCurrentMonth = () => {
 
-  return new Date().getMonth() + 1;
+  // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
+  // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
+
+  // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
+  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+
+  // return new Date().toLocaleString();
+  // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
+  // return new Date().toISOString().slice(0, 19).replace("T", " ");
+  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ").getMonth() + 1;
 
 };
 
 
 export const getCurrentYear = () => {
 
-  return new Date().getFullYear();
+  // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
+  // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
+
+  // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
+  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+
+  // return new Date().toLocaleString();
+  // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
+  // return new Date().toISOString().slice(0, 19).replace("T", " ");
+  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ").getFullYear();
 
 };
 
@@ -1362,15 +1389,19 @@ export const replaceSmartCharacters = (jsonData) => {
 
   let newJSON = jsonData;
 
-  newJSON = newJSON.replaceAll("’", "'");
+  if (isEmpty(newJSON) === false) {
 
-  // newJSON = newJSON.replaceAll("–", "--");
-  newJSON = newJSON.replaceAll("–", "-");
+    newJSON = newJSON.replaceAll("’", "'");
 
-  newJSON = newJSON.replaceAll(" ", " ");
+    // newJSON = newJSON.replaceAll("–", "--");
+    newJSON = newJSON.replaceAll("–", "-");
 
-  newJSON = newJSON.replaceAll("“", "\"");
-  newJSON = newJSON.replaceAll("”", "\"");
+    newJSON = newJSON.replaceAll(" ", " ");
+
+    newJSON = newJSON.replaceAll("“", "\"");
+    newJSON = newJSON.replaceAll("”", "\"");
+
+  };
 
   return newJSON;
 
@@ -1403,4 +1434,149 @@ export const getQueryStringData = () => {
 };
 
 
+export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogging, logObject) => {
+
+  let logResult = "Add log not attempted due to parameter values.";
+
+  if (allowLogging === true && databaseAvailable !== false) {
+
+    let operationValue = "Add Log";
+
+    let url = `${baseURL}logs/`;
+    let response = "";
+    let data = "";
+
+    fetch(url, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json", "Authorization": fetchAuthorization
+      }),
+      body: JSON.stringify({ recordObject: logObject })
+    })
+      .then(results => {
+
+        response = results;
+
+        if (response.ok !== true) {
+
+          addErrorLog(baseURL, databaseAvailable, { operation: `${operationValue} SQL Server`, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
+
+          // throw Error(`${response.status} ${response.statusText} ${response.url}`);
+
+          logResult = `${operationValue}: ${response.status} ${response.statusText} ${response.url}`;
+
+        } else {
+
+          if (response.status === 200) {
+
+            return response.json();
+
+          } else {
+
+            return response.status;
+
+          };
+
+        };
+
+      })
+      .then(results => {
+
+        data = results;
+
+        logResult = data;
+
+      })
+      .catch((error) => {
+
+        // console.error(componentName, getDateTime(), "addLog error", error);
+        // console.error(componentName, getDateTime(), "addLog error.name", error.name);
+        // console.error(componentName, getDateTime(), "addLog error.message", error.message);
+        // console.error(componentName, getDateTime(), "addLog error.stack", error.stack);
+
+        // // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
+        // dispatch(addErrorMessage(`${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
+
+        addErrorLog(baseURL, databaseAvailable, { operation: operationValue, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { name: error.name, message: error.message, stack: error.stack }, dateEntered: getDateTime() });
+
+        logResult = `${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
+
+      });
+
+  };
+
+  return logResult;
+
+};
+
+
+export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogging, errorObject) => {
+
+  let logErrorResult = "Add error log not attempted due to parameter values.";
+
+  if (allowLogging === true && databaseAvailable !== false) {
+
+    let operationValue = "Add Error Log";
+
+    let url = `${baseURL}errorLogs/`;
+    let response = "";
+    let data = "";
+
+    fetch(url, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json", "Authorization": fetchAuthorization
+      }),
+      body: JSON.stringify({ recordObject: errorObject })
+    })
+      .then(results => {
+
+        response = results;
+
+        if (response.ok !== true) {
+
+          // throw Error(`${response.status} ${response.statusText} ${response.url}`);
+
+          logErrorResult = `${operationValue}: ${response.status} ${response.statusText} ${response.url}`;
+
+        } else {
+
+          if (response.status === 200) {
+
+            return response.json();
+
+          } else {
+
+            return response.status;
+
+          };
+
+        };
+
+      })
+      .then(results => {
+
+        data = results;
+
+        logErrorResult = data;
+
+      })
+      .catch((error) => {
+
+        // console.error(componentName, getDateTime(), "addErrorLog error", error);
+        // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
+        // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);
+
+        // // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
+        // dispatch(addErrorMessage(`${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
+
+        logErrorResult = `${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
+
+      });
+
+  };
+
+  return logErrorResult;
+
+};
 
