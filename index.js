@@ -318,7 +318,8 @@ export const getCurrentDay = () => {
   // return new Date().toLocaleString();
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
   // return new Date().toISOString().slice(0, 19).replace("T", " ");
-  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ").getDate();
+  // return new Date().getDate();
+  return new Date(new Date() - timezoneOffset).getDate();
 
 };
 
@@ -334,7 +335,8 @@ export const getCurrentMonth = () => {
   // return new Date().toLocaleString();
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
   // return new Date().toISOString().slice(0, 19).replace("T", " ");
-  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ").getMonth() + 1;
+  // return new Date().getMonth() + 1;
+  return new Date(new Date() - timezoneOffset).getMonth() + 1;
 
 };
 
@@ -350,7 +352,8 @@ export const getCurrentYear = () => {
   // return new Date().toLocaleString();
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
   // return new Date().toISOString().slice(0, 19).replace("T", " ");
-  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ").getFullYear();
+  // return new Date().getFullYear();
+  return new Date(new Date() - timezoneOffset).getFullYear();
 
 };
 
