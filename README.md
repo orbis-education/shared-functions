@@ -70,6 +70,19 @@ arrayItem: the array to retreive the first item from
 first item in the array
 
 
+### getLastItem(arrayItem)
+
+If the value passed is an array, the last item of the array is returned.
+
+#### parameters
+
+arrayItem: the array to retreive the last item from
+
+#### return
+
+last item in the array
+
+
 ### displayValue(variableValue)
 
 Converts the value passed into a string if it's a boolean or a date, or leaves the value alone if it's a string in order to be displayed in a component.

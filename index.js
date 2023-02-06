@@ -67,13 +67,28 @@ export const getFirstItem = (arrayItem) => {
 
   let firstItem = null;
 
-  if (isEmpty(arrayItem) === false && isEmpty(arrayItem[0]) === false) {
+  if (isNonEmptyArray(arrayItem) === true && isEmpty(arrayItem[0]) === false) {
 
     firstItem = arrayItem[0];
 
   };
 
   return firstItem;
+
+};
+
+
+export const getLastItem = (arrayItem) => {
+
+  let lastItem = null;
+
+  if (isNonEmptyArray(arrayItem) === true && isEmpty(arrayItem[arrayItem.length - 1]) === false) {
+
+    lastItem = arrayItem[arrayItem.length - 1];
+
+  };
+
+  return lastItem;
 
 };
 
