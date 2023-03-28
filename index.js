@@ -1020,7 +1020,7 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 
   if (Array.isArray(uniqueArray) === true) {
 
-    uniqueArray = [...new Set(objectArray.map(item => item[uniqueProperty]))];
+    uniqueArray = [...new Set(objectArray.map((item) => item[uniqueProperty]))];
 
     if (typeof uniqueArray[0] === "number") {
 
