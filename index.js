@@ -167,7 +167,7 @@ export const tryParseJSON = (jsonString) => {
 
     // * Handle non-exception-throwing cases: -- 03/05/2021
     // * Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking, -- 03/05/2021
-    // * but... JSON.parse(null) returns null, and typeof null === "object",  -- 03/05/2021
+    // * but... JSON.parse(null) returns null, and typeof null === "object", -- 03/05/2021
     // * so we must check for that, too. Thankfully, null is falsey, so this suffices: -- 03/05/2021
     if (jsonData && typeof jsonData === "object") {
 
@@ -1020,7 +1020,7 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 
   if (Array.isArray(uniqueArray) === true) {
 
-    uniqueArray = [...new Set(objectArray.map(item => item[uniqueProperty]))];
+    uniqueArray = [...new Set(objectArray.map((item) => item[uniqueProperty]))];
 
     if (typeof uniqueArray[0] === "number") {
 
