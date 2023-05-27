@@ -1435,6 +1435,8 @@ export const getQueryStringData = () => {
 
     let queryStrings = new URLSearchParams(window.location.search);
 
+    queryStringData.parametersURL = queryStrings.toString();
+
     // * From https://medium.com/swlh/urlsearchparams-in-javascript-df524f705317 -- 01/22/2023 MF
     queryStrings.forEach(function (value, key) {
 
