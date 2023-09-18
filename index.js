@@ -681,6 +681,56 @@ export const validateMilitaryTime = (timeEntered) => {
 };
 
 
+export const convertMilitaryTimeToStandardTime = (timeEntered) => {
+
+  // * https://stackoverflow.com/questions/29206453/best-way-to-convert-military-time-to-standard-time-in-javascript. -- 09/18/2023 KH
+
+  // * timeEntered must be a string in HH:MM format. -- 09/18/2023 KH
+
+  let time = timeEntered;
+
+  let hours = "";
+  let minutes = "";
+
+  time = time.split(':');
+
+  if (isEmpty(time[0]) === false) {
+
+    hours = Number(time[0]);
+
+  };
+
+  if (isEmpty(time[1]) === false) {
+
+    minutes = Number(time[1]);
+
+  };
+
+  let standardTime = "";
+
+  if (hours > 0 && hours <= 12) {
+
+    standardTime = "" + hours;
+
+  } else if (hours > 12) {
+
+    standardTime = "" + (hours - 12);
+
+  } else if (hours == 0) {
+
+    standardTime = "12";
+
+  };
+
+  standardTime += (minutes < 10) ? ":0" + minutes : ":" + minutes;
+
+  standardTime += (hours >= 12) ? " PM" : " AM";
+
+  return standardTime;
+
+};
+
+
 export const convertTemperature = (temperatureScale, temperature) => {
 
   // let temperatureFloat = parseFloat(formatTrim(temperature));
