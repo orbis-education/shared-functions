@@ -1,3 +1,4 @@
+import parseHTML from "html-react-parser";
 
 const componentName = "shared-functions";
 
@@ -177,8 +178,10 @@ export const tryParseJSON = (jsonString) => {
 
   }
   catch (error) {
-    // ! Don't display this error in the console. This function is already returning false if the JSON file is not in the correct format. -- 03/06/2021 MF
+
+    // * Don't display this error in the console. This function is already returning false if the JSON file is not in the correct format. -- 03/06/2021 MF
     // console.log(componentName, getDateTime(), "tryParseJSON error", error);
+
   };
 
   return false;
@@ -482,8 +485,9 @@ export const daysSince = (dateToCompare) => {
 };
 
 
-// * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures or to see if the object has a property available with a value. -- 06/09/2022 MF
 export const hasNonEmptyProperty = (objectItem, propertyName) => {
+
+  // * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures or to see if the object has a property available with a value. -- 06/09/2022 MF
 
   let nonEmptyProperty = false;
 
@@ -502,8 +506,9 @@ export const hasNonEmptyProperty = (objectItem, propertyName) => {
 };
 
 
-// * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 export const hasEqualsProperty = (objectItem, propertyName, value) => {
+
+  // * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 
   let equalsProperty = false;
 
@@ -522,8 +527,9 @@ export const hasEqualsProperty = (objectItem, propertyName, value) => {
 };
 
 
-// * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 export const hasTrueProperty = (objectItem, propertyName) => {
+
+  // * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 
   let trueProperty = false;
 
@@ -542,8 +548,9 @@ export const hasTrueProperty = (objectItem, propertyName) => {
 };
 
 
-// * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 export const hasFalseProperty = (objectItem, propertyName) => {
+
+  // * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 
   let falseProperty = false;
 
@@ -687,7 +694,7 @@ export const convertTemperature = (temperatureScale, temperature) => {
   let temperatureFloat = parseFloat(temperature);
   let temperatureConverted = null;
 
-  if (isNaN(temperatureFloat) === false && isEmpty(temperatureFloat) === false) {
+  if (isEmpty(temperatureFloat) === false && isNaN(temperatureFloat) === false) {
 
     if (formatLowerCase(temperatureScale) === "celsius") {
 
@@ -795,8 +802,8 @@ export const convertEnableDisableTrueFalse = (value) => {
 
 export const convertNullEmptyString = (value) => {
 
-  // TODO: Change this function so that it can handle if there are already empty string values in the database. -- 03/19/2021 MF
-  // ! This can't be done in one function like this to handle both conversions because what if the database value is set to an empty string. -- 07/09/2021 MF
+  // * TODO: Change this function so that it can handle if there are already empty string values in the database. -- 03/19/2021 MF
+  // * This can't be done in one function like this to handle both conversions because what if the database value is set to an empty string. -- 07/09/2021 MF
 
   if (value === null) {
 
@@ -833,7 +840,8 @@ export const convertNullEmptyString = (value) => {
 
 export const isWholeNumber = (value) => {
 
-  if (isNaN(formatTrim(value)) === true) {
+  // * Make sure that the value isn't empty. isNaN counts empty values as a number. -- 09/11/2023 MF
+  if (isEmpty(value) === true || isNaN(formatTrim(value)) === true) {
 
     return false;
 
@@ -844,8 +852,7 @@ export const isWholeNumber = (value) => {
 
       return false;
 
-    }
-    else {
+    } else {
 
       return true;
 
@@ -858,7 +865,8 @@ export const isWholeNumber = (value) => {
 
 export const hasDecimalPlaces = (value, decimalPlaces) => {
 
-  if (isNaN(formatTrim(value)) === true) {
+  // * Make sure that the value isn't empty. isNaN counts empty values as a number. -- 09/11/2023 MF
+  if (isEmpty(value) === true || isNaN(formatTrim(value)) === true) {
 
     return false;
 
@@ -885,7 +893,7 @@ export const hasDecimalPlaces = (value, decimalPlaces) => {
 
     };
 
-    if (isNaN(valueToTest) === true || (isEmpty(currentDecimalPlaces) === false && valueDecimals.length > currentDecimalPlaces)) {
+    if (isEmpty(valueToTest) === true || isNaN(valueToTest) === true || (isEmpty(currentDecimalPlaces) === false && valueDecimals.length > currentDecimalPlaces)) {
 
       return false;
 
@@ -1107,7 +1115,7 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
 export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sortPropertyTwo, direction) => {
 
-  // TODO: The sorting for two object properties isn't working correctly. -- 06/16/2022 MF
+  // ? TODO: The sorting for two object properties isn't working correctly? -- 06/16/2022 MF
   // * https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/ -- 05/07/2022 MF
   // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields -- 03/06/2021 MF
 
@@ -1600,3 +1608,130 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
 
 };
 
+
+export const addComputerLog = (computerLogOne, computerLogTwo) => {
+
+  let computerLog = { ...computerLogOne };
+
+  if (typeof computerLogItem === "object") {
+
+    // * From https://geolocation-db.com/json/ -- 09/27/2021 MF
+    if (isEmpty(computerLogTwo.country_code) === false) {
+
+      computerLog.countryCode = computerLogTwo.country_code;
+
+    };
+
+    if (isEmpty(computerLogTwo.country_name) === false) {
+
+      computerLog.countryName = computerLogTwo.country_name;
+
+    };
+
+    if (isEmpty(computerLogTwo.city) === false) {
+
+      computerLog.city = computerLogTwo.city;
+
+    };
+
+    if (isEmpty(computerLogTwo.postal) === false) {
+
+      computerLog.postal = computerLogTwo.postal;
+
+    };
+
+    if (isEmpty(computerLogTwo.latitude) === false) {
+
+      computerLog.latitude = computerLogTwo.latitude;
+
+    };
+
+    if (isEmpty(computerLogTwo.longitude) === false) {
+
+      computerLog.longitude = computerLogTwo.longitude;
+
+    };
+
+    if (isEmpty(computerLogTwo.IPv4) === false) {
+
+      computerLog.ipAddress = computerLogTwo.IPv4;
+
+    };
+
+    if (isEmpty(computerLogTwo.state) === false) {
+
+      computerLog.state = computerLogTwo.state;
+
+    };
+
+    // * From https://api.db-ip.com/v2/free/self -- 09/27/2021 MF
+    if (isEmpty(computerLogTwo.ipAddress) === false) {
+
+      computerLog.ipAddress = computerLogTwo.ipAddress;
+
+    };
+
+    if (isEmpty(computerLogTwo.continentCode) === false) {
+
+      computerLog.continentCode = computerLogTwo.continentCode;
+
+    };
+
+    if (isEmpty(computerLogTwo.continentName) === false) {
+
+      computerLog.continentName = computerLogTwo.continentName;
+
+    };
+
+    if (isEmpty(computerLogTwo.countryCode) === false) {
+
+      computerLog.countryCode = computerLogTwo.countryCode;
+
+    };
+
+    if (isEmpty(computerLogTwo.countryName) === false) {
+
+      computerLog.countryName = computerLogTwo.countryName;
+
+    };
+
+    if (isEmpty(computerLogTwo.stateProvCode) === false) {
+
+      computerLog.stateProvCode = computerLogTwo.stateProvCode;
+
+    };
+
+    if (isEmpty(computerLogTwo.stateProv) === false) {
+
+      computerLog.state = computerLogTwo.state;
+
+    };
+
+    if (isEmpty(computerLogTwo.city) === false) {
+
+      computerLog.city = computerLogTwo.city;
+
+    };
+
+  };
+
+  return computerLog;
+
+};
+
+
+export const parse = (value) => {
+
+  // * The parseHTML function from the npm package html-react-parser doesn't provide error handling if the value sent to it isn't a string. -- 03/09/2023 MF
+
+  let newValue = value;
+
+  if (isEmpty(value) === false) {
+
+    newValue = parseHTML(value);
+
+  };
+
+  return newValue;
+
+};
