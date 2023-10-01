@@ -1,6 +1,6 @@
 {
   "name": "shared-functions",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Contains common functions that could apply to all applications developed.",
   "author": "Orbis Education",
   "copyrightYear": "2023",
@@ -12,5 +12,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "html-react-parser": "^4.2.2"
   }
 }

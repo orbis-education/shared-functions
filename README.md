@@ -830,3 +830,27 @@ errorObject(object): the object to be posted to the API
 string: the result of the Post request
 
 
+### addComputerLog()
+
+Combines the properties of the object returned by two free geolocation APIs (https://geolocation-db.com/json/ and https://api.db-ip.com/v2/free/self) and places them in a JavaScript object.
+
+#### parameters
+
+none
+
+#### return
+
+object
+
+
+### parse()
+
+Provides error checking for the parseHTML function from the npm package html-react-parser to ensure that the value being converted to HTML isn't null, undefined or an empty string.
+
+#### parameters
+
+none
+
+#### return
+
+string
