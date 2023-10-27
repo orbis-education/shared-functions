@@ -972,7 +972,7 @@ export const formatTitle = (title) => {
   if (isEmpty(title) === false && title !== "iSBAR" && title !== "iSBARs" && title !== "iSBAREnable") {
 
     // * iSBARs is the special case that is difficult to make work in regex. -- 08/16/2021 MF
-    formattedTitle = title.replace(/(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])/g, " $1").replace(/\b\w/g, c => c.toUpperCase());
+    formattedTitle = title.replace(/(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])/g, "$1").replace(/\b\w/g, c => c.toUpperCase());
 
   } else if (isEmpty(title) === false && title === "iSBAR") {
 
