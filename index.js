@@ -1092,7 +1092,27 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
     } else {
 
-      sortedArray.sort((a, b) => (removeArticlesFromBeginning(a[sortProperty]) > removeArticlesFromBeginning(b[sortProperty])) ? 1 : -1);
+      sortedArray.sort((a, b) => {
+
+        let aProperty = removeArticlesFromBeginning(a[sortProperty]);
+        let bProperty = removeArticlesFromBeginning(b[sortProperty]);
+
+        // * Put null values at the end of the array: https://stackoverflow.com/a/29829361 -- 11/30/2023 JH
+        if (aProperty === bProperty) {
+          return 0;
+        };
+
+        if (aProperty === null) {
+          return 1;
+        };
+
+        if (bProperty === null) {
+          return -1;
+        };
+
+        return aProperty > bProperty ? 1 : -1;
+
+      });
 
     };
 
