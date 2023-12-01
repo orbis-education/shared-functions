@@ -1102,11 +1102,11 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
           return 0;
         };
 
-        if (aProperty === null) {
+        if (isEmpty(aProperty) === true) {
           return 1;
         };
 
-        if (bProperty === null) {
+        if (isEmpty(bProperty) === true) {
           return -1;
         };
 
