@@ -854,3 +854,90 @@ none
 #### return
 
 string
+
+
+### displayTime()
+
+Creates a string from a date object.
+
+#### parameters
+
+dateToDisplay(date): the date object to be displayed
+
+removeLeadingZeroes(boolean): remove the leading zeroes from the returned value
+
+#### return
+
+string
+
+
+### convertMilitaryTimeToStandardTime()
+
+Converts a time in the military format into the standard time format.
+
+#### parameters
+
+timeEntered(date): the date object to be converted
+
+#### return
+
+string
+
+
+### convertStandardTimeToMilitaryTime()
+
+Converts a time in the standard format into the military time format.
+
+#### parameters
+
+timeEntered(date): the date object to be converted
+
+#### return
+
+string
+
+
+### getNumberOfDaysBetweenDates()
+
+Calculates the number of days between two dates.
+
+#### parameters
+
+startDate(date): the date object to start the calculation from
+
+endDate(date): the date object to end the calculation at
+
+#### return
+
+integer
+
+
+### convertTimeToMinutes()
+
+Converts a time into minutes.
+
+#### parameters
+
+timeEntered(date): the date object to be converted
+
+#### return
+
+integer
+
+
+### generateHoursInterval()
+
+Calculates the number of hours between two minutes values.
+
+#### parameters
+
+startHourInMinutes(integer): the minutes value to start from
+
+endHourInMinutes(integer): the minutes value to end at
+
+interval(integer): the amount of minutes between intervals
+
+#### return
+
+object
+

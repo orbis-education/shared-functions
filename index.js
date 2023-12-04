@@ -1092,6 +1092,7 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
     } else {
 
+      // * sortedArray.sort((a, b) => (removeArticlesFromBeginning(a[sortProperty]) > removeArticlesFromBeginning(b[sortProperty])) ? 1 : -1);
       sortedArray.sort((a, b) => {
 
         let aProperty = removeArticlesFromBeginning(a[sortProperty]);
@@ -1099,15 +1100,21 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
         // * Put null values at the end of the array: https://stackoverflow.com/a/29829361 -- 11/30/2023 JH
         if (aProperty === bProperty) {
+
           return 0;
+
         };
 
         if (isEmpty(aProperty) === true) {
+
           return 1;
+
         };
 
         if (isEmpty(bProperty) === true) {
+
           return -1;
+
         };
 
         return aProperty > bProperty ? 1 : -1;
@@ -1749,5 +1756,219 @@ export const parse = (value) => {
   };
 
   return newValue;
+
+};
+
+
+export const displayTime = (dateToDisplay, removeLeadingZeroes) => {
+
+  let newDisplayTime = "";
+
+  if (isEmpty(dateToDisplay) === false) {
+
+    // * Time
+    let time = formatToString(dateToDisplay).substring(11, 16);
+
+    newDisplayTime = time;
+
+    if (isEmpty(newDisplayTime) === false && removeLeadingZeroes === true) {
+
+      newDisplayTime = newDisplayTime.replace(/\b0/g, "");
+
+    };
+
+  };
+
+  return newDisplayTime;
+
+};
+
+
+export const convertMilitaryTimeToStandardTime = (timeEntered) => {
+
+  // * https://stackoverflow.com/questions/29206453/best-way-to-convert-military-time-to-standard-time-in-javascript. -- 09/18/2023 KH
+
+  // * timeEntered must be a string in HH:MM format. -- 09/18/2023 KH
+
+  let newTime = timeEntered;
+
+  let hours = "";
+  let minutes = "";
+  let modifier = "";
+
+  // * Split the time by : and " " -- 11/27/2023 KH
+  newTime = newTime.split(/[\s: ]+/);
+
+  if (isEmpty(newTime[0]) === false) {
+
+    hours = Number(newTime[0]);
+
+  };
+
+  if (isEmpty(newTime[1]) === false) {
+
+    minutes = Number(newTime[1]);
+
+  };
+
+  if (isEmpty(newTime[2]) === false) {
+
+    modifier = Number(newTime[2]);
+
+  };
+
+  let standardTime = "";
+
+  if (hours > 0 && hours <= 12) {
+
+    standardTime = "" + hours;
+
+  } else if (hours > 12) {
+
+    standardTime = "" + (hours - 12);
+
+  } else if (hours == 0) {
+
+    standardTime = "12";
+
+  };
+
+  if (hours >= 12) {
+
+    modifier = " PM";
+
+  } else {
+
+    modifier = " AM";
+
+  };
+
+  standardTime += (minutes < 10) ? ":0" + minutes + modifier : ":" + minutes + modifier;
+
+  return standardTime;
+
+};
+
+
+export const convertStandardTimeToMilitaryTime = (timeEntered) => {
+
+  // * https://www.tutorialspoint.com/converting-12-hour-format-time-to-24-hour-format-in-javascript. -- 11/27/2023 KH
+
+  // * timeEntered must be a string in HH:MM AM/PM format. -- 09/18/2023 KH
+
+  let newTime = timeEntered;
+
+  let hours = "";
+  let minutes = "";
+  let modifier = "";
+
+  // * Split the time by : and " " -- 11/27/2023 KH
+  newTime = newTime.split(/[\s: ]+/);
+
+  if (isEmpty(newTime[0]) === false) {
+
+    hours = Number(newTime[0]);
+    hours = (hours < 10) ? "0" + hours : hours;
+
+  };
+
+  if (isEmpty(newTime[1]) === false) {
+
+    minutes = Number(newTime[1]);
+    minutes = (minutes < 30) ? "0" + minutes : minutes;
+
+  };
+
+  if (isEmpty(newTime[2]) === false) {
+
+    modifier = newTime[2];
+
+  };
+
+  if (hours === '12') {
+
+    hours = '00';
+
+  };
+
+  if (modifier === 'PM') {
+
+    // * 10 indicates that the string is in base 10 (decimal notation). -- 11/27/2023 KH
+    // * + 12 converts the 12-hour format to a 24-hour format. -- 11/27/2023 KH
+    hours = parseInt(hours, 10) + 12;
+
+  };
+
+  return `${hours}:${minutes}`;
+
+};
+
+
+export const getNumberOfDaysBetweenDates = (startDate, endDate) => {
+
+  // * https://www.geeksforgeeks.org/how-to-calculate-the-number-of-days-between-two-dates-in-javascript/ -- 09/12/2023 KH
+  // * https://stackoverflow.com/questions/2627473/how-to-calculate-the-number-of-days-between-two-dates/2627493#2627493 -- 09/12/2023 KH
+
+  let newStartDate = new Date(startDate);
+  let newEndDate = new Date(endDate);
+  let numberOfDays = 1;
+
+  // * The function getTime() converts days to milliseconds to subtract the two dates. -- 08/31/2023 KH  
+  // * The equation (1000 * 60 * 60 * 24) turns the values back into a day count. -- 08/31/2023 KH  
+  // * The operation + 1 adds one day to account for 08/31/2023 - 08/31/2023 = 0 but should equal 1 day in order to account for running studentsPerDay amount of students that day. -- 08/31/2023 KH  
+  numberOfDays = ((newEndDate.getTime() - newStartDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+  return numberOfDays;
+
+};
+
+
+export const convertTimeToMinutes = (timeEntered) => {
+
+  // * https://stackoverflow.com/questions/32885682/convert-hhmmss-into-minute-using-javascript -- 11/27/2023 KH
+  // * timeEntered must be a string in HH:MM format. -- 09/18/2023 KH
+
+  let newTime = timeEntered.split(':');
+
+  let minutes = (+newTime[0]) * 60 + (+newTime[1]);
+
+  return minutes;
+
+};
+
+
+export const generateHoursInterval = (startHourInMinutes, endHourInMinutes, interval) => {
+
+  // * https://gist.github.com/indexzero/6261ad9292c78cf3c5aa69265e2422bf?permalink_comment_id=4003346#gistcomment-4003346 -- 11/20/2023 KH
+
+  let timesArray = [];
+
+  if (isEmpty(startHourInMinutes) === false && isWholeNumber(startHourInMinutes) === true) {
+
+    for (let i = 0; startHourInMinutes < 24 * 60; i++) {
+
+      if (startHourInMinutes > endHourInMinutes) {
+
+        break;
+
+      } else {
+
+        // * Get hours of day in 0-24 format. -- 11/20/2023 KH
+        let hh = Math.floor(startHourInMinutes / 60);
+
+        // * Get minutes of the hour in 0-55 format. -- 11/20/2023 KH
+        let mm = startHourInMinutes % 60;
+
+        timesArray[i] = { timeID: i, time: convertMilitaryTimeToStandardTime(("0" + (hh % 24)).slice(-2) + ":" + ("0" + mm).slice(-2)) };
+
+        startHourInMinutes = startHourInMinutes + interval;
+
+      };
+
+    };
+
+  };
+
+  return timesArray;
 
 };
