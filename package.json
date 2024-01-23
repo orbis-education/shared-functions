@@ -3,7 +3,7 @@
   "version": "0.2.3",
   "description": "Contains common functions that could apply to all applications developed.",
   "author": "Orbis Education",
-  "copyrightYear": "2023",
+  "copyrightYear": "2024",
   "repository": {
     "type": "git",
     "url": "https://github.com/orbis-education/shared-functions"
