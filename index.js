@@ -1545,7 +1545,6 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
         // console.error(componentName, getDateTime(), "addLog error.message", error.message);
         // console.error(componentName, getDateTime(), "addLog error.stack", error.stack);
 
-        // // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
         // dispatch(addErrorMessage(`${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
 
         addErrorLog(baseURL, databaseAvailable, { operation: operationValue, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { name: error.name, message: error.message, stack: error.stack }, dateEntered: getDateTime() });
@@ -1618,7 +1617,6 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
         // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
         // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);
 
-        // // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
         // dispatch(addErrorMessage(`${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
 
         logErrorResult = `${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
