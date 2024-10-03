@@ -231,6 +231,7 @@ export const displayObjectData = (ObjectData) => {
 };
 
 
+// TODO: Account for JSON data embedded in JSON data. -- 09/18/2024 MF
 export const displayObjectDataTable = (ObjectData) => {
 
   let objectDataString = JSON.stringify(ObjectData);
@@ -813,6 +814,7 @@ export const convertNullEmptyString = (value) => {
 
     return "";
 
+    // TODO: Should this be a null value or an empty string? Causes errors in select components if the value is null. -- 09/26/2024 MF
   } else if (value === "NaN") {
 
     return null;
@@ -969,10 +971,13 @@ export const formatTitle = (title) => {
 
   let formattedTitle = "";
 
+  // * iSBARs is the special case that is difficult to make work in regex. -- 08/16/2021 MF
   if (isEmpty(title) === false && title !== "iSBAR" && title !== "iSBARs" && title !== "iSBAREnable") {
 
-    // * iSBARs is the special case that is difficult to make work in regex. -- 08/16/2021 MF
     formattedTitle = title.replace(/(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])/g, "$1").replace(/\b\w/g, c => c.toUpperCase());
+
+    // * Accounts for 's in strings. -- 10/03/2024 MF
+    formattedTitle = title.replaceAll("'S", "'s");
 
   } else if (isEmpty(title) === false && title === "iSBAR") {
 
@@ -1381,6 +1386,25 @@ export const formatFloat = (value) => {
   };
 
   return formatedFloat;
+
+};
+
+
+export const formatDate = (dateToFormat) => {
+
+  let formattedDate = "";
+
+  if (isEmpty(dateToFormat) === false) {
+
+    formattedDate = dateToFormat.substring(0, 10);
+
+  } else {
+
+    formattedDate = "";
+
+  };
+
+  return formattedDate;
 
 };
 
