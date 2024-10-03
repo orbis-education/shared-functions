@@ -723,6 +723,19 @@ value
 float
 
 
+### formatDate(value)
+
+In a date string, removes the time and time zone information and only leaves the date in this format YYYY-MM-DD. Handles the situations in which the value passed is null or undefined by returning an empty string.
+
+#### parameters
+
+value
+
+#### return
+
+string
+
+
 ### formatSearchInput(value)
 
 Removes the white spaces at the beginning and end of the value passed and converts the value passed to all lowercase characters. Handles the situations in which the value passed is null or undefined and converts the value to a string if needed.
