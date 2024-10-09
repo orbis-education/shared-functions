@@ -977,7 +977,7 @@ export const formatTitle = (title) => {
     formattedTitle = title.replace(/(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])/g, "$1").replace(/\b\w/g, c => c.toUpperCase());
 
     // * Accounts for 's in strings. -- 10/03/2024 MF
-    formattedTitle = title.replaceAll("'S", "'s");
+    formattedTitle = formattedTitle.replaceAll("'S", "'s");
 
   } else if (isEmpty(title) === false && title === "iSBAR") {
 
