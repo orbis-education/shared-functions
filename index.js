@@ -814,7 +814,6 @@ export const convertNullEmptyString = (value) => {
 
     return "";
 
-    // TODO: Should this be a null value or an empty string? Causes errors in select components if the value is null. -- 09/26/2024 MF
   } else if (value === "NaN") {
 
     return null;
@@ -950,7 +949,7 @@ export const formatPhoneNumber = (phoneNumber) => {
 
   let validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/);
 
-  if (isEmpty(validPhoneNumber) === false) {
+  if (isNonEmptyArray(validPhoneNumber) === true) {
 
     return `${validPhoneNumber[1]}-${validPhoneNumber[2]}-${validPhoneNumber[3]}`;
 
@@ -1002,7 +1001,7 @@ export const randomizeItems = (items, randomize) => {
 
   let itemsRandomized = [];
 
-  if (randomize === true && Array.isArray(items) === true) {
+  if (randomize === true && isNonEmptyArray(items) === true) {
 
     itemsRandomized = items.map((a) => {
 
@@ -1031,7 +1030,7 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 
   let uniqueArray = [...objectArray];
 
-  if (Array.isArray(uniqueArray) === true) {
+  if (isNonEmptyArray(uniqueArray) === true) {
 
     uniqueArray = [...new Set(objectArray.map((item) => item[uniqueProperty]))];
 
@@ -1089,7 +1088,7 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
   let sortedArray = [...objectArray];
 
-  if (Array.isArray(sortedArray) === true) {
+  if (isNonEmptyArray(sortedArray) === true) {
 
     if (typeof sortedArray[0][sortProperty] === "number") {
 
