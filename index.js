@@ -1087,16 +1087,22 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
   if (isNonEmptyArray(sortedArray) === true) {
 
-    sortedArray.sort((a, b) => {
+    if (isEmpty(sortProperty) === false) {
 
-      let aProperty = typeof a[sortProperty] === "number" ? a[sortProperty] : removeArticlesFromBeginning(a[sortProperty]);
-      let bProperty = typeof b[sortProperty] === "number" ? b[sortProperty] : removeArticlesFromBeginning(b[sortProperty]);
+      // * https://typeofnan.dev/sort-array-objects-multiple-properties-javascript/ -- 01/07/2024 JH
 
-      if (aProperty < bProperty) return -1;
-      if (aProperty > bProperty) return 1;
-      return 0;
+      sortedArray.sort((a, b) => {
 
-    });
+        let aProperty = typeof a[sortProperty] === "number" ? a[sortProperty] : removeArticlesFromBeginning(a[sortProperty]);
+        let bProperty = typeof b[sortProperty] === "number" ? b[sortProperty] : removeArticlesFromBeginning(b[sortProperty]);
+
+        if (aProperty < bProperty) return -1;
+        if (aProperty > bProperty) return 1;
+        return 0;
+
+      });
+
+    };
 
   };
 
@@ -1111,15 +1117,23 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 };
 
 
-export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sortPropertyTwo, direction) => {
+export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sortPropertyTwo, directionOne, directionTwo) => {
 
   let sortedArray = [...objectArray];
 
   if (isNonEmptyArray(sortedArray) === true) {
 
-    sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyTwo, direction);
+    if (isEmpty(sortPropertyTwo) === false) {
 
-    sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyOne, direction);
+      sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyTwo, directionOne);
+
+    };
+
+    if (isEmpty(sortPropertyOne) === false) {
+
+      sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyOne, directionTwo);
+
+    };
 
   };
 
