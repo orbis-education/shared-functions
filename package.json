@@ -1,9 +1,9 @@
 {
   "name": "shared-functions",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Contains common functions that could apply to all applications developed.",
   "author": "Orbis Education",
-  "copyrightYear": "2024",
+  "copyrightYear": "2025",
   "repository": {
     "type": "git",
     "url": "https://github.com/orbis-education/shared-functions"
