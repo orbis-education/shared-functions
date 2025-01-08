@@ -553,7 +553,7 @@ Array
 
 ### removeArticlesFromBeginning(value)
 
-Removes a and the from the beginning of a string. Mainly used when sorting items.
+Removes a, an and the from the beginning of a string. Mainly used when sorting items.
 
 #### parameters
 
@@ -596,7 +596,7 @@ direction(string): the direction to sort (asc or desc)
 Array
 
 
-### sortObjectArrayByTwoProperties(objectArray, sortPropertyOne, sortPropertyTwo, direction)
+### sortObjectArrayByTwoProperties(objectArray, sortPropertyOne, sortPropertyTwo, directionOne, directionTwo)
 
 Sorts an array on the properties and direction that were passed to the function. May not be functioning correctly.
 
@@ -608,7 +608,9 @@ sortPropertyOne(string): the first property to be used to sort
 
 sortPropertyTwo(string): the second property to be used to sort
 
-direction(string): the direction to sort (asc or desc)
+directionOne(string): the direction to sort (asc or desc) for sortPropertyOne
+
+directionTwo(string): the direction to sort (asc or desc) for sortPropertyTwo
 
 #### return
 

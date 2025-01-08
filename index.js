@@ -1057,7 +1057,7 @@ export const removeArticlesFromBeginning = (value) => {
 
   if (isEmpty(value) === false) {
 
-    newValue = formatLowerCase(newValue).replace(/^(a\.)/, "").replace(/^(the\.)/, "");
+    newValue = formatLowerCase(newValue).replace(/^(a\.)/, "").replace(/^(an\.)/, "").replace(/^(the\.)/, "");
 
   };
 
@@ -1083,45 +1083,24 @@ export const compareItemsForSorting = (itemOne, itemTwo) => {
 
 export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) => {
 
-  // * https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/ -- 05/07/2022 MF
-  // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields -- 03/06/2021 MF
-
   let sortedArray = [...objectArray];
 
   if (isNonEmptyArray(sortedArray) === true) {
 
-    if (typeof sortedArray[0][sortProperty] === "number") {
+    if (isEmpty(sortProperty) === false) {
 
-      sortedArray.sort((a, b) => a[sortProperty] - b[sortProperty]);
+      // * https://typeofnan.dev/sort-array-objects-multiple-properties-javascript/ -- 01/07/2025 JH
 
-    } else {
-
-      // * sortedArray.sort((a, b) => (removeArticlesFromBeginning(a[sortProperty]) > removeArticlesFromBeginning(b[sortProperty])) ? 1 : -1);
       sortedArray.sort((a, b) => {
 
-        let aProperty = removeArticlesFromBeginning(a[sortProperty]);
-        let bProperty = removeArticlesFromBeginning(b[sortProperty]);
+        let aProperty = typeof a[sortProperty] === "number" ? a[sortProperty] : removeArticlesFromBeginning(a[sortProperty]);
+        let bProperty = typeof b[sortProperty] === "number" ? b[sortProperty] : removeArticlesFromBeginning(b[sortProperty]);
 
-        // * Put null values at the end of the array: https://stackoverflow.com/a/29829361 -- 11/30/2023 JH
-        if (aProperty === bProperty) {
+        if (aProperty < bProperty) return -1;
 
-          return 0;
+        if (aProperty > bProperty) return 1;
 
-        };
-
-        if (isEmpty(aProperty) === true) {
-
-          return 1;
-
-        };
-
-        if (isEmpty(bProperty) === true) {
-
-          return -1;
-
-        };
-
-        return aProperty > bProperty ? 1 : -1;
+        return 0;
 
       });
 
@@ -1140,11 +1119,7 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 };
 
 
-export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sortPropertyTwo, direction) => {
-
-  // ? TODO: The sorting for two object properties isn't working correctly? -- 06/16/2022 MF
-  // * https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/ -- 05/07/2022 MF
-  // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields -- 03/06/2021 MF
+export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sortPropertyTwo, directionOne, directionTwo) => {
 
   let sortedArray = [...objectArray];
 
@@ -1152,40 +1127,15 @@ export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sor
 
     if (isEmpty(sortPropertyTwo) === false) {
 
-      sortedArray.sort(
-        function (a, b) {
-
-          if (a[sortPropertyOne] === b[sortPropertyOne]) {
-
-            // * sortPropertyTwo is only important when a and b sortPropertyOne are the same -- 03/06/2021 MF
-            return compareItemsForSorting(a[sortPropertyTwo], b[sortPropertyTwo]);
-
-          };
-
-          return compareItemsForSorting(a[sortPropertyOne], b[sortPropertyOne]) ? 1 : -1;
-
-        });
-
-    } else if (isEmpty(sortPropertyOne) === false) {
-
-      // sortedArray.sort((a, b) => (a[sortPropertyOne] > b[sortPropertyOne]) ? 1 : -1);
-
-      sortedArray.sort(
-        function (a, b) {
-
-          return compareItemsForSorting(a[sortPropertyOne], b[sortPropertyOne]) ? 1 : -1;
-
-        }
-
-      );
+      sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyTwo, directionTwo);
 
     };
 
-  };
+    if (isEmpty(sortPropertyOne) === false) {
 
-  if (formatLowerCase(direction) === "desc") {
+      sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyOne, directionOne);
 
-    sortedArray.reverse();
+    };
 
   };
 
