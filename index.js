@@ -1057,7 +1057,7 @@ export const removeArticlesFromBeginning = (value) => {
 
   if (isEmpty(value) === false) {
 
-    newValue = formatLowerCase(newValue).replace(/^(a\.)/, "").replace(/^(the\.)/, "");
+    newValue = formatLowerCase(newValue).replace(/^(a\.)/, "").replace(/^(an\.)/, "").replace(/^(the\.)/, "");
 
   };
 
@@ -1089,7 +1089,7 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
     if (isEmpty(sortProperty) === false) {
 
-      // * https://typeofnan.dev/sort-array-objects-multiple-properties-javascript/ -- 01/07/2024 JH
+      // * https://typeofnan.dev/sort-array-objects-multiple-properties-javascript/ -- 01/07/2025 JH
 
       sortedArray.sort((a, b) => {
 
@@ -1097,7 +1097,9 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
         let bProperty = typeof b[sortProperty] === "number" ? b[sortProperty] : removeArticlesFromBeginning(b[sortProperty]);
 
         if (aProperty < bProperty) return -1;
+
         if (aProperty > bProperty) return 1;
+
         return 0;
 
       });
@@ -1125,13 +1127,13 @@ export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sor
 
     if (isEmpty(sortPropertyTwo) === false) {
 
-      sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyTwo, directionOne);
+      sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyTwo, directionTwo);
 
     };
 
     if (isEmpty(sortPropertyOne) === false) {
 
-      sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyOne, directionTwo);
+      sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyOne, directionOne);
 
     };
 
