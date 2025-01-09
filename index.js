@@ -1100,9 +1100,9 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
         // * The return 0 at the end should cover this case. -- 01/09/2025 JH
         // if (aProperty === bProperty) return 0;
 
-        if (isEmpty(aProperty) === true) return 1;
+        if (isEmpty(aProperty)) return 1;
 
-        if (isEmpty(bProperty) === true) return -1;
+        if (isEmpty(bProperty)) return -1;
 
         if (aProperty < bProperty) return -1;
 
