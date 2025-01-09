@@ -1096,6 +1096,14 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
         let aProperty = typeof a[sortProperty] === "number" ? a[sortProperty] : removeArticlesFromBeginning(a[sortProperty]);
         let bProperty = typeof b[sortProperty] === "number" ? b[sortProperty] : removeArticlesFromBeginning(b[sortProperty]);
 
+        // * Put null values at the end of the array: https://stackoverflow.com/a/29829361 -- 11/30/2023 JH
+        // * The return 0 at the end should cover this case. -- 01/09/2025 JH
+        // if (aProperty === bProperty) return 0;
+
+        if (isEmpty(aProperty)) return 1;
+
+        if (isEmpty(bProperty)) return -1;
+
         if (aProperty < bProperty) return -1;
 
         if (aProperty > bProperty) return 1;
