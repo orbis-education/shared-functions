@@ -956,3 +956,17 @@ interval(integer): the amount of minutes between intervals
 
 object
 
+
+### displayCommaBetweenTwoItems(firstItem, secondItem)
+
+UPDATE: Inserts a comma and a space between two string values
+
+#### parameters
+
+firstItem(string): the first string value
+
+secondItem(string): the second string value
+
+#### return
+
+string
