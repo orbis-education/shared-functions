@@ -1979,3 +1979,93 @@ export const displayCommaBetweenTwoItems = (firstItem, secondItem) => {
 
 };
 
+
+export const constructCSVFile = (dataList, dataColumnTitles, propertyNameList) => {
+
+  let fileData = "";
+
+  // * Initialize fileData with columns titles. -- 10/15/2024 EBG
+  if (isEmpty(dataColumnTitles) === false) {
+
+    fileData += dataColumnTitles;
+
+  };
+
+  if (isNonEmptyArray(dataList) === true && isNonEmptyArray(propertyNameList) === true) {
+
+    // * Loop through every record in the data. -- 10/16/2024 EBG
+    for (let i = 0; i < dataList.length; i++) {
+
+      // * Look at each object property name specified in propertyNameList. -- 10/16/2024 EBG
+      for (let j = 0; j < propertyNameList.length; j++) {
+
+        let cellData = "";
+
+        let propertyNameData = dataList[i][propertyNameList[j].propertyName];
+
+        if (isEmpty(propertyNameData) === false) {
+
+          // ? Will json need its own case or be passed as a string? -- 10/17/2024 EBG
+          // * When JSON is passed, I'm pretty sure it's going to be a different case in these if statements. -- 10/17/2024 MF
+          if (propertyNameList[j].dataType === "string") {
+
+            cellData = `"${propertyNameData}"`;
+
+          } else if (propertyNameList[j].dataType === "number") {
+
+            cellData = `${propertyNameData}`;
+
+          } else if (propertyNameList[j].dataType === "boolean") {
+
+            cellData = `${propertyNameData === true || propertyNameData === 1 ? "Yes" : "-"}`;
+
+          } else if (propertyNameList[j].dataType === "date") {
+
+            cellData = `${displayDate(propertyNameData)}`;
+
+          } else if (propertyNameList[j].dataType === "dateTime") {
+
+            cellData = `${displayDateAndTime(propertyNameData)}`;
+
+          } else if (propertyNameList[j].dataType === "hyperlink") {
+
+            // * Creates a hyperlink in the CSV file. -- 05/30/2024 MF
+            // * https://stackoverflow.com/questions/7572268/how-to-encode-a-hyperlink-in-csv-formatted-file -- 05/30/2024 MF
+
+            cellData = "=HYPERLINK(" + `${propertyNameData}` + ")";
+
+          };
+
+        };
+
+        fileData += `${cellData},`;
+
+      };
+
+      fileData += `\r\n`;
+
+    };
+
+  };
+
+  return fileData;
+
+};
+
+
+export const exportCSVFile = (fileData, fileTitle) => {
+
+  // * https://medium.com/@gb.usmanumar/how-to-export-data-to-csv-json-in-react-js-ea45d940652a -- 05/30/2024 EBG
+
+  const csvData = new Blob([fileData], { type: "text/csv" });
+  const csvURL = window.URL.createObjectURL(csvData);
+  const link = document.createElement("a");
+
+  link.href = csvURL;
+  link.download = `${fileTitle} ${displayDate(getDateTime()).replaceAll("/", "_")}.csv`;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+};

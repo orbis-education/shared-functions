@@ -196,62 +196,6 @@ export const showPlayground = (environmentMode, demonstrationMode) => {
 };
 
 
-export const showBanner = (environmentMode, demonstrationMode) => {
-
-  // * This should be true in these cases: -- 06/30/2023 MF
-  // * 1. When showDevelopment === true
-  // * 2. When window.location.href contains "intranet.orbiseducation.com/test_local/" or window.location.href contains "intranet.orbiseducation.com/for-review/"
-  // * The intranet.orbiseducation.com/test_local directory is the location that the web developers can place code to test or demonstrate learning object functionality. -- 06/30/2023 MF
-  // * The intranet.orbiseducation.com/for-review directory is the location that the ELD Team can place learning objects to test or demonstrate functionality. -- 06/30/2023 MF
-  // * 3. When environmentMode=development regardless of where the learning object is (intranet, LOR, Executive Demonstration in Electron, etc.)?
-  // * 4. When demonstrationMode=true regardless of where the learning object is (intranet, LOR, Executive Demonstration in Electron, etc.)?
-  // * 5. https://intranet.orbiseducation.com/learningObject/index.html?learningObjectID=caseStudyOne1387
-  // * 6. https://intranet.orbiseducation.com/executivedemo/
-  // * 7. https://intranet.orbiseducation.com/executivedemo_ota/
-  // * 8. https://intranet.orbiseducation.com/mls-demo/
-  // * 9. https://instructor.orbiseducation.com/
-  // * 10. When window.location.href contains "intranet.orbiseducation.com"
-  // * 11. When window.location.href contains "product.orbiseducation.com"
-  // * 12. When window.location.href contains "testlor.orbiseducation.com"
-  // * 13. When window.location.href contains "api.orbiseducation.com" or window.location.href contains ""api-dev.orbiseducation.com" (temporary)
-  // * 14. Executive Demonstration in Electron except when environmentMode=development
-  // * 15. When window.location.href contains "lor.orbiseducation.com" except when environmentMode=development or demonstrationMode=true
-
-  // * This should be false in these cases: -- 06/30/2023 MF
-  // * 1. Executive Demonstration in Electron except when environmentMode=development
-  // * 2. When window.location.href contains "lor.orbiseducation.com" except when environmentMode=development or demonstrationMode=true
-  // * 3. environmentMode === "production"
-
-  // * The reason behind marking learning objects this way is so that they aren't linked to from a learning management system (LMS) and used as a production learning object. The only production learning objects should be on the LOR. There are no exceptions that I'm aware of. -- 06/30/2023 MF
-
-  if (environmentMode === "production" || (inElectron() === true && showDevelopment(environmentMode, demonstrationMode) !== true) || (showDevelopment(environmentMode, demonstrationMode) !== true && showDemonstration(demonstrationMode) !== true && window.location.href.includes("lor.orbiseducation.com") === true)) {
-
-    return false;
-
-  } else {
-
-    return true;
-
-  };
-
-};
-
-
-export const showSelectPage = (environmentMode, demonstrationMode) => {
-
-  if ( /* isEmpty(import.meta) === false && import.meta.env.VITE_DISPLAY_LOAD_PAGE_COMPONENT !== "False" && */ showDevelopment(environmentMode, demonstrationMode) === true) {
-
-    return true;
-
-  } else {
-
-    return false;
-
-  };
-
-};
-
-
 export const showErrorMessage = (environmentMode, alwaysShow) => {
 
   if ((isLocalDevelopment() === true && environmentMode !== "production") || alwaysShow === true) {
@@ -293,68 +237,6 @@ export const allowLogging = ( /* baseURLLOR */) => {
     } else {
 
       return false;
-
-    };
-
-  };
-
-};
-
-
-export const showDeveloperTools = (environmentMode, isSystemAdministrator) => {
-
-  if (isSystemAdministrator === true || showDevelopment(environmentMode) === true) {
-
-    return true;
-
-  } else {
-
-    return false;
-
-  };
-
-};
-
-
-export const showBarcode = (environmentMode, demonstrationMode, barcodeScannerRequired, isAdministrator, isSystemAdministrator) => {
-
-  if (isProcessEnvironment()) {
-
-    if (isAdministrator === true || isSystemAdministrator === true) {
-
-      return true;
-
-    } else {
-
-      if ((showDemonstration(environmentMode, demonstrationMode, isSystemAdministrator) === true || showDevelopment(environmentMode) === true) && process.env.REACT_APP_DISPLAY_BARCODE === "True" && barcodeScannerRequired === true) {
-
-        return true;
-
-      } else {
-
-        return false;
-
-      };
-
-    };
-
-  } else {
-
-    if (isAdministrator === true || isSystemAdministrator === true) {
-
-      return true;
-
-    } else {
-
-      if ((showDemonstration(environmentMode, demonstrationMode, isSystemAdministrator) === true || showDevelopment(environmentMode) === true) && import.meta.env.VITE_DISPLAY_BARCODE === "True" && barcodeScannerRequired === true) {
-
-        return true;
-
-      } else {
-
-        return false;
-
-      };
 
     };
 
