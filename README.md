@@ -3,7 +3,7 @@
 This repository contains shared functions that can be reused in multiple applications.
 
 
-## Functions Available
+## Shared Functions Available
 
 ### noFunctionAvailable()
 
@@ -970,3 +970,36 @@ secondItem(string): the second string value
 #### return
 
 string
+
+
+### constructCSVFile(dataList, dataColumnTitles, propertyNameList)
+
+
+
+### exportCSVFile(fileData, fileTitle)
+
+
+
+## Developer Functions Available
+
+### isProcessEnvironment()
+
+### isLocalDevelopment()
+
+### inElectron()
+
+### inLearningObjectEcosystem()
+
+### showLocalDevelopment(environmentMode)
+
+### showDevelopment(environmentMode, demonstrationMode)
+
+### showDemonstration(/* environmentMode, */ demonstrationMode)
+
+### showPlayground(environmentMode, demonstrationMode)
+
+### showErrorMessage(environmentMode, alwaysShow)
+
+### allowLogging( /* baseURLLOR */)
+
+### showAuthentication(environmentMode, demonstrationMode, applicationName, azureAuthentication)
