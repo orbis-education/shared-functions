@@ -2,7 +2,7 @@ import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase } from "./shared
 
 const componentName = "DeveloperFunctions";
 
-const isProcessEnvironment = () => {
+export const isProcessEnvironment = () => {
 
   let importProcessEnabled = false;
 
