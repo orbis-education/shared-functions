@@ -247,7 +247,21 @@ export const allowLogging = ( /* baseURLLOR */) => {
 
 export const showAuthentication = (environmentMode, demonstrationMode, applicationName, azureAuthentication) => {
 
-  if (isEmpty(azureAuthentication) === false && azureAuthentication !== true && applicationName === "Learning Object Template" && showPlayground(environmentMode, demonstrationMode) === true) {
+  // * This should be true in these cases: -- 03/28/2025 MF
+  // * 1. When window.location.href contains "orbiseducation.com"
+  // * 2. When window.location.href contains "dewfapvs2001e.gce.com"
+  // * 3. 
+
+  // * This should be false in these cases: -- 03/28/2025 MF
+  // * 1. When azureAuthentication !== true and applicationName === "Learning Object Template" and application is on a playground
+  // * 2. When window.location.href contains "lor.orbiseducation.com"
+  // * 3. When window.location.href contains "lor-dev."
+  // * 4. When window.location.href contains "lor-staging."
+  // * 5. 
+
+  let learningObjectAzureAuthentication = azureAuthentication !== true && applicationName === "Learning Object Template";
+
+  if (learningObjectAzureAuthentication === true && (showPlayground(environmentMode, demonstrationMode) === true || (window.location.href.includes("orbiseducation.com/test_local/") === true && environmentMode === "production"))) {
 
     return false;
 
