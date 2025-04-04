@@ -2,15 +2,20 @@ import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase } from "./shared
 
 const componentName = "DeveloperFunctions";
 
-export const isProcessEnvironment = () => {
+export const selectEnvironmentVariable = (name) => {
 
-  let importProcessEnabled = false;
+  let environmentVariable = null;
+  let environmentVariableName = isEmpty(name) === false ? name : "";
 
   try {
 
-    if (typeof process.env !== "undefined") {
+    if (typeof import.meta !== "undefined") {
 
-      importProcessEnabled = true;
+      environmentVariable = import.meta?.env?.[`VITE_${environmentVariableName}`];
+
+    } else if (typeof process.env !== "undefined") {
+
+      environmentVariable = process?.env[`REACT_APP_${environmentVariableName}`];
 
     };
 
@@ -18,36 +23,42 @@ export const isProcessEnvironment = () => {
 
   };
 
-  return importProcessEnabled;
+  return environmentVariable;
 
 };
 
 
 export const isLocalDevelopment = () => {
 
-  if (isProcessEnvironment()) {
+  try {
 
-    if (process.env.NODE_ENV === "development") {
+    if (typeof import.meta !== "undefined") {
 
-      return true;
+      if (import.meta?.env?.MODE === "development") {
 
-    } else {
+        return true;
 
-      return false;
+      } else {
+
+        return false;
+
+      };
+
+    } else if (typeof process.env !== "undefined") {
+
+      if (process.env?.NODE_ENV === "development") {
+
+        return true;
+
+      } else {
+
+        return false;
+
+      };
 
     };
 
-  } else {
-
-    if (isEmpty(import.meta) === false && import.meta.env.MODE === "development") {
-
-      return true;
-
-    } else {
-
-      return false;
-
-    };
+  } catch (error) {
 
   };
 
@@ -110,29 +121,15 @@ export const showLocalDevelopment = (environmentMode) => {
 
 export const showDevelopment = (environmentMode, demonstrationMode) => {
 
-  if (isProcessEnvironment()) {
+  let forceDevelopmentMode = selectEnvironmentVariable("FORCE_DEVELOPMENT_MODE");
 
-    if ((isLocalDevelopment() === true || process.env.REACT_APP_FORCE_DEVELOPMENT_MODE === "True" || environmentMode === "development") && demonstrationMode !== true && environmentMode !== "production") {
+  if ((isLocalDevelopment() === true || forceDevelopmentMode === "True" || environmentMode === "development") && demonstrationMode !== true && environmentMode !== "production") {
 
-      return true;
-
-    } else {
-
-      return false;
-
-    };
+    return true;
 
   } else {
 
-    if (isEmpty(import.meta) === false && (isLocalDevelopment() === true || import.meta.env.VITE_FORCE_DEVELOPMENT_MODE === "True" || environmentMode === "development") && demonstrationMode !== true && environmentMode !== "production") {
-
-      return true;
-
-    } else {
-
-      return false;
-
-    };
+    return false;
 
   };
 
@@ -145,29 +142,15 @@ export const showDemonstration = (/* environmentMode, */ demonstrationMode) => {
 
   // * Demonstration Mode would always override the environmentMode value. -- 09/20/2023 MF
 
-  if (isProcessEnvironment()) {
+  let forceDemonstrationMode = selectEnvironmentVariable("FORCE_DEMONSTRATION_MODE");
 
-    if ( /* showDevelopment(environmentMode, demonstrationMode) === true || */ (demonstrationMode === true || process.env.REACT_APP_FORCE_DEMONSTRATION_MODE === "True") /* && environmentMode !== "production" */) {
+  if ( /* showDevelopment(environmentMode, demonstrationMode) === true || */ (demonstrationMode === true || forceDemonstrationMode === "True") /* && environmentMode !== "production" */) {
 
-      return true;
-
-    } else {
-
-      return false;
-
-    };
+    return true;
 
   } else {
 
-    if ( /* showDevelopment(environmentMode, demonstrationMode) === true || */ (demonstrationMode === true || (isEmpty(import.meta) === false && import.meta.env.VITE_FORCE_DEMONSTRATION_MODE === "True")) /* && environmentMode !== "production" */) {
-
-      return true;
-
-    } else {
-
-      return false;
-
-    };
+    return false;
 
   };
 
@@ -216,29 +199,15 @@ export const allowLogging = ( /* baseURLLOR */) => {
   // // * Checking window.location.href.includes(baseURLLOR + "1387/index.html") and window.location.href.includes(baseURLLOR + "1293/index.html" are temporary to test on the LOR without other learning objects going out to production before this is ready. -- 01/14/2022 MF
   // if (isLocalDevelopment() === true || window.location.href.includes("intranet.orbiseducation.com/test_local/") === true || window.location.href.includes(baseURLLOR + "1387/index.html") || window.location.href.includes(baseURLLOR + "1293/index.html") === true) {
 
-  if (isProcessEnvironment()) {
+  let allowDevelopmentComputerLog = selectEnvironmentVariable("ALLOW_DEVELOPMENT_COMPUTERLOG");
 
-    if (inLearningObjectEcosystem() === true && isEmpty(process.env) === false && (isLocalDevelopment() === false || process.env.REACT_APP_ALLOW_DEVELOPMENT_COMPUTERLOG === "True")) {
+  if (inLearningObjectEcosystem() === true && (isLocalDevelopment() === false || allowDevelopmentComputerLog === "True")) {
 
-      return true;
-
-    } else {
-
-      return false;
-
-    };
+    return true;
 
   } else {
 
-    if (inLearningObjectEcosystem() === true && isEmpty(import.meta) === false && (isLocalDevelopment() === false || import.meta.env.VITE_ALLOW_DEVELOPMENT_COMPUTERLOG === "True")) {
-
-      return true;
-
-    } else {
-
-      return false;
-
-    };
+    return false;
 
   };
 
