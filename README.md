@@ -982,7 +982,7 @@ string
 
 ## Developer Functions Available
 
-### isProcessEnvironment()
+### selectEnvironmentVariable()
 
 ### isLocalDevelopment()
 
