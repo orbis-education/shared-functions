@@ -11,11 +11,13 @@ export const selectEnvironmentVariable = (name) => {
 
     if (typeof import.meta !== "undefined") {
 
-      environmentVariable = import.meta?.env?.[`VITE_${environmentVariableName}`];
+      environmentVariable = import.meta.env?.[`VITE_${environmentVariableName}`];
 
-    } else if (typeof process.env !== "undefined") {
+    };
 
-      environmentVariable = process?.env[`REACT_APP_${environmentVariableName}`];
+    if (typeof process === "undefined" && isEmpty(environmentVariable) === true && typeof process.env !== "undefined") {
+
+      environmentVariable = process.env[`REACT_APP_${environmentVariableName}`];
 
     };
 
@@ -30,35 +32,36 @@ export const selectEnvironmentVariable = (name) => {
 
 export const isLocalDevelopment = () => {
 
+  let developmentEnvironment = "";
+
   try {
 
     if (typeof import.meta !== "undefined") {
 
-      if (import.meta?.env?.MODE === "development") {
+      // developmentEnvironment = import.meta?.env?.MODE; // * Does not work for some reason. -- 04/07/2025 MF
+      developmentEnvironment = import.meta.env?.MODE;
+      // developmentEnvironment = import.meta.env.MODE;
 
-        return true;
+    };
 
-      } else {
+    if (typeof process === "undefined" && isEmpty(developmentEnvironment) === true && typeof process.env !== "undefined") {
 
-        return false;
-
-      };
-
-    } else if (typeof process.env !== "undefined") {
-
-      if (process.env?.NODE_ENV === "development") {
-
-        return true;
-
-      } else {
-
-        return false;
-
-      };
+      developmentEnvironment = process.env?.NODE_ENV;
+      // developmentEnvironment = process.env.NODE_ENV;
 
     };
 
   } catch (error) {
+
+  };
+
+  if (developmentEnvironment === "development") {
+
+    return true;
+
+  } else {
+
+    return false;
 
   };
 
