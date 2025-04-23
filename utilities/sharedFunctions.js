@@ -1765,38 +1765,23 @@ export const displayTime = (dateToDisplay, removeLeadingZeroes) => {
 
 export const convertMilitaryTimeToStandardTime = (timeEntered) => {
 
-  // * https://stackoverflow.com/questions/29206453/best-way-to-convert-military-time-to-standard-time-in-javascript. -- 09/18/2023 KH
+  // * https://stackoverflow.com/questions/29206453/best-way-to-convert-military-time-to-standard-time-in-javascript -- 09/18/2023 KH
 
   // * timeEntered must be a string in HH:MM format. -- 09/18/2023 KH
-
-  let newTime = timeEntered;
+  // * The timeEntered format is no longer a requirement. The function returns an empty string if the format isn't correct. -- 04/23/2025 MF
 
   let hours = "";
   let minutes = "";
   let modifier = "";
 
-  // * Split the time by : and " " -- 11/27/2023 KH
-  newTime = newTime.split(/[\s: ]+/);
-
-  if (isEmpty(newTime[0]) === false) {
-
-    hours = Number(newTime[0]);
-
-  };
-
-  if (isEmpty(newTime[1]) === false) {
-
-    minutes = Number(newTime[1]);
-
-  };
-
-  if (isEmpty(newTime[2]) === false) {
-
-    modifier = Number(newTime[2]);
-
-  };
-
   let standardTime = "";
+
+  // * Split the time by : -- 11/27/2023 KH
+  let newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s:]+/) : [];
+
+  hours = !isEmpty(newTime[0]) ? Number(newTime[0]) : "";
+
+  minutes = !isEmpty(newTime[1]) ? Number(newTime[1]) : "";
 
   if (hours > 0 && hours <= 12) {
 
@@ -1806,7 +1791,7 @@ export const convertMilitaryTimeToStandardTime = (timeEntered) => {
 
     standardTime = "" + (hours - 12);
 
-  } else if (hours == 0) {
+  } else if (hours === 0) {
 
     standardTime = "12";
 
@@ -1816,13 +1801,17 @@ export const convertMilitaryTimeToStandardTime = (timeEntered) => {
 
     modifier = " PM";
 
-  } else {
+  } else if (hours > 0 && hours < 12) {
 
     modifier = " AM";
 
   };
 
-  standardTime += (minutes < 10) ? ":0" + minutes + modifier : ":" + minutes + modifier;
+  if (!isEmpty(standardTime)) {
+
+    standardTime += (minutes > -1 && minutes < 10) ? ":0" + minutes + modifier : ":" + minutes + modifier;
+
+  };
 
   return standardTime;
 
@@ -1831,46 +1820,43 @@ export const convertMilitaryTimeToStandardTime = (timeEntered) => {
 
 export const convertStandardTimeToMilitaryTime = (timeEntered) => {
 
-  // * https://www.tutorialspoint.com/converting-12-hour-format-time-to-24-hour-format-in-javascript. -- 11/27/2023 KH
+  // * https://www.tutorialspoint.com/converting-12-hour-format-time-to-24-hour-format-in-javascript -- 11/27/2023 KH
 
   // * timeEntered must be a string in HH:MM AM/PM format. -- 09/18/2023 KH
-
-  let newTime = timeEntered;
+  // * The timeEntered format is no longer a requirement. The function returns an empty string if the format isn't correct. -- 04/23/2025 MF
 
   let hours = "";
   let minutes = "";
   let modifier = "";
 
-  // * Split the time by : and " " -- 11/27/2023 KH
-  newTime = newTime.split(/[\s: ]+/);
+  let militaryTime = "";
 
-  if (isEmpty(newTime[0]) === false) {
+  // * Split the time by : and " " -- 11/27/2023 KH
+  let newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s: ]+/) : [];
+
+  if (!isEmpty(newTime[0])) {
 
     hours = Number(newTime[0]);
     hours = (hours < 10) ? "0" + hours : hours;
 
   };
 
-  if (isEmpty(newTime[1]) === false) {
+  if (!isEmpty(newTime[1])) {
 
     minutes = Number(newTime[1]);
-    minutes = (minutes < 30) ? "0" + minutes : minutes;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
 
   };
 
-  if (isEmpty(newTime[2]) === false) {
+  modifier = !isEmpty(newTime[2]) ? newTime[2] : "";
 
-    modifier = newTime[2];
+  if (hours === 12) {
 
-  };
-
-  if (hours === '12') {
-
-    hours = '00';
+    hours = "00";
 
   };
 
-  if (modifier === 'PM') {
+  if (modifier === "PM") {
 
     // * 10 indicates that the string is in base 10 (decimal notation). -- 11/27/2023 KH
     // * + 12 converts the 12-hour format to a 24-hour format. -- 11/27/2023 KH
@@ -1878,7 +1864,13 @@ export const convertStandardTimeToMilitaryTime = (timeEntered) => {
 
   };
 
-  return `${hours}:${minutes}`;
+  if (!isEmpty(hours) && !isEmpty(minutes)) {
+
+    militaryTime = `${hours}:${minutes}`;
+
+  };
+
+  return militaryTime;
 
 };
 
