@@ -1,6 +1,4 @@
-import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase } from "./sharedFunctions";
-
-const componentName = "DeveloperFunctions";
+import { isEmpty, formatLowerCase } from "./sharedFunctions";
 
 export const selectEnvironmentVariable = (name) => {
 
@@ -244,5 +242,20 @@ export const showAuthentication = (environmentMode, demonstrationMode, applicati
     return false;
 
   };
+
+};
+
+
+export const getFetchAuthorization = (partnerID, databaseNameProduction, databaseNameDevelopment, sessionToken, environmentMode, demonstrationMode) => {
+
+  let databaseName = databaseNameProduction;
+
+  if (showLocalDevelopment(environmentMode) || showPlayground(environmentMode, demonstrationMode)) {
+
+    databaseName = databaseNameDevelopment;
+
+  };
+
+  return window.btoa(JSON.stringify({ partnerID: partnerID, databaseName: databaseName, sessionToken: sessionToken }));
 
 };

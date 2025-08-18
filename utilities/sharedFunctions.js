@@ -1,6 +1,6 @@
 import parseHTML from "html-react-parser";
 
-const componentName = "shared-functions";
+export const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 export const noFunctionAvailable = () => {
 
@@ -1489,25 +1489,15 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
 
         response = results;
 
-        if (response.ok !== true) {
+        if (response.status === 200) {
 
-          addErrorLog(baseURL, databaseAvailable, { operation: `${operationValue} SQL Server`, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
-
-          // throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-          logResult = `${operationValue}: ${response.status} ${response.statusText} ${response.url}`;
+          return response.json();
 
         } else {
 
-          if (response.status === 200) {
+          addErrorLog(baseURL, databaseAvailable, { operation: `${operationValue} SQL Server`, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
 
-            return response.json();
-
-          } else {
-
-            return response.status;
-
-          };
+          logResult = `${operationValue}: ${response.status} ${response.statusText} ${response.url}`;
 
         };
 
@@ -1516,7 +1506,7 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
 
         data = results;
 
-        logResult = data;
+        logResult = results;
 
       })
       .catch((error) => {
@@ -1551,7 +1541,7 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
 
     let url = `${baseURL}errorLogs/`;
     let response = "";
-    let data = "";
+    // let data = "";
 
     fetch(url, {
       method: "POST",
@@ -1564,32 +1554,22 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
 
         response = results;
 
-        if (response.ok !== true) {
+        if (response.status === 200) {
 
-          // throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-          logErrorResult = `${operationValue}: ${response.status} ${response.statusText} ${response.url}`;
+          return response.json();
 
         } else {
 
-          if (response.status === 200) {
-
-            return response.json();
-
-          } else {
-
-            return response.status;
-
-          };
+          logResult = `${operationValue}: ${response.status} ${response.statusText} ${response.url}`;
 
         };
 
       })
       .then(results => {
 
-        data = results;
+        // data = results;
 
-        logErrorResult = data;
+        logErrorResult = results;
 
       })
       .catch((error) => {
@@ -1598,7 +1578,7 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
         // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
         // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);
 
-        // dispatch(addErrorMessage(`${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
+        // addErrorMessage(`${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`);
 
         logErrorResult = `${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
 
