@@ -259,3 +259,62 @@ export const getFetchAuthorization = (partnerID, databaseNameProduction, databas
   return window.btoa(JSON.stringify({ partnerID: partnerID, databaseName: databaseName, sessionToken: sessionToken }));
 
 };
+
+
+export const resolveBaseURL = (endPointBase, environmentMode, demonstrationMode, lorServer) => {
+
+  let forceLocalAPI = selectEnvironmentVariable("FORCE_LOCAL_API");
+  let forceStagingAPI = selectEnvironmentVariable("FORCE_STAGING_API");
+  let forceProductionAPI = selectEnvironmentVariable("FORCE_PRODUCTION_API");
+  let serverPort = selectEnvironmentVariable("SERVER_PORT");
+
+  let baseURL = lorServer === true ? "lor" : "api";
+
+  if (
+    isLocalDevelopment() &&
+    forceLocalAPI === "True" &&
+    forceProductionAPI !== "True"
+  ) {
+
+    return `http://localhost:${serverPort}/${endPointBase}/`;
+
+  };
+
+  if (
+    (isLocalDevelopment() || showPlayground(environmentMode, demonstrationMode)) &&
+    forceLocalAPI !== "True" &&
+    forceProductionAPI !== "True"
+  ) {
+
+    return `https://${baseURL}-dev.orbiseducation.com/${endPointBase}/`;
+
+  };
+
+  if (
+    (forceStagingAPI === "True" || window.location.href.includes("intranet.orbiseducation.com/test_local/") || window.location.href.includes("intranet.orbiseducation.com/for-review/")) &&
+    forceLocalAPI !== "True" &&
+    forceProductionAPI !== "True"
+  ) {
+
+    return `https://${baseURL}-staging.orbiseducation.com/${endPointBase}/`;
+
+  };
+
+  return `https://${baseURL}.orbiseducation.com/${endPointBase}/`;
+
+};
+
+
+export const resolveRedirectURL = (environmentMode, demonstrationMode) => {
+
+  let popUpRedirectURI = selectEnvironmentVariable("POPUP_REDIRECT_URI");
+  let playgroundPopUpRedirectURI = selectEnvironmentVariable("PLAYGROUND_POPUP_REDIRECT_URI");
+
+  if (isLocalDevelopment()) return "/";
+
+  if (showPlayground(environmentMode, demonstrationMode))
+    return "/test_local" + playgroundPopUpRedirectURI;
+
+  return popUpRedirectURI;
+
+};
