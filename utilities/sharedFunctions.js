@@ -1,6 +1,6 @@
 import parseHTML from "html-react-parser";
 
-const componentName = "shared-functions";
+export const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 export const noFunctionAvailable = () => {
 
@@ -53,7 +53,7 @@ export const isNonEmptyArray = (arrayItem) => {
 
   let nonEmptyArray = false;
 
-  if (Array.isArray(arrayItem) === true && arrayItem.length > 0) {
+  if (Array.isArray(arrayItem) && arrayItem.length > 0) {
 
     nonEmptyArray = true;
 
@@ -64,11 +64,25 @@ export const isNonEmptyArray = (arrayItem) => {
 };
 
 
+export const isEmptyArray = (arrayItem) => {
+
+  let emptyArray = true;
+
+  if (Array.isArray(arrayItem) && arrayItem.length > 0) {
+
+    emptyArray = false;
+
+  };
+
+  return emptyArray;
+
+};
+
 export const getFirstItem = (arrayItem) => {
 
   let firstItem = null;
 
-  if (isNonEmptyArray(arrayItem) === true && isEmpty(arrayItem[0]) === false) {
+  if (isNonEmptyArray(arrayItem) && !isEmpty(arrayItem[0])) {
 
     firstItem = arrayItem[0];
 
@@ -83,7 +97,7 @@ export const getLastItem = (arrayItem) => {
 
   let lastItem = null;
 
-  if (isNonEmptyArray(arrayItem) === true && isEmpty(arrayItem[arrayItem.length - 1]) === false) {
+  if (isNonEmptyArray(arrayItem) && !isEmpty(arrayItem[arrayItem.length - 1])) {
 
     lastItem = arrayItem[arrayItem.length - 1];
 
@@ -98,7 +112,7 @@ export const displayValue = (variableValue) => {
 
   let displayValue = "";
 
-  if (isEmpty(variableValue) === false) {
+  if (!isEmpty(variableValue)) {
 
     if (variableValue === true) {
 
@@ -133,7 +147,7 @@ export const displaySpaceAfterComma = (text) => {
 
   let displayText = text;
 
-  if (isEmpty(text) === false) {
+  if (!isEmpty(text)) {
 
     displayText = text.replaceAll(",", ", ");
 
@@ -148,7 +162,7 @@ export const removeForwardSlashes = (text) => {
 
   let displayText = text;
 
-  if (isEmpty(text) === false) {
+  if (!isEmpty(text)) {
 
     displayText = formatToString(text).replace(/\//g, "");
 
@@ -193,7 +207,7 @@ export const displayObjectData = (ObjectData) => {
 
   let objectDataString = JSON.stringify(ObjectData);
 
-  if (isEmpty(objectDataString) === false) {
+  if (!isEmpty(objectDataString)) {
 
     objectDataString = objectDataString.replaceAll("\\", "");
 
@@ -236,7 +250,7 @@ export const displayObjectDataTable = (ObjectData) => {
 
   let objectDataString = JSON.stringify(ObjectData);
 
-  if (isEmpty(objectDataString) === false) {
+  if (!isEmpty(objectDataString)) {
 
     objectDataString = objectDataString.replaceAll("\\", "");
 
@@ -290,7 +304,7 @@ export const displayObjectDataXML = (ObjectData) => {
 
   let objectDataString = JSON.stringify(ObjectData);
 
-  if (isEmpty(objectDataString) === false) {
+  if (!isEmpty(objectDataString)) {
 
     objectDataString = objectDataString.replaceAll("\\", "");
 
@@ -381,7 +395,7 @@ export const displayDate = (dateToDisplay, removeLeadingZeroes) => {
 
   let newDisplayDate = "";
 
-  if (isEmpty(dateToDisplay) === false) {
+  if (!isEmpty(dateToDisplay)) {
 
     // * Year
     let yyyy = formatToString(dateToDisplay).substring(0, 4);
@@ -392,7 +406,7 @@ export const displayDate = (dateToDisplay, removeLeadingZeroes) => {
 
     newDisplayDate = mm + "/" + dd + "/" + yyyy;
 
-    if (isEmpty(newDisplayDate) === false && removeLeadingZeroes === true) {
+    if (!isEmpty(newDisplayDate) && removeLeadingZeroes === true) {
 
       newDisplayDate = newDisplayDate.replace(/\b0/g, "");
 
@@ -409,7 +423,7 @@ export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
 
   let newDisplayDateAndTime = "";
 
-  if (isEmpty(dateToDisplay) === false) {
+  if (!isEmpty(dateToDisplay)) {
 
     // * Year
     let yyyy = formatToString(dateToDisplay).substring(0, 4);
@@ -428,7 +442,7 @@ export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
 
     newDisplayDateAndTime = mm + "/" + dd + "/" + yyyy + " " + time;
 
-    if (isEmpty(newDisplayDateAndTime) === false && removeLeadingZeroes === true) {
+    if (!isEmpty(newDisplayDateAndTime) && removeLeadingZeroes === true) {
 
       newDisplayDateAndTime = newDisplayDateAndTime.replace(/\b0/g, "");
 
@@ -445,7 +459,7 @@ export const displayYear = (dateToDisplay) => {
 
   let newDisplayDate = "";
 
-  if (isEmpty(dateToDisplay) === false) {
+  if (!isEmpty(dateToDisplay)) {
 
     // * Year
     let yyyy = formatToString(dateToDisplay).substring(0, 4);
@@ -471,7 +485,7 @@ export const daysSince = (dateToCompare) => {
 
   let newDaysSince = 0;
 
-  if (isEmpty(dateToCompare) === false) {
+  if (!isEmpty(dateToCompare)) {
 
     let today = new Date();
     let compareDate = new Date(dateToCompare);
@@ -494,7 +508,7 @@ export const hasNonEmptyProperty = (objectItem, propertyName) => {
 
   if (typeof objectItem === "object") {
 
-    if (objectItem.hasOwnProperty(propertyName) === true && isEmpty(objectItem[propertyName]) === false) {
+    if (objectItem.hasOwnProperty(propertyName) && !isEmpty(objectItem[propertyName])) {
 
       nonEmptyProperty = true;
 
@@ -515,7 +529,7 @@ export const hasEqualsProperty = (objectItem, propertyName, value) => {
 
   if (typeof objectItem === "object") {
 
-    if (objectItem.hasOwnProperty(propertyName) === true && isEmpty(objectItem[propertyName]) === false && objectItem[propertyName] === value) {
+    if (objectItem.hasOwnProperty(propertyName) && !isEmpty(objectItem[propertyName]) && objectItem[propertyName] === value) {
 
       equalsProperty = true;
 
@@ -536,7 +550,7 @@ export const hasTrueProperty = (objectItem, propertyName) => {
 
   if (typeof objectItem === "object") {
 
-    if (objectItem.hasOwnProperty(propertyName) === true && objectItem[propertyName] === true) {
+    if (objectItem.hasOwnProperty(propertyName) && objectItem[propertyName] === true) {
 
       trueProperty = true;
 
@@ -557,7 +571,7 @@ export const hasFalseProperty = (objectItem, propertyName) => {
 
   if (typeof objectItem === "object") {
 
-    if (objectItem.hasOwnProperty(propertyName) === true && objectItem[propertyName] === false) {
+    if (objectItem.hasOwnProperty(propertyName) && objectItem[propertyName] === false) {
 
       falseProperty = true;
 
@@ -576,7 +590,7 @@ export const convertSpecialCharacters = (value) => {
 
   let newValue = value;
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     newValue = newValue.replace(/&/g, "&amp;");
     newValue = newValue.replace(/</g, "&lt;");
@@ -595,7 +609,7 @@ export const truncateText = (text, limit) => {
 
   // * https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript -- 03/06/2021 MF
 
-  if (isEmpty(text) === false && text.length > limit) {
+  if (!isEmpty(text) && text.length > limit) {
 
     for (let i = limit; i > 0; i--) {
 
@@ -646,7 +660,7 @@ export const validateMilitaryTime = (timeEntered) => {
 
     } else {
 
-      if (isNaN(parseInt(timeEnteredString.charAt(0))) === true || isNaN(parseInt(timeEnteredString.charAt(1))) === true || isNaN(parseInt(timeEnteredString.charAt(2))) === true || isNaN(parseInt(timeEnteredString.charAt(3))) === true) {
+      if (isNaN(parseInt(timeEnteredString.charAt(0))) || isNaN(parseInt(timeEnteredString.charAt(1))) || isNaN(parseInt(timeEnteredString.charAt(2))) || isNaN(parseInt(timeEnteredString.charAt(3)))) {
 
         validTimeFormat = false;
 
@@ -695,7 +709,7 @@ export const convertTemperature = (temperatureScale, temperature) => {
   let temperatureFloat = parseFloat(temperature);
   let temperatureConverted = null;
 
-  if (isEmpty(temperatureFloat) === false && isNaN(temperatureFloat) === false) {
+  if (!isEmpty(temperatureFloat) && !isNaN(temperatureFloat)) {
 
     if (formatLowerCase(temperatureScale) === "celsius") {
 
@@ -722,11 +736,11 @@ export const convertTemperature = (temperatureScale, temperature) => {
 
 export const convertYesNoTrueFalse = (value) => {
 
-  if (isNaN(value) === true && value === "Yes") {
+  if (isNaN(value) && value === "Yes") {
 
     return true;
 
-  } else if (isNaN(value) === true && value === "No") {
+  } else if (isNaN(value) && value === "No") {
 
     return false;
 
@@ -749,11 +763,11 @@ export const convertYesNoTrueFalse = (value) => {
 
 export const convertNormalAbnormalTrueFalse = (value) => {
 
-  if (isNaN(value) === true && value === "Normal") {
+  if (isNaN(value) && value === "Normal") {
 
     return true;
 
-  } else if (isNaN(value) === true && value === "Abnormal") {
+  } else if (isNaN(value) && value === "Abnormal") {
 
     return false;
 
@@ -776,11 +790,11 @@ export const convertNormalAbnormalTrueFalse = (value) => {
 
 export const convertEnableDisableTrueFalse = (value) => {
 
-  if (isNaN(value) === true && value === "Enable") {
+  if (isNaN(value) && value === "Enable") {
 
     return true;
 
-  } else if (isNaN(value) === true && value === "Disable") {
+  } else if (isNaN(value) && value === "Disable") {
 
     return false;
 
@@ -818,11 +832,11 @@ export const convertNullEmptyString = (value) => {
 
     return null;
 
-  } else if (isNaN(value) === true && typeof value === "number") {
+  } else if (isNaN(value) && typeof value === "number") {
 
     return null;
 
-  } else if (isNaN(value) === true && value === "") {
+  } else if (isNaN(value) && value === "") {
 
     return null;
 
@@ -842,7 +856,7 @@ export const convertNullEmptyString = (value) => {
 export const isWholeNumber = (value) => {
 
   // * Make sure that the value isn't empty. isNaN counts empty values as a number. -- 09/11/2023 MF
-  if (isEmpty(value) === true || isNaN(formatTrim(value)) === true) {
+  if (isEmpty(value) || isNaN(formatTrim(value))) {
 
     return false;
 
@@ -867,7 +881,7 @@ export const isWholeNumber = (value) => {
 export const hasDecimalPlaces = (value, decimalPlaces) => {
 
   // * Make sure that the value isn't empty. isNaN counts empty values as a number. -- 09/11/2023 MF
-  if (isEmpty(value) === true || isNaN(formatTrim(value)) === true) {
+  if (isEmpty(value) || isNaN(formatTrim(value))) {
 
     return false;
 
@@ -875,7 +889,7 @@ export const hasDecimalPlaces = (value, decimalPlaces) => {
 
     let currentDecimalPlaces = 1;
 
-    if (Number.isInteger(parseFloat(decimalPlaces)) === true) {
+    if (Number.isInteger(parseFloat(decimalPlaces))) {
 
       currentDecimalPlaces = decimalPlaces;
 
@@ -894,7 +908,7 @@ export const hasDecimalPlaces = (value, decimalPlaces) => {
 
     };
 
-    if (isEmpty(valueToTest) === true || isNaN(valueToTest) === true || (isEmpty(currentDecimalPlaces) === false && valueDecimals.length > currentDecimalPlaces)) {
+    if (isEmpty(valueToTest) || isNaN(valueToTest) || (!isEmpty(currentDecimalPlaces) && valueDecimals.length > currentDecimalPlaces)) {
 
       return false;
 
@@ -949,7 +963,7 @@ export const formatPhoneNumber = (phoneNumber) => {
 
   let validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/);
 
-  if (isNonEmptyArray(validPhoneNumber) === true) {
+  if (isNonEmptyArray(validPhoneNumber)) {
 
     return `${validPhoneNumber[1]}-${validPhoneNumber[2]}-${validPhoneNumber[3]}`;
 
@@ -971,22 +985,22 @@ export const formatTitle = (title) => {
   let formattedTitle = "";
 
   // * iSBARs is the special case that is difficult to make work in regex. -- 08/16/2021 MF
-  if (isEmpty(title) === false && title !== "iSBAR" && title !== "iSBARs" && title !== "iSBAREnable") {
+  if (!isEmpty(title) && title !== "iSBAR" && title !== "iSBARs" && title !== "iSBAREnable") {
 
     formattedTitle = title.replace(/(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])/g, "$1").replace(/\b\w/g, c => c.toUpperCase());
 
     // * Accounts for 's in strings. -- 10/03/2024 MF
     formattedTitle = formattedTitle.replaceAll("'S", "'s");
 
-  } else if (isEmpty(title) === false && title === "iSBAR") {
+  } else if (!isEmpty(title) && title === "iSBAR") {
 
     formattedTitle = "iSBAR";
 
-  } else if (isEmpty(title) === false && title === "iSBARs") {
+  } else if (!isEmpty(title) && title === "iSBARs") {
 
     formattedTitle = "iSBARs";
 
-  } else if (isEmpty(title) === false && title === "iSBAREnable") {
+  } else if (!isEmpty(title) && title === "iSBAREnable") {
 
     formattedTitle = "iSBAR Enable";
 
@@ -1001,7 +1015,7 @@ export const randomizeItems = (items, randomize) => {
 
   let itemsRandomized = [];
 
-  if (randomize === true && isNonEmptyArray(items) === true) {
+  if (randomize === true && isNonEmptyArray(items)) {
 
     itemsRandomized = items.map((a) => {
 
@@ -1030,7 +1044,7 @@ export const getObjectArrayUniqueProperty = (objectArray, uniqueProperty) => {
 
   let uniqueArray = [...objectArray];
 
-  if (isNonEmptyArray(uniqueArray) === true) {
+  if (isNonEmptyArray(uniqueArray)) {
 
     uniqueArray = [...new Set(objectArray.map((item) => item[uniqueProperty]))];
 
@@ -1055,7 +1069,7 @@ export const removeArticlesFromBeginning = (value) => {
 
   let newValue = value;
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     newValue = formatLowerCase(newValue).replace(/^(a\.)/, "").replace(/^(an\.)/, "").replace(/^(the\.)/, "");
 
@@ -1085,9 +1099,9 @@ export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) 
 
   let sortedArray = [...objectArray];
 
-  if (isNonEmptyArray(sortedArray) === true) {
+  if (isNonEmptyArray(sortedArray)) {
 
-    if (isEmpty(sortProperty) === false) {
+    if (!isEmpty(sortProperty)) {
 
       // * https://typeofnan.dev/sort-array-objects-multiple-properties-javascript/ -- 01/07/2025 JH
 
@@ -1131,15 +1145,15 @@ export const sortObjectArrayByTwoProperties = (objectArray, sortPropertyOne, sor
 
   let sortedArray = [...objectArray];
 
-  if (isNonEmptyArray(sortedArray) === true) {
+  if (isNonEmptyArray(sortedArray)) {
 
-    if (isEmpty(sortPropertyTwo) === false) {
+    if (!isEmpty(sortPropertyTwo)) {
 
       sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyTwo, directionTwo);
 
     };
 
-    if (isEmpty(sortPropertyOne) === false) {
+    if (!isEmpty(sortPropertyOne)) {
 
       sortedArray = sortObjectArrayByProperty(sortedArray, sortPropertyOne, directionOne);
 
@@ -1261,7 +1275,7 @@ export const formatLowerCase = (value) => {
 
   let lowerCaseValue = "";
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     lowerCaseValue = formatToString(value).toLowerCase();
 
@@ -1276,7 +1290,7 @@ export const formatUpperCase = (value) => {
 
   let upperCaseValue = "";
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     upperCaseValue = formatToString(value).toUpperCase();
 
@@ -1291,7 +1305,7 @@ export const formatTrim = (value) => {
 
   let trimValue = "";
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     trimValue = formatToString(value).trim();
 
@@ -1306,7 +1320,7 @@ export const formatToString = (value) => {
 
   let toStringValue = "";
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     toStringValue = value.toString();
 
@@ -1321,7 +1335,7 @@ export const formatInt = (value) => {
 
   let formatedInt = "";
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     formatedInt = parseInt(formatTrim(value.replaceAll(",", ""))).toLocaleString();
 
@@ -1336,7 +1350,7 @@ export const formatFloat = (value) => {
 
   let formatedFloat = "";
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     formatedFloat = parseFloat(formatTrim(value.replaceAll(",", ""))).toLocaleString();
 
@@ -1351,7 +1365,7 @@ export const formatDate = (dateToFormat) => {
 
   let formattedDate = "";
 
-  if (isEmpty(dateToFormat) === false) {
+  if (!isEmpty(dateToFormat)) {
 
     formattedDate = dateToFormat.substring(0, 10);
 
@@ -1370,7 +1384,7 @@ export const formatSearchInput = (value) => {
 
   let formatedSearchInput = "";
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     formatedSearchInput = formatTrim(value).toLowerCase();
 
@@ -1387,7 +1401,7 @@ export const removeHTML = (text) => {
 
   let displayText = "";
 
-  if (isEmpty(text) === false) {
+  if (!isEmpty(text)) {
 
     displayText = text.replace(/(<([^>]+)>)/ig, "");
 
@@ -1404,7 +1418,7 @@ export const removeNonAlphanumericCharacters = (text) => {
 
   let formatedText = "";
 
-  if (isEmpty(text) === false) {
+  if (!isEmpty(text)) {
 
     formatedText = text.replace(/[^a-zA-Z0-9\. ]/g, "");
 
@@ -1419,7 +1433,7 @@ export const replaceSmartCharacters = (jsonData) => {
 
   let newJSON = jsonData;
 
-  if (isEmpty(newJSON) === false) {
+  if (!isEmpty(newJSON)) {
 
     newJSON = newJSON.replaceAll("’", "'");
 
@@ -1472,7 +1486,7 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
 
   if (allowLogging === true && databaseAvailable !== false) {
 
-    let operationValue = "Add Log";
+    let operation = "Add Log";
 
     let url = `${baseURL}logs/`;
     let response = "";
@@ -1489,25 +1503,15 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
 
         response = results;
 
-        if (response.ok !== true) {
+        if (response.status === 200) {
 
-          addErrorLog(baseURL, databaseAvailable, { operation: `${operationValue} SQL Server`, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
-
-          // throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-          logResult = `${operationValue}: ${response.status} ${response.statusText} ${response.url}`;
+          return response.json();
 
         } else {
 
-          if (response.status === 200) {
+          addErrorLog(baseURL, databaseAvailable, { operation: `${operation} SQL Server`, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
 
-            return response.json();
-
-          } else {
-
-            return response.status;
-
-          };
+          logResult = `${operation}: ${response.status} ${response.statusText} ${response.url}`;
 
         };
 
@@ -1516,7 +1520,7 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
 
         data = results;
 
-        logResult = data;
+        logResult = results;
 
       })
       .catch((error) => {
@@ -1526,11 +1530,11 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
         // console.error(componentName, getDateTime(), "addLog error.message", error.message);
         // console.error(componentName, getDateTime(), "addLog error.stack", error.stack);
 
-        // dispatch(addErrorMessage(`${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
+        // dispatch(addErrorMessage(`${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
 
-        addErrorLog(baseURL, databaseAvailable, { operation: operationValue, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { name: error.name, message: error.message, stack: error.stack }, dateEntered: getDateTime() });
+        addErrorLog(baseURL, databaseAvailable, { operation: operation, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { name: error.name, message: error.message, stack: error.stack }, dateEntered: getDateTime() });
 
-        logResult = `${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
+        logResult = `${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
 
       });
 
@@ -1547,11 +1551,11 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
 
   if (allowLogging === true && databaseAvailable !== false) {
 
-    let operationValue = "Add Error Log";
+    let operation = "Add Error Log";
 
     let url = `${baseURL}errorLogs/`;
     let response = "";
-    let data = "";
+    // let data = "";
 
     fetch(url, {
       method: "POST",
@@ -1564,32 +1568,22 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
 
         response = results;
 
-        if (response.ok !== true) {
+        if (response.status === 200) {
 
-          // throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-          logErrorResult = `${operationValue}: ${response.status} ${response.statusText} ${response.url}`;
+          return response.json();
 
         } else {
 
-          if (response.status === 200) {
-
-            return response.json();
-
-          } else {
-
-            return response.status;
-
-          };
+          logResult = `${operation}: ${response.status} ${response.statusText} ${response.url}`;
 
         };
 
       })
       .then(results => {
 
-        data = results;
+        // data = results;
 
-        logErrorResult = data;
+        logErrorResult = results;
 
       })
       .catch((error) => {
@@ -1598,9 +1592,9 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
         // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
         // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);
 
-        // dispatch(addErrorMessage(`${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
+        // addErrorMessage(`${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`);
 
-        logErrorResult = `${operationValue}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
+        logErrorResult = `${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
 
       });
 
@@ -1618,98 +1612,98 @@ export const addComputerLog = (computerLogOne, computerLogTwo) => {
   if (typeof computerLogItem === "object") {
 
     // * From https://geolocation-db.com/json/ -- 09/27/2021 MF
-    if (isEmpty(computerLogTwo.country_code) === false) {
+    if (!isEmpty(computerLogTwo.country_code)) {
 
       computerLog.countryCode = computerLogTwo.country_code;
 
     };
 
-    if (isEmpty(computerLogTwo.country_name) === false) {
+    if (!isEmpty(computerLogTwo.country_name)) {
 
       computerLog.countryName = computerLogTwo.country_name;
 
     };
 
-    if (isEmpty(computerLogTwo.city) === false) {
+    if (!isEmpty(computerLogTwo.city)) {
 
       computerLog.city = computerLogTwo.city;
 
     };
 
-    if (isEmpty(computerLogTwo.postal) === false) {
+    if (!isEmpty(computerLogTwo.postal)) {
 
       computerLog.postal = computerLogTwo.postal;
 
     };
 
-    if (isEmpty(computerLogTwo.latitude) === false) {
+    if (!isEmpty(computerLogTwo.latitude)) {
 
       computerLog.latitude = computerLogTwo.latitude;
 
     };
 
-    if (isEmpty(computerLogTwo.longitude) === false) {
+    if (!isEmpty(computerLogTwo.longitude)) {
 
       computerLog.longitude = computerLogTwo.longitude;
 
     };
 
-    if (isEmpty(computerLogTwo.IPv4) === false) {
+    if (!isEmpty(computerLogTwo.IPv4)) {
 
       computerLog.ipAddress = computerLogTwo.IPv4;
 
     };
 
-    if (isEmpty(computerLogTwo.state) === false) {
+    if (!isEmpty(computerLogTwo.state)) {
 
       computerLog.state = computerLogTwo.state;
 
     };
 
     // * From https://api.db-ip.com/v2/free/self -- 09/27/2021 MF
-    if (isEmpty(computerLogTwo.ipAddress) === false) {
+    if (!isEmpty(computerLogTwo.ipAddress)) {
 
       computerLog.ipAddress = computerLogTwo.ipAddress;
 
     };
 
-    if (isEmpty(computerLogTwo.continentCode) === false) {
+    if (!isEmpty(computerLogTwo.continentCode)) {
 
       computerLog.continentCode = computerLogTwo.continentCode;
 
     };
 
-    if (isEmpty(computerLogTwo.continentName) === false) {
+    if (!isEmpty(computerLogTwo.continentName)) {
 
       computerLog.continentName = computerLogTwo.continentName;
 
     };
 
-    if (isEmpty(computerLogTwo.countryCode) === false) {
+    if (!isEmpty(computerLogTwo.countryCode)) {
 
       computerLog.countryCode = computerLogTwo.countryCode;
 
     };
 
-    if (isEmpty(computerLogTwo.countryName) === false) {
+    if (!isEmpty(computerLogTwo.countryName)) {
 
       computerLog.countryName = computerLogTwo.countryName;
 
     };
 
-    if (isEmpty(computerLogTwo.stateProvCode) === false) {
+    if (!isEmpty(computerLogTwo.stateProvCode)) {
 
       computerLog.stateProvCode = computerLogTwo.stateProvCode;
 
     };
 
-    if (isEmpty(computerLogTwo.stateProv) === false) {
+    if (!isEmpty(computerLogTwo.stateProv)) {
 
       computerLog.state = computerLogTwo.state;
 
     };
 
-    if (isEmpty(computerLogTwo.city) === false) {
+    if (!isEmpty(computerLogTwo.city)) {
 
       computerLog.city = computerLogTwo.city;
 
@@ -1728,7 +1722,7 @@ export const parse = (value) => {
 
   let newValue = value;
 
-  if (isEmpty(value) === false) {
+  if (!isEmpty(value)) {
 
     newValue = parseHTML(value);
 
@@ -1743,14 +1737,14 @@ export const displayTime = (dateToDisplay, removeLeadingZeroes) => {
 
   let newDisplayTime = "";
 
-  if (isEmpty(dateToDisplay) === false) {
+  if (!isEmpty(dateToDisplay)) {
 
     // * Time
     let time = formatToString(dateToDisplay).substring(11, 16);
 
     newDisplayTime = time;
 
-    if (isEmpty(newDisplayTime) === false && removeLeadingZeroes === true) {
+    if (!isEmpty(newDisplayTime) && removeLeadingZeroes === true) {
 
       newDisplayTime = newDisplayTime.replace(/\b0/g, "");
 
@@ -1914,7 +1908,7 @@ export const generateHoursInterval = (startHourInMinutes, endHourInMinutes, inte
 
   let timesArray = [];
 
-  if (isEmpty(startHourInMinutes) === false && isWholeNumber(startHourInMinutes) === true) {
+  if (!isEmpty(startHourInMinutes) && isWholeNumber(startHourInMinutes)) {
 
     for (let i = 0; startHourInMinutes < 24 * 60; i++) {
 
@@ -1949,19 +1943,19 @@ export const displayCommaBetweenTwoItems = (firstItem, secondItem) => {
 
   let textValue = "";
 
-  if (isEmpty(firstItem) === false) {
+  if (!isEmpty(firstItem)) {
 
     textValue = firstItem;
 
   };
 
-  if (isEmpty(firstItem) === false && isEmpty(secondItem) === false) {
+  if (!isEmpty(firstItem) && !isEmpty(secondItem)) {
 
     textValue += ", ";
 
   };
 
-  if (isEmpty(secondItem) === false) {
+  if (!isEmpty(secondItem)) {
 
     textValue += secondItem;
 
@@ -1977,13 +1971,13 @@ export const constructCSVFile = (dataList, dataColumnTitles, propertyNameList) =
   let fileData = "";
 
   // * Initialize fileData with columns titles. -- 10/15/2024 EBG
-  if (isEmpty(dataColumnTitles) === false) {
+  if (!isEmpty(dataColumnTitles)) {
 
     fileData += dataColumnTitles;
 
   };
 
-  if (isNonEmptyArray(dataList) === true && isNonEmptyArray(propertyNameList) === true) {
+  if (isNonEmptyArray(dataList) && isNonEmptyArray(propertyNameList)) {
 
     // * Loop through every record in the data. -- 10/16/2024 EBG
     for (let i = 0; i < dataList.length; i++) {
@@ -1995,7 +1989,7 @@ export const constructCSVFile = (dataList, dataColumnTitles, propertyNameList) =
 
         let propertyNameData = dataList[i][propertyNameList[j].propertyName];
 
-        if (isEmpty(propertyNameData) === false) {
+        if (!isEmpty(propertyNameData)) {
 
           // ? Will json need its own case or be passed as a string? -- 10/17/2024 EBG
           // * When JSON is passed, I'm pretty sure it's going to be a different case in these if statements. -- 10/17/2024 MF

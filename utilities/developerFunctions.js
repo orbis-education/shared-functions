@@ -1,11 +1,9 @@
-import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase } from "./sharedFunctions";
-
-const componentName = "DeveloperFunctions";
+import { isEmpty, formatLowerCase } from "./sharedFunctions";
 
 export const selectEnvironmentVariable = (name) => {
 
   let environmentVariable = null;
-  let environmentVariableName = isEmpty(name) === false ? name : "";
+  let environmentVariableName = !isEmpty(name) ? name : "";
 
   try {
 
@@ -15,7 +13,7 @@ export const selectEnvironmentVariable = (name) => {
 
     };
 
-    if (typeof process === "undefined" && isEmpty(environmentVariable) === true && typeof process.env !== "undefined") {
+    if (typeof process === "undefined" && isEmpty(environmentVariable) && typeof process.env !== "undefined") {
 
       environmentVariable = process.env[`REACT_APP_${environmentVariableName}`];
 
@@ -44,7 +42,7 @@ export const isLocalDevelopment = () => {
 
     };
 
-    if (typeof process === "undefined" && isEmpty(developmentEnvironment) === true && typeof process.env !== "undefined") {
+    if (typeof process === "undefined" && isEmpty(developmentEnvironment) && typeof process.env !== "undefined") {
 
       developmentEnvironment = process.env?.NODE_ENV;
       // developmentEnvironment = process.env.NODE_ENV;
@@ -71,7 +69,7 @@ export const isLocalDevelopment = () => {
 export const inElectron = () => {
 
   // * Check the userAgent when the nodeIntegration is set to false or contextIsolation is set to true to determine if the application is running in electron. -- 07/02/2021 MF
-  // if (isEmpty(navigator) === false && isEmpty(navigator.userAgent) === false) {
+  // if (!isEmpty(navigator) && !isEmpty(navigator.userAgent)) {
   let userAgent = formatLowerCase(navigator.userAgent);
 
   if (userAgent.indexOf(" electron/") > -1) {
@@ -92,9 +90,9 @@ export const inLearningObjectEcosystem = () => {
   // * This should be true in these cases: -- 06/30/2023 MF
   // * 1. When window.location.href contains "orbiseducation.com"
   // * 2. Executive Demonstration in Electron
-  // * 3. isLocalDevelopment() === true
+  // * 3. isLocalDevelopment()
 
-  if (isLocalDevelopment() === true || inElectron() === true || window.location.href.includes("orbiseducation.com") === true) {
+  if (isLocalDevelopment() || inElectron() || window.location.href.includes("orbiseducation.com")) {
 
     return true;
 
@@ -109,7 +107,7 @@ export const inLearningObjectEcosystem = () => {
 
 export const showLocalDevelopment = (environmentMode) => {
 
-  if (isLocalDevelopment() === true && environmentMode !== "production") {
+  if (isLocalDevelopment() && environmentMode !== "production") {
 
     return true;
 
@@ -126,7 +124,7 @@ export const showDevelopment = (environmentMode, demonstrationMode) => {
 
   let forceDevelopmentMode = selectEnvironmentVariable("FORCE_DEVELOPMENT_MODE");
 
-  if ((isLocalDevelopment() === true || forceDevelopmentMode === "True" || environmentMode === "development") && demonstrationMode !== true && environmentMode !== "production") {
+  if ((isLocalDevelopment() || forceDevelopmentMode === "True" || environmentMode === "development") && demonstrationMode !== true && environmentMode !== "production" && environmentMode !== "staging") {
 
     return true;
 
@@ -139,7 +137,24 @@ export const showDevelopment = (environmentMode, demonstrationMode) => {
 };
 
 
-export const showDemonstration = (/* environmentMode, */ demonstrationMode) => {
+export const showStaging = (environmentMode, demonstrationMode) => {
+
+  let forceStagingMode = selectEnvironmentVariable("FORCE_STAGING_MODE");
+
+  if ((forceStagingMode === "True" || environmentMode === "staging") && demonstrationMode !== true && environmentMode !== "production" && environmentMode !== "development") {
+
+    return true;
+
+  } else {
+
+    return false;
+
+  };
+
+};
+
+
+export const showDemonstration = (demonstrationMode) => {
 
   // TODO: Ignore the query string if the user doesn't view the learning object from a playground, executive demonstration, or linked to from the learning object repository administration application (if it's being viewed from a learning management system (LMS) or other outside location). -- 09/20/2023 MF
 
@@ -147,7 +162,7 @@ export const showDemonstration = (/* environmentMode, */ demonstrationMode) => {
 
   let forceDemonstrationMode = selectEnvironmentVariable("FORCE_DEMONSTRATION_MODE");
 
-  if ( /* showDevelopment(environmentMode, demonstrationMode) === true || */ (demonstrationMode === true || forceDemonstrationMode === "True") /* && environmentMode !== "production" */) {
+  if (demonstrationMode === true || forceDemonstrationMode === "True") {
 
     return true;
 
@@ -169,7 +184,7 @@ export const showPlayground = (environmentMode, demonstrationMode) => {
   // * The intranet.orbiseducation.com/for-review directory is the location that the ELD Team can place learning objects to test or demonstrate functionality. -- 01/13/2023 MF
   // * On these web servers, there may be other directories in which this behavior is not desired so the check needs to be at a directory level and not only at the web server level. -- 01/13/2023 MF
 
-  if (showDevelopment(environmentMode, demonstrationMode) === true || ((window.location.href.includes("intranet.orbiseducation.com/test_local/") === true || window.location.href.includes("intranet.orbiseducation.com/for-review/") === true) && environmentMode !== "production")) {
+  if (showDevelopment(environmentMode, demonstrationMode) || ((window.location.href.includes("intranet.orbiseducation.com/test_local/") || window.location.href.includes("intranet.orbiseducation.com/for-review/")) && environmentMode !== "production")) {
 
     return true;
 
@@ -184,7 +199,7 @@ export const showPlayground = (environmentMode, demonstrationMode) => {
 
 export const showErrorMessage = (environmentMode, alwaysShow) => {
 
-  if ((isLocalDevelopment() === true && environmentMode !== "production") || alwaysShow === true) {
+  if ((isLocalDevelopment() && environmentMode !== "production") || alwaysShow === true) {
 
     return true;
 
@@ -197,14 +212,14 @@ export const showErrorMessage = (environmentMode, alwaysShow) => {
 };
 
 
-export const allowLogging = ( /* baseURLLOR */) => {
+export const allowLogging = () => {
 
   // // * Checking window.location.href.includes(baseURLLOR + "1387/index.html") and window.location.href.includes(baseURLLOR + "1293/index.html" are temporary to test on the LOR without other learning objects going out to production before this is ready. -- 01/14/2022 MF
-  // if (isLocalDevelopment() === true || window.location.href.includes("intranet.orbiseducation.com/test_local/") === true || window.location.href.includes(baseURLLOR + "1387/index.html") || window.location.href.includes(baseURLLOR + "1293/index.html") === true) {
+  // if (isLocalDevelopment() || window.location.href.includes("intranet.orbiseducation.com/test_local/") || window.location.href.includes(baseURLLOR + "1387/index.html") || window.location.href.includes(baseURLLOR + "1293/index.html")) {
 
   let allowDevelopmentComputerLog = selectEnvironmentVariable("ALLOW_DEVELOPMENT_COMPUTERLOG");
 
-  if (inLearningObjectEcosystem() === true && (isLocalDevelopment() === false || allowDevelopmentComputerLog === "True")) {
+  if (inLearningObjectEcosystem() && (!isLocalDevelopment() || allowDevelopmentComputerLog === "True")) {
 
     return true;
 
@@ -231,11 +246,11 @@ export const showAuthentication = (environmentMode, demonstrationMode, applicati
 
   let learningObjectAzureAuthentication = azureAuthentication !== true && applicationName === "Learning Object Template";
 
-  if (learningObjectAzureAuthentication === true && (showPlayground(environmentMode, demonstrationMode) === true || (window.location.href.includes("orbiseducation.com/test_local/") === true && environmentMode === "production"))) {
+  if (learningObjectAzureAuthentication === true && (showPlayground(environmentMode, demonstrationMode) || (window.location.href.includes("orbiseducation.com/test_local/") && environmentMode === "production"))) {
 
     return false;
 
-  } else if (window.location.href.includes("lor.orbiseducation.com") === false && window.location.href.includes("lor-dev.") === false && window.location.href.includes("lor-staging.") === false && (window.location.href.includes("orbiseducation.com") === true || window.location.href.includes("dewfapvs2001e.gce.com") === true)) {
+  } else if (!window.location.href.includes("lor.orbiseducation.com") && !window.location.href.includes("lor-dev.") && !window.location.href.includes("lor-staging.") && (window.location.href.includes("orbiseducation.com") || window.location.href.includes("dewfapvs2001e.gce.com"))) {
 
     return true;
 
@@ -244,5 +259,81 @@ export const showAuthentication = (environmentMode, demonstrationMode, applicati
     return false;
 
   };
+
+};
+
+
+export const getFetchAuthorization = (partnerID, databaseNameProduction, databaseNameDevelopment, sessionToken, environmentMode, demonstrationMode) => {
+
+  let databaseName = databaseNameProduction;
+
+  if (showLocalDevelopment(environmentMode) || showPlayground(environmentMode, demonstrationMode)) {
+
+    databaseName = databaseNameDevelopment;
+
+  };
+
+  return window.btoa(JSON.stringify({ partnerID: partnerID, databaseName: databaseName, sessionToken: sessionToken }));
+
+};
+
+
+export const resolveBaseURL = (endPointBase, environmentMode, demonstrationMode, lorServer) => {
+
+  let forceLocalAPI = selectEnvironmentVariable("FORCE_LOCAL_API");
+  let forceStagingAPI = selectEnvironmentVariable("FORCE_STAGING_API");
+  let forceProductionAPI = selectEnvironmentVariable("FORCE_PRODUCTION_API");
+  let serverPort = selectEnvironmentVariable("SERVER_PORT");
+
+  let baseURL = lorServer === true ? "lor" : "api";
+
+  if (
+    isLocalDevelopment() &&
+    forceLocalAPI === "True" &&
+    forceStagingAPI !== "True" &&
+    forceProductionAPI !== "True"
+  ) {
+
+    return `http://localhost:${serverPort}/${endPointBase}/`;
+
+  };
+
+  if (
+    (isLocalDevelopment() || showDevelopment(environmentMode, demonstrationMode)) &&
+    forceLocalAPI !== "True" &&
+    forceStagingAPI !== "True" &&
+    forceProductionAPI !== "True"
+  ) {
+
+    return `https://${baseURL}-dev.orbiseducation.com/${endPointBase}/`;
+
+  };
+
+  if (
+    (forceStagingAPI === "True" || showPlayground(environmentMode, demonstrationMode) || showStaging(environmentMode, demonstrationMode)) &&
+    forceLocalAPI !== "True" &&
+    forceProductionAPI !== "True"
+  ) {
+
+    return `https://${baseURL}-staging.orbiseducation.com/${endPointBase}/`;
+
+  };
+
+  return `https://${baseURL}.orbiseducation.com/${endPointBase}/`;
+
+};
+
+
+export const resolveRedirectURL = (environmentMode, demonstrationMode) => {
+
+  let popUpRedirectURI = selectEnvironmentVariable("POPUP_REDIRECT_URI");
+  let playgroundPopUpRedirectURI = selectEnvironmentVariable("PLAYGROUND_POPUP_REDIRECT_URI");
+
+  if (isLocalDevelopment()) return "/";
+
+  if (showPlayground(environmentMode, demonstrationMode))
+    return "/test_local" + playgroundPopUpRedirectURI;
+
+  return popUpRedirectURI;
 
 };

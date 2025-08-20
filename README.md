@@ -57,6 +57,19 @@ arrayItem: the value to be checked
 boolean
 
 
+### iEmptyArray(arrayItem)
+
+Determines if the value passed is an array and if there are items in it.
+
+#### parameters
+
+arrayItem: the value to be checked
+
+#### return
+
+boolean
+
+
 ### getFirstItem(arrayItem)
 
 If the value passed is an array, the first item of the array is returned.
@@ -994,12 +1007,14 @@ string
 
 ### showDevelopment(environmentMode, demonstrationMode)
 
-### showDemonstration(/* environmentMode, */ demonstrationMode)
+### showStaging(environmentMode, demonstrationMode)
+
+### showDemonstration(demonstrationMode)
 
 ### showPlayground(environmentMode, demonstrationMode)
 
 ### showErrorMessage(environmentMode, alwaysShow)
 
-### allowLogging( /* baseURLLOR */)
+### allowLogging()
 
 ### showAuthentication(environmentMode, demonstrationMode, applicationName, azureAuthentication)
