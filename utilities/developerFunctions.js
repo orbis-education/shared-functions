@@ -267,7 +267,7 @@ export const getFetchAuthorization = (partnerID, databaseNameProduction, databas
 
   let databaseName = databaseNameProduction;
 
-  if (showLocalDevelopment(environmentMode) || showPlayground(environmentMode, demonstrationMode)) {
+  if (!isEmpty(databaseNameDevelopment) && (showLocalDevelopment(environmentMode) || showPlayground(environmentMode, demonstrationMode) || window.location.href.includes("lor-dev.orbiseducation.com") || window.location.href.includes("lor-staging.orbiseducation.com"))) {
 
     databaseName = databaseNameDevelopment;
 
