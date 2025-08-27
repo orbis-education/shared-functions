@@ -64,19 +64,9 @@ export const isNonEmptyArray = (arrayItem) => {
 };
 
 
-export const isEmptyArray = (arrayItem) => {
+export const isEmptyArray = (arrayItem) =>
+  Array.isArray(arrayItem) && arrayItem.length === 0;
 
-  let emptyArray = true;
-
-  if (Array.isArray(arrayItem) && arrayItem.length > 0) {
-
-    emptyArray = false;
-
-  };
-
-  return emptyArray;
-
-};
 
 export const getFirstItem = (arrayItem) => {
 
@@ -2053,5 +2043,108 @@ export const exportCSVFile = (fileData, fileTitle) => {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+
+};
+
+
+// export const convertValueToBoolean = (value) => {
+
+//   let stringValue = formatLowerCase(value);
+
+//   switch (stringValue) {
+//     case "true":
+//       // case "yes":
+//       // case "enable":
+//       // case "normal":
+//       return true;
+//     case "True":
+//       return true;
+//     case "1":
+//       return true;
+//     case 1:
+//       return true;
+//     case "false":
+//       // case "no":
+//       // case "disable":
+//       // case "abnormal":
+//       return false;
+//     case "False":
+//       return false;
+//     case "0":
+//       // case null:
+//       // case undefined:
+//       return false;
+//     case 0:
+//       return false;
+//     default:
+//       return value;
+//   };
+
+// };
+
+
+export const convertMinutesToSeconds = (time) => {
+
+  let timeInSeconds = 0;
+
+  if (!isEmpty(time)) {
+
+    let splitTime = time.split(/[ :]/);
+
+    let minute = parseInt(splitTime[0]) * 60;
+    let second = parseInt(splitTime[1]);
+
+    timeInSeconds = minute + second;
+
+  };
+
+  return timeInSeconds;
+
+};
+
+
+// export const displaySecondsAsMinutes = (seconds) => {
+
+//   let newTime = "";
+
+//   if (!isEmpty(seconds)) {
+
+//     let newMinutes = Math.floor((parseInt(seconds) % 3600) / 60);
+//     let newSeconds = parseInt(seconds) % 60;
+
+//     // newMinutes = newMinutes.toString().padStart(2, "0");
+//     newSeconds = newSeconds.toString().padStart(2, "0");
+
+//     newTime = `${newMinutes}:${newSeconds}`;
+
+//   };
+
+//   return newTime;
+
+// };
+
+
+export const createDateFromString = (dateString) => {
+
+  let [year, month, day] = dateString.split("-").map(Number);
+
+  if (dateString.includes("/")) {
+
+    [month, day, year] = dateString.split("/").map(Number);
+
+  };
+
+  return new Date(year, month - 1, day);  // * Month is 0-indexed. -- 04/08/2025 MF
+
+};
+
+
+export const isFutureDate = (dateToCheck, referenceDate) => {
+
+  const dateOne = new Date(dateToCheck.getFullYear(), dateToCheck.getMonth(), dateToCheck.getDate());
+
+  const dateTwo = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate());
+
+  return dateOne > dateTwo;
 
 };
