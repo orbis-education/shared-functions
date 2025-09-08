@@ -2148,3 +2148,54 @@ export const isFutureDate = (dateToCheck, referenceDate) => {
   return dateOne > dateTwo;
 
 };
+
+
+export const formatToUSD = (value) => {
+
+  if (!Number.isNaN(value)) {
+
+    let formattedValue = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0
+    }).format(value);
+
+    return formattedValue;
+
+  } else {
+
+    return "";
+
+  };
+
+};
+
+
+export const getYears = (months) => {
+
+  let newValue = Number.parseFloat(months / 12).toFixed(1);
+
+  if (!isNaN(newValue)) {
+
+    return newValue;
+
+  } else {
+
+    return "";
+
+  };
+
+};
+
+
+export const parseDescription = (description) => {
+
+  // console.log("description", description.split("\\r"));
+
+  return parse(description.replace(/\\r/g, "<br />"));
+  // return parse(description.split("\r").join("<br />"));
+
+};
+
+
+export const getBrowserData = () => ({ appCodeName: navigator.appCodeName, appName: navigator.appName, appVersion: navigator.appVersion, cookieEnabled: navigator.cookieEnabled, language: navigator.language, onLine: navigator.onLine, platform: navigator.platform, product: navigator.product, userAgent: navigator.userAgent });
