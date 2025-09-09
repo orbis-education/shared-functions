@@ -136,3 +136,6 @@ ehthumbs_vista.db
 
 # postcss compiled file
 /src/css/styles.css
+
+# TypeScript
+*.tsbuildinfo
