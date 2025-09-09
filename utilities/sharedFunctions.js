@@ -64,8 +64,23 @@ export const isNonEmptyArray = (arrayItem) => {
 };
 
 
-export const isEmptyArray = (arrayItem) =>
-  Array.isArray(arrayItem) && arrayItem.length === 0;
+// * Doesn't consistently work as expected. -- 09/09/2025 MF
+// export const isEmptyArray = (arrayItem) =>
+//   Array.isArray(arrayItem) && arrayItem.length === 0;
+
+export const isEmptyArray = (arrayItem) => {
+
+  let emptyArray = true;
+
+  if (Array.isArray(arrayItem) && arrayItem.length > 0) {
+
+    emptyArray = false;
+
+  };
+
+  return emptyArray;
+
+};
 
 
 export const getFirstItem = (arrayItem) => {
