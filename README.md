@@ -1017,4 +1017,4 @@ string
 
 ### allowLogging()
 
-### showAuthentication(environmentMode, demonstrationMode, applicationName, azureAuthentication)
+### showAuthentication(environmentMode, applicationName, azureAuthentication)
