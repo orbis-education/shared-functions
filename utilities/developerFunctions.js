@@ -232,7 +232,8 @@ export const allowLogging = () => {
 };
 
 
-export const showAuthentication = (environmentMode, demonstrationMode, applicationName, azureAuthentication) => {
+// export const showAuthentication = (environmentMode, demonstrationMode, applicationName, azureAuthentication) => {
+export const showAuthentication = (environmentMode, applicationName, azureAuthentication) => {
 
   // * This should be true in these cases: -- 03/28/2025 MF
   // * 1. When window.location.href contains "orbiseducation.com"
@@ -246,7 +247,9 @@ export const showAuthentication = (environmentMode, demonstrationMode, applicati
 
   let learningObjectAzureAuthentication = azureAuthentication !== true && applicationName === "Learning Object Template";
 
-  if (learningObjectAzureAuthentication === true && (showPlayground(environmentMode, demonstrationMode) || (window.location.href.includes("orbiseducation.com/test_local/") && environmentMode === "production"))) {
+  // if (learningObjectAzureAuthentication === true && (showPlayground(environmentMode, demonstrationMode) || (window.location.href.includes("orbiseducation.com/test_local/") && environmentMode === "production"))) {
+  // * Removed the code to allow development environment bypass the login. -- 09/11/2025 MF
+  if (learningObjectAzureAuthentication === true && window.location.href.includes("orbiseducation.com/test_local/") && environmentMode === "production") {
 
     return false;
 
