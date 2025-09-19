@@ -257,6 +257,10 @@ export const showAuthentication = (environmentMode, applicationName, azureAuthen
 
     return true;
 
+  } else if (window.location.href.includes("localhost:")) {
+
+    return true;
+
   } else {
 
     return false;
