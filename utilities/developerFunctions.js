@@ -306,7 +306,7 @@ export const resolveBaseURL = (endPointBase, environmentMode, demonstrationMode,
   };
 
   if (
-    (isLocalDevelopment() || showDevelopment(environmentMode, demonstrationMode)) &&
+    (isLocalDevelopment() || showDevelopment(environmentMode, demonstrationMode) || showPlayground(environmentMode, demonstrationMode)) &&
     forceLocalAPI !== "True" &&
     forceStagingAPI !== "True" &&
     forceProductionAPI !== "True"
@@ -317,7 +317,7 @@ export const resolveBaseURL = (endPointBase, environmentMode, demonstrationMode,
   };
 
   if (
-    (forceStagingAPI === "True" || showPlayground(environmentMode, demonstrationMode) || showStaging(environmentMode, demonstrationMode)) &&
+    (forceStagingAPI === "True" || showStaging(environmentMode, demonstrationMode)) &&
     forceLocalAPI !== "True" &&
     forceProductionAPI !== "True"
   ) {
