@@ -298,6 +298,8 @@ export const displayObjectDataTable = (ObjectData) => {
 
     objectDataString = objectDataString.replace(/<th>(.*?)<\/th>/g, (match) => { return formatTitle(match); });
 
+    objectDataString = `<div class="table-container"><table><thead><tr class="sr-only"><th>Property Name</th><th>Value</th></tr></thead><tbody>${objectDataString}</tbody></table></div>`;
+
   };
 
   return (objectDataString);
