@@ -1516,7 +1516,7 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
 
         } else {
 
-          addErrorLog(baseURL, databaseAvailable, { operation: `${operation} SQL Server`, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
+          addErrorLog(baseURL, databaseAvailable, { operation: `${operation} SQL Server`, componentName: componentName, transactionData: { url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
 
           logResult = `${operation}: ${response.status} ${response.statusText} ${response.url}`;
 
@@ -1539,7 +1539,7 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
 
         // dispatch(addErrorMessage(`${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
 
-        addErrorLog(baseURL, databaseAvailable, { operation: operation, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { name: error.name, message: error.message, stack: error.stack }, dateEntered: getDateTime() });
+        addErrorLog(baseURL, databaseAvailable, { operation: operation, componentName: componentName, transactionData: { url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data, logObject: logObject }, errorData: { name: error.name, message: error.message, stack: error.stack }, dateEntered: getDateTime() });
 
         logResult = `${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
 
