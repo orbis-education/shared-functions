@@ -66,23 +66,8 @@ export const isLocalDevelopment = () => {
 };
 
 
-export const inElectron = () => {
-
-  // * Check the userAgent when the nodeIntegration is set to false or contextIsolation is set to true to determine if the application is running in electron. -- 07/02/2021 MF
-  // if (!isEmpty(navigator) && !isEmpty(navigator.userAgent)) {
-  let userAgent = formatLowerCase(navigator.userAgent);
-
-  if (userAgent.indexOf(" electron/") > -1) {
-
-    return true;
-
-  } else {
-
-    return false;
-
-  };
-
-};
+// * inElectron checks for a window object variable that is set in the Electron preload script for Electron applications. -- 10/22/2025 JW
+export const inElectron = () => window?.electronEnvironment?.inElectron ?? false;
 
 
 export const inLearningObjectEcosystem = () => {
