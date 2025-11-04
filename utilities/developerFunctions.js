@@ -1,4 +1,4 @@
-import { isEmpty, formatLowerCase } from "./sharedFunctions";
+import { isEmpty } from "./sharedFunctions";
 
 export const selectEnvironmentVariable = (name) => {
 

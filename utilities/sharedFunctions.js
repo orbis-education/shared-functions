@@ -4,7 +4,7 @@ export const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.
 
 export const noFunctionAvailable = () => {
 
-  console.log(componentName, getDateTime(), "A function wasn't passed as a props when it needed to be.");
+  console.log("A function wasn't passed as a props when it needed to be.");
 
 };
 
@@ -17,18 +17,18 @@ export const isEmpty = (value) => {
   return value === undefined || value === null || (typeof value === "object" && Object.keys(value).length === 0) || (typeof value === "string" && value.trim().length === 0);
 
   // * Returns true -- 03/06/2021 MF
-  // console.log(componentName, getDateTime(), "isEmpty(\"\")", isEmpty(""));
-  // console.log(componentName, getDateTime(), "isEmpty(null)", isEmpty(null));
-  // console.log(componentName, getDateTime(), "isEmpty(undefined)", isEmpty(undefined));
-  // console.log(componentName, getDateTime(), "isEmpty([])", isEmpty([]));
-  // console.log(componentName, getDateTime(), "isEmpty({})", isEmpty({}));
+  // console.log("isEmpty(\"\")", isEmpty(""));
+  // console.log("isEmpty(null)", isEmpty(null));
+  // console.log("isEmpty(undefined)", isEmpty(undefined));
+  // console.log("isEmpty([])", isEmpty([]));
+  // console.log("isEmpty({})", isEmpty({}));
 
   // * Returns false -- 03/06/2021 MF
-  // console.log(componentName, getDateTime(), "isEmpty(\"test\")", isEmpty("test"));
-  // console.log(componentName, getDateTime(), "isEmpty(5)", isEmpty(5));
-  // console.log(componentName, getDateTime(), "isEmpty(true)", isEmpty(true));
-  // console.log(componentName, getDateTime(), "isEmpty([\"test\"])", isEmpty(["test"]));
-  // console.log(componentName, getDateTime(), "isEmpty({test: \"test\"})", isEmpty({ test: "test" }));
+  // console.log("isEmpty(\"test\")", isEmpty("test"));
+  // console.log("isEmpty(5)", isEmpty(5));
+  // console.log("isEmpty(true)", isEmpty(true));
+  // console.log("isEmpty([\"test\"])", isEmpty(["test"]));
+  // console.log("isEmpty({test: \"test\"})", isEmpty({ test: "test" }));
 
 };
 
@@ -199,7 +199,7 @@ export const tryParseJSON = (jsonString) => {
   catch (error) {
 
     // * Don't display this error in the console. This function is already returning false if the JSON file is not in the correct format. -- 03/06/2021 MF
-    // console.log(componentName, getDateTime(), "tryParseJSON error", error);
+    // console.log("tryParseJSON error", error);
 
   };
 
@@ -1473,8 +1473,8 @@ export const getQueryStringData = () => {
     // * From https://medium.com/swlh/urlsearchparams-in-javascript-df524f705317 -- 01/22/2023 MF
     queryStrings.forEach(function (value, key) {
 
-      // console.log(componentName, getDateTime(), "key", key);
-      // console.log(componentName, getDateTime(), "value", value);
+      // console.log("key", key);
+      // console.log("value", value);
 
       queryStringData[key] = value;
 
@@ -1516,7 +1516,7 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
 
         } else {
 
-          addErrorLog(baseURL, databaseAvailable, { operation: `${operation} SQL Server`, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
+          addErrorLog(baseURL, databaseAvailable, { operation: `${operation} SQL Server`, componentName: componentName, transactionData: { url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data, logObject: logObject }, errorData: { message: `${response.status} ${response.statusText} ${response.url}` }, dateEntered: getDateTime() });
 
           logResult = `${operation}: ${response.status} ${response.statusText} ${response.url}`;
 
@@ -1532,14 +1532,14 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
       })
       .catch((error) => {
 
-        // console.error(componentName, getDateTime(), "addLog error", error);
-        // console.error(componentName, getDateTime(), "addLog error.name", error.name);
-        // console.error(componentName, getDateTime(), "addLog error.message", error.message);
-        // console.error(componentName, getDateTime(), "addLog error.stack", error.stack);
+        // console.error("addLog error", error);
+        // console.error("addLog error.name", error.name);
+        // console.error("addLog error.message", error.message);
+        // console.error("addLog error.stack", error.stack);
 
         // dispatch(addErrorMessage(`${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`));
 
-        addErrorLog(baseURL, databaseAvailable, { operation: operation, componentName: componentName, transactionData: { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data: data, logObject: logObject }, errorData: { name: error.name, message: error.message, stack: error.stack }, dateEntered: getDateTime() });
+        addErrorLog(baseURL, databaseAvailable, { operation: operation, componentName: componentName, transactionData: { url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, data, logObject: logObject }, errorData: { name: error.name, message: error.message, stack: error.stack }, dateEntered: getDateTime() });
 
         logResult = `${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`;
 
@@ -1595,9 +1595,9 @@ export const addErrorLog = (baseURL, fetchAuthorization, databaseAvailable, allo
       })
       .catch((error) => {
 
-        // console.error(componentName, getDateTime(), "addErrorLog error", error);
-        // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
-        // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);
+        // console.error("addErrorLog error", error);
+        // console.error("addErrorLog error.name", error.name);
+        // console.error("addErrorLog error.message", error.message);
 
         // addErrorMessage(`${operation}: ${convertSpecialCharacters(error.name)}: ${convertSpecialCharacters(error.message)}`);
 
