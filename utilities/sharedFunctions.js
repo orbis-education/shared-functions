@@ -2229,8 +2229,7 @@ export const returnActiveClass = (componentName, componentToLoad, classList) => 
 };
 
 
-// ? filterArrayByProperty -- 11/14/2025 MF
-// ? Is this function the same as filterBySelectedCheckbox? -- 11/14/2025 MF
+// ? removeArrayItemsByProperty -- 11/14/2025 MF
 export const filterDropdownOptions = (allItems, itemsToFilter, propertyName, currentItem) => {
 
   let filteredItems = [];
@@ -2238,9 +2237,7 @@ export const filterDropdownOptions = (allItems, itemsToFilter, propertyName, cur
   if (!isEmptyArray(allItems)) {
 
     // * https://stackoverflow.com/a/71904924 -- 07/28/2025 JH
-    filteredItems = allItems.filter(item =>
-      !itemsToFilter.find(itemToFilter => item[propertyName] === itemToFilter[propertyName])
-    );
+    filteredItems = allItems.filter(item => !itemsToFilter.find(itemToFilter => item[propertyName] === itemToFilter[propertyName]));
 
     if (!isEmpty(currentItem)) {
 
@@ -2279,7 +2276,7 @@ export const filterBySelectedCheckbox = (checkboxValues, selectedID, currentResu
 };
 
 
-// ? filterArrayByProperty -- 11/14/2025 MF
+// ? filterArrayByPropertyArray -- 11/14/2025 MF
 // TODO: Found two filterBySelectedCheckbox functions. This one is located in Faculty Training and Learning Object Repository. -- 11/14/2025 MF
 // export const filterBySelectedCheckbox = (checkboxValues, selectedID, currentResults) => {
 
