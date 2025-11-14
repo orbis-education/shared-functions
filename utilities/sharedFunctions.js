@@ -2216,3 +2216,123 @@ export const parseDescription = (description) => {
 
 
 export const getBrowserData = () => ({ appCodeName: navigator.appCodeName, appName: navigator.appName, appVersion: navigator.appVersion, cookieEnabled: navigator.cookieEnabled, language: navigator.language, onLine: navigator.onLine, platform: navigator.platform, product: navigator.product, userAgent: navigator.userAgent });
+
+
+export const returnActiveClass = (componentName, componentToLoad, classList) => {
+
+  let newClassList = !isEmpty(classList) ? classList : "";
+
+  newClassList += componentName === componentToLoad ? " active" : "";
+
+  return newClassList;
+
+};
+
+
+// ? filterArrayByProperty -- 11/14/2025 MF
+// ? Is this function the same as filterBySelectedCheckbox? -- 11/14/2025 MF
+export const filterDropdownOptions = (allItems, itemsToFilter, propertyName, currentItem) => {
+
+  let filteredItems = [];
+
+  if (!isEmptyArray(allItems)) {
+
+    // * https://stackoverflow.com/a/71904924 -- 07/28/2025 JH
+    filteredItems = allItems.filter(item =>
+      !itemsToFilter.find(itemToFilter => item[propertyName] === itemToFilter[propertyName])
+    );
+
+    if (!isEmpty(currentItem)) {
+
+      filteredItems.push(currentItem);
+
+    };
+
+  };
+
+  return filteredItems;
+
+};
+
+
+// ? filterArrayByProperty -- 11/14/2025 MF
+// ? Is this function the same as filterDropdownOptions? -- 11/14/2025 MF
+// TODO: Found two filterBySelectedCheckbox functions. This one is located in Extended Reality Scheduling and Partners. -- 11/14/2025 MF
+export const filterBySelectedCheckbox = (checkboxValues, selectedID, currentResults) => {
+
+  let filteredResults = [];
+
+  if (!isEmptyArray(checkboxValues) && !isEmptyArray(currentResults)) {
+
+    checkboxValues.forEach(checkboxValue => {
+
+      let newFilteredResults = currentResults.filter((result) => formatToString(result[selectedID]) === formatToString(checkboxValue));
+
+      filteredResults = filteredResults.concat(newFilteredResults);
+
+    });
+
+  };
+
+  return filteredResults;
+
+};
+
+
+// ? filterArrayByProperty -- 11/14/2025 MF
+// TODO: Found two filterBySelectedCheckbox functions. This one is located in Faculty Training and Learning Object Repository. -- 11/14/2025 MF
+// export const filterBySelectedCheckbox = (checkboxValues, selectedID, currentResults) => {
+
+//   let filteredResults = [];
+
+//   if (isNonEmptyArray(checkboxValues) && isNonEmptyArray(currentResults)) {
+
+//     // ? Two filters? Filter then map? -- 08/24/2023 JH
+//     for (let i = 0; i < checkboxValues.length; i++) {
+
+//       let newFilteredResults = currentResults.filter((seminar) => formatToString(seminar[selectedID]) === checkboxValues[i]);
+
+//       filteredResults = filteredResults.concat(newFilteredResults);
+
+//     };
+
+//   };
+
+//   return filteredResults;
+
+// };
+
+
+export const getFilteredNames = (selectedCheckbox, selectedID, optionData, nameToReturn, filteredNames) => {
+
+  let newFilteredNames = filteredNames;
+
+  if (!isEmptyArray(selectedCheckbox) && !isEmptyArray(optionData)) {
+
+    for (let i = 0; i < selectedCheckbox.length; i++) {
+
+      for (let j = 0; j < optionData.length; j++) {
+
+        if (formatToString(optionData[j][selectedID]) === formatToString(selectedCheckbox[i])) {
+
+          if (!isEmpty(newFilteredNames)) {
+
+            newFilteredNames += `, ${optionData[j][nameToReturn]}`;
+
+          } else {
+
+            newFilteredNames = `${optionData[j][nameToReturn]}`;
+
+          };
+
+        };
+
+      };
+
+    };
+
+  };
+
+  return newFilteredNames;
+
+};
