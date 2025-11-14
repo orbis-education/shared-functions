@@ -987,9 +987,29 @@ string
 
 ### constructCSVFile(dataList, dataColumnTitles, propertyNameList)
 
-
-
 ### exportCSVFile(fileData, fileTitle)
+
+### convertMinutesToSeconds(time)
+
+### createDateFromString(dateString)
+
+### isFutureDate(dateToCheck, referenceDate)
+
+### formatToUSD(value)
+
+### getYears(months)
+
+### parseDescription(description)
+
+### getBrowserData()
+
+### returnActiveClass(componentName, componentToLoad, classList)
+
+### filterDropdownOptions(allItems, itemsToFilter, propertyName, currentItem)
+
+### filterBySelectedCheckbox(checkboxValues, selectedID, currentResults)
+
+### getFilteredNames(selectedCheckbox, selectedID, optionData, nameToReturn, filteredNames)
 
 
 
@@ -1018,3 +1038,9 @@ string
 ### allowLogging()
 
 ### showAuthentication(environmentMode, applicationName, azureAuthentication)
+
+### getFetchAuthorization(partnerID, databaseNameProduction, databaseNameDevelopment, sessionToken, environmentMode, demonstrationMode)
+
+### resolveBaseURL(endPointBase, environmentMode, demonstrationMode, lorServer)
+
+### resolveRedirectURL(environmentMode, demonstrationMode)
