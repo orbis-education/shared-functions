@@ -2255,7 +2255,7 @@ export const filterDropdownOptions = (allItems, itemsToFilter, propertyName, cur
 };
 
 
-// ? filterArrayByProperty -- 11/14/2025 MF
+// ? filterArrayByPropertyArray -- 11/14/2025 MF
 // ? Is this function the same as filterDropdownOptions? -- 11/14/2025 MF
 // TODO: Found two filterBySelectedCheckbox functions. This one is located in Extended Reality Scheduling and Partners. -- 11/14/2025 MF
 export const filterBySelectedCheckbox = (checkboxValues, selectedID, currentResults) => {
@@ -2290,7 +2290,7 @@ export const filterBySelectedCheckbox = (checkboxValues, selectedID, currentResu
 //     // ? Two filters? Filter then map? -- 08/24/2023 JH
 //     for (let i = 0; i < checkboxValues.length; i++) {
 
-//       let newFilteredResults = currentResults.filter((seminar) => formatToString(seminar[selectedID]) === checkboxValues[i]);
+//       let newFilteredResults = currentResults.filter((item) => formatToString(item[selectedID]) === checkboxValues[i]);
 
 //       filteredResults = filteredResults.concat(newFilteredResults);
 
