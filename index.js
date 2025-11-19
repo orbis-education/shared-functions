@@ -70,6 +70,7 @@ export {
   isEmptyArray,
   isFutureDate,
   isNonEmptyArray,
+  isValidURL,
   isWholeNumber,
   noFunctionAvailable,
   parse,
