@@ -1011,6 +1011,7 @@ string
 
 ### getFilteredNames(selectedCheckbox, selectedID, optionData, nameToReturn, filteredNames)
 
+### isValidURL(value)
 
 
 ## Developer Functions Available
