@@ -2333,3 +2333,19 @@ export const getFilteredNames = (selectedCheckbox, selectedID, optionData, nameT
   return newFilteredNames;
 
 };
+
+
+export const isValidURL = (value) => {
+
+  try {
+
+    new URL(value);
+    return true;
+
+  } catch {
+
+    return false;
+
+  }
+
+};
