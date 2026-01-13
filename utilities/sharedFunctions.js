@@ -1723,7 +1723,7 @@ export const addComputerLog = (computerLogOne, computerLogTwo) => {
 };
 
 
-export const parse = (value) => {
+export const parse = (value, options) => {
 
   // * The parseHTML function from the npm package html-react-parser doesn't provide error handling if the value sent to it isn't a string. -- 03/09/2023 MF
 
@@ -1731,7 +1731,15 @@ export const parse = (value) => {
 
   if (!isEmpty(value)) {
 
-    newValue = parseHTML(value);
+    if (!isEmpty(options)) {
+
+      newValue = parseHTML(value, options);
+
+    } else {
+
+      newValue = parseHTML(value);
+
+    };
 
   };
 
