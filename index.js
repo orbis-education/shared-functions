@@ -97,7 +97,7 @@ export {
   isLocalDevelopment,
   resolveBaseURL,
   resolveRedirectURL,
-  selectEnvironmentVariable,
+  // selectEnvironmentVariable,
   showAuthentication,
   showDemonstration,
   showDevelopment,
