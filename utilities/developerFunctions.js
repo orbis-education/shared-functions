@@ -1,31 +1,31 @@
 import { isEmpty } from "./sharedFunctions";
 
-export const selectEnvironmentVariable = (name) => {
+// export const selectEnvironmentVariable = (name) => {
 
-  let environmentVariable = null;
-  let environmentVariableName = !isEmpty(name) ? name : "";
+//   let environmentVariable = null;
+//   const environmentVariableName = !isEmpty(name) ? name : "";
 
-  try {
+//   try {
 
-    if (typeof import.meta !== "undefined") {
+//     if (typeof import.meta !== "undefined") {
 
-      environmentVariable = import.meta.env?.[`VITE_${environmentVariableName}`];
+//       environmentVariable = import.meta.env?.[`VITE_${environmentVariableName}`];
 
-    };
+//     };
 
-    if (typeof process === "undefined" && isEmpty(environmentVariable) && typeof process.env !== "undefined") {
+//     if (typeof process === "undefined" && isEmpty(environmentVariable) && typeof process.env !== "undefined") {
 
-      environmentVariable = process.env[`REACT_APP_${environmentVariableName}`];
+//       environmentVariable = process.env[`REACT_APP_${environmentVariableName}`];
 
-    };
+//     };
 
-  } catch (error) {
+//   } catch (error) {
 
-  };
+//   };
 
-  return environmentVariable;
+//   return environmentVariable;
 
-};
+// };
 
 
 export const isLocalDevelopment = () => {
@@ -42,12 +42,12 @@ export const isLocalDevelopment = () => {
 
     };
 
-    if (typeof process === "undefined" && isEmpty(developmentEnvironment) && typeof process.env !== "undefined") {
+    // if (typeof process === "undefined" && isEmpty(developmentEnvironment) && typeof process.env !== "undefined") {
 
-      developmentEnvironment = process.env?.NODE_ENV;
-      // developmentEnvironment = process.env.NODE_ENV;
+    //   developmentEnvironment = process.env?.NODE_ENV;
+    //   // developmentEnvironment = process.env.NODE_ENV;
 
-    };
+    // };
 
   } catch (error) {
 
@@ -107,7 +107,8 @@ export const showLocalDevelopment = (environmentMode) => {
 
 export const showDevelopment = (environmentMode, demonstrationMode) => {
 
-  let forceDevelopmentMode = selectEnvironmentVariable("FORCE_DEVELOPMENT_MODE");
+  // const forceDevelopmentMode = selectEnvironmentVariable("FORCE_DEVELOPMENT_MODE");
+  const forceDevelopmentMode = import.meta.env?.VITE_FORCE_DEVELOPMENT_MODE;
 
   if ((isLocalDevelopment() || forceDevelopmentMode === "True" || environmentMode === "development") && demonstrationMode !== true && environmentMode !== "production" && environmentMode !== "staging") {
 
@@ -124,7 +125,8 @@ export const showDevelopment = (environmentMode, demonstrationMode) => {
 
 export const showStaging = (environmentMode, demonstrationMode) => {
 
-  let forceStagingMode = selectEnvironmentVariable("FORCE_STAGING_MODE");
+  // const forceStagingMode = selectEnvironmentVariable("FORCE_STAGING_MODE");
+  const forceStagingMode = import.meta.env?.VITE_FORCE_STAGING_MODE;
 
   if ((forceStagingMode === "True" || environmentMode === "staging") && demonstrationMode !== true && environmentMode !== "production" && environmentMode !== "development") {
 
@@ -145,7 +147,8 @@ export const showDemonstration = (demonstrationMode) => {
 
   // * Demonstration Mode would always override the environmentMode value. -- 09/20/2023 MF
 
-  let forceDemonstrationMode = selectEnvironmentVariable("FORCE_DEMONSTRATION_MODE");
+  // const forceDemonstrationMode = selectEnvironmentVariable("FORCE_DEMONSTRATION_MODE");
+  const forceDemonstrationMode = import.meta.env?.VITE_FORCE_DEMONSTRATION_MODE;
 
   if (demonstrationMode === true || forceDemonstrationMode === "True") {
 
@@ -202,7 +205,8 @@ export const allowLogging = () => {
   // // * Checking window.location.href.includes(baseURLLOR + "1387/index.html") and window.location.href.includes(baseURLLOR + "1293/index.html" are temporary to test on the LOR without other learning objects going out to production before this is ready. -- 01/14/2022 MF
   // if (isLocalDevelopment() || window.location.href.includes("intranet.orbiseducation.com/test_local/") || window.location.href.includes(baseURLLOR + "1387/index.html") || window.location.href.includes(baseURLLOR + "1293/index.html")) {
 
-  let allowDevelopmentComputerLog = selectEnvironmentVariable("ALLOW_DEVELOPMENT_COMPUTERLOG");
+  // const allowDevelopmentComputerLog = selectEnvironmentVariable("ALLOW_DEVELOPMENT_COMPUTERLOG");
+  const allowDevelopmentComputerLog = import.meta.env?.VITE_ALLOW_DEVELOPMENT_COMPUTERLOG;
 
   if (inLearningObjectEcosystem() && (!isLocalDevelopment() || allowDevelopmentComputerLog === "True")) {
 
@@ -230,7 +234,7 @@ export const showAuthentication = (environmentMode, applicationName, azureAuthen
   // * 3. When window.location.href contains "lor-dev."
   // * 4. When window.location.href contains "lor-staging."
 
-  let learningObjectAzureAuthentication = azureAuthentication !== true && applicationName === "Learning Object Template";
+  const learningObjectAzureAuthentication = azureAuthentication !== true && applicationName === "Learning Object Template";
 
   // if (learningObjectAzureAuthentication === true && (showPlayground(environmentMode, demonstrationMode) || (window.location.href.includes("orbiseducation.com/test_local/") && environmentMode === "production"))) {
   // * Removed the code to allow development environment bypass the login. -- 09/11/2025 MF
@@ -272,40 +276,43 @@ export const getFetchAuthorization = (partnerID, databaseNameProduction, databas
 
 export const resolveBaseURL = (endPointBase, environmentMode, demonstrationMode, lorServer) => {
 
-  let forceLocalAPI = selectEnvironmentVariable("FORCE_LOCAL_API");
-  let forceStagingAPI = selectEnvironmentVariable("FORCE_STAGING_API");
-  let forceProductionAPI = selectEnvironmentVariable("FORCE_PRODUCTION_API");
-  let serverPort = selectEnvironmentVariable("SERVER_PORT");
+  // const forceLocalAPI = selectEnvironmentVariable("FORCE_LOCAL_API");
+  const forceLocalAPI = import.meta.env?.VITE_FORCE_LOCAL_API;
+  // const forceStagingAPI = selectEnvironmentVariable("FORCE_STAGING_API");
+  const forceStagingAPI = import.meta.env?.VITE_FORCE_STAGING_API;
+  // const forceProductionAPI = selectEnvironmentVariable("FORCE_PRODUCTION_API");
+  const forceProductionAPI = import.meta.env?.VITE_FORCE_PRODUCTION_API;
+  // const serverPort = selectEnvironmentVariable("SERVER_PORT");
+  const serverPort = import.meta.env?.VITE_SERVER_PORT;
+
+  const isLocalhost = isLocalDevelopment() && forceLocalAPI === "True" && forceStagingAPI !== "True" && forceProductionAPI !== "True";
+
+  const isDevelopment = (isLocalDevelopment() || showDevelopment(environmentMode, demonstrationMode) || showPlayground(environmentMode, demonstrationMode)) && forceLocalAPI !== "True" && forceStagingAPI !== "True" && forceProductionAPI !== "True";
+
+  const isStaging = (forceStagingAPI === "True" || showStaging(environmentMode, demonstrationMode)) && forceLocalAPI !== "True" && forceProductionAPI !== "True";
 
   let baseURL = lorServer === true ? "lor" : "api";
 
-  if (
-    isLocalDevelopment() &&
-    forceLocalAPI === "True" &&
-    forceStagingAPI !== "True" &&
-    forceProductionAPI !== "True"
-  ) {
+  // * If the hostname's subdomain is lor-dev or lor-staging, use that value for the baseURL. -- 03/11/2026 MF
+  if (window.location.hostname.startsWith("lor-dev") || window.location.hostname.startsWith("lor-staging")) {
+
+    baseURL = window.location.hostname.replace(".orbiseducation.com", "");
+
+  }
+
+  if (isLocalhost) {
 
     return `http://localhost:${serverPort}/${endPointBase}/`;
 
   };
 
-  if (
-    (isLocalDevelopment() || showDevelopment(environmentMode, demonstrationMode) || showPlayground(environmentMode, demonstrationMode)) &&
-    forceLocalAPI !== "True" &&
-    forceStagingAPI !== "True" &&
-    forceProductionAPI !== "True"
-  ) {
+  if (isDevelopment) {
 
     return `https://${baseURL}-dev.orbiseducation.com/${endPointBase}/`;
 
   };
 
-  if (
-    (forceStagingAPI === "True" || showStaging(environmentMode, demonstrationMode)) &&
-    forceLocalAPI !== "True" &&
-    forceProductionAPI !== "True"
-  ) {
+  if (isStaging) {
 
     return `https://${baseURL}-staging.orbiseducation.com/${endPointBase}/`;
 
@@ -318,8 +325,10 @@ export const resolveBaseURL = (endPointBase, environmentMode, demonstrationMode,
 
 export const resolveRedirectURL = (environmentMode, demonstrationMode) => {
 
-  let popUpRedirectURI = selectEnvironmentVariable("POPUP_REDIRECT_URI");
-  let playgroundPopUpRedirectURI = selectEnvironmentVariable("PLAYGROUND_POPUP_REDIRECT_URI");
+  // const popUpRedirectURI = selectEnvironmentVariable("POPUP_REDIRECT_URI");
+  const popUpRedirectURI = import.meta.env?.VITE_POPUP_REDIRECT_URI;
+  // const playgroundPopUpRedirectURI = selectEnvironmentVariable("PLAYGROUND_POPUP_REDIRECT_URI");
+  const playgroundPopUpRedirectURI = import.meta.env?.VITE_PLAYGROUND_POPUP_REDIRECT_URI;
 
   if (isLocalDevelopment()) return "/";
 

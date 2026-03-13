@@ -85,7 +85,7 @@ export const isEmptyArray = (arrayItem) => {
 
 export const getFirstItem = (arrayItem) => {
 
-  let firstItem = null;
+  let firstItem = {};
 
   if (isNonEmptyArray(arrayItem) && !isEmpty(arrayItem[0])) {
 
@@ -100,7 +100,7 @@ export const getFirstItem = (arrayItem) => {
 
 export const getLastItem = (arrayItem) => {
 
-  let lastItem = null;
+  let lastItem = {};
 
   if (isNonEmptyArray(arrayItem) && !isEmpty(arrayItem[arrayItem.length - 1])) {
 
@@ -714,7 +714,7 @@ export const convertTemperature = (temperatureScale, temperature) => {
 
   // let temperatureFloat = parseFloat(formatTrim(temperature));
   let temperatureFloat = parseFloat(temperature);
-  let temperatureConverted = null;
+  let temperatureConverted = "";
 
   if (!isEmpty(temperatureFloat) && !isNaN(temperatureFloat)) {
 
