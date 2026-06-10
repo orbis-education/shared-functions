@@ -515,7 +515,7 @@ export const hasNonEmptyProperty = (objectItem, propertyName) => {
 
   if (typeof objectItem === "object") {
 
-    if (objectItem.hasOwnProperty(propertyName) && !isEmpty(objectItem[propertyName])) {
+    if (Object.hasOwn(objectItem, propertyName) && !isEmpty(objectItem[propertyName])) {
 
       nonEmptyProperty = true;
 
@@ -536,7 +536,7 @@ export const hasEqualsProperty = (objectItem, propertyName, value) => {
 
   if (typeof objectItem === "object") {
 
-    if (objectItem.hasOwnProperty(propertyName) && !isEmpty(objectItem[propertyName]) && objectItem[propertyName] === value) {
+    if (Object.hasOwn(objectItem, propertyName) && !isEmpty(objectItem[propertyName]) && objectItem[propertyName] === value) {
 
       equalsProperty = true;
 
@@ -557,7 +557,7 @@ export const hasTrueProperty = (objectItem, propertyName) => {
 
   if (typeof objectItem === "object") {
 
-    if (objectItem.hasOwnProperty(propertyName) && objectItem[propertyName] === true) {
+    if (Object.hasOwn(objectItem, propertyName) && objectItem[propertyName] === true) {
 
       trueProperty = true;
 
@@ -578,7 +578,7 @@ export const hasFalseProperty = (objectItem, propertyName) => {
 
   if (typeof objectItem === "object") {
 
-    if (objectItem.hasOwnProperty(propertyName) && objectItem[propertyName] === false) {
+    if (Object.hasOwn(objectItem, propertyName) && objectItem[propertyName] === false) {
 
       falseProperty = true;
 
