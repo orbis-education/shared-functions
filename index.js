@@ -58,6 +58,7 @@ export {
   getLastItem,
   getNumberOfDaysBetweenDates,
   getObjectArrayUniqueProperty,
+  getParseInt,
   getQueryStringData,
   getYears,
   groupObjectArrayByProperties,
