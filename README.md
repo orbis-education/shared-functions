@@ -714,7 +714,7 @@ string
 
 ### getParseInt
 
-Converts the value to an integer. Handles the situations in which the value passed is null, undefined or empty string by returning a null.
+Converts the value to an integer. Handles the situations in which the value passed is null, undefined or empty string by returning a null. Used when setting a variable's value to ensure that it's either an integer or null.
 
 #### parameters
 
