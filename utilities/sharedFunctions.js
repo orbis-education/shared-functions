@@ -1338,13 +1338,20 @@ export const formatToString = (value) => {
 };
 
 
+export const getParseInt = value => {
+
+  return !isEmpty(value) && !Number.isNaN(value) ? parseInt(value) : null;
+
+};
+
+
 export const formatInt = (value) => {
 
   let formatedInt = "";
 
   if (!isEmpty(value)) {
 
-    formatedInt = parseInt(formatTrim(value.replaceAll(",", ""))).toLocaleString();
+    formatedInt = getParseInt(formatTrim(value.replaceAll(",", ""))).toLocaleString();
 
   };
 
@@ -1869,7 +1876,7 @@ export const convertStandardTimeToMilitaryTime = (timeEntered) => {
 
     // * 10 indicates that the string is in base 10 (decimal notation). -- 11/27/2023 KH
     // * + 12 converts the 12-hour format to a 24-hour format. -- 11/27/2023 KH
-    hours = parseInt(hours, 10) + 12;
+    hours = getParseInt(hours, 10) + 12;
 
   };
 
@@ -2116,8 +2123,8 @@ export const convertMinutesToSeconds = (time) => {
 
     let splitTime = time.split(/[ :]/);
 
-    let minute = parseInt(splitTime[0]) * 60;
-    let second = parseInt(splitTime[1]);
+    let minute = getParseInt(splitTime[0]) * 60;
+    let second = getParseInt(splitTime[1]);
 
     timeInSeconds = minute + second;
 
@@ -2134,8 +2141,8 @@ export const convertMinutesToSeconds = (time) => {
 
 //   if (!isEmpty(seconds)) {
 
-//     let newMinutes = Math.floor((parseInt(seconds) % 3600) / 60);
-//     let newSeconds = parseInt(seconds) % 60;
+//     let newMinutes = Math.floor((getParseInt(seconds) % 3600) / 60);
+//     let newSeconds = getParseInt(seconds) % 60;
 
 //     // newMinutes = newMinutes.toString().padStart(2, "0");
 //     newSeconds = newSeconds.toString().padStart(2, "0");
