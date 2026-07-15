@@ -2,7 +2,6 @@
 
 This repository contains shared functions that can be reused in multiple applications.
 
-
 ## Shared Functions Available
 
 ### noFunctionAvailable()
@@ -17,7 +16,6 @@ none
 
 none
 
-
 ### isEmpty(value)
 
 Determines if the value passed is not null, undefined or empty string.
@@ -29,7 +27,6 @@ value: the value to be checked
 #### return
 
 boolean
-
 
 ### getDateTime()
 
@@ -43,7 +40,6 @@ none
 
 Date object
 
-
 ### isNonEmptyArray(arrayItem)
 
 Determines if the value passed is an array and if there are items in it.
@@ -55,7 +51,6 @@ arrayItem: the value to be checked
 #### return
 
 boolean
-
 
 ### iEmptyArray(arrayItem)
 
@@ -69,7 +64,6 @@ arrayItem: the value to be checked
 
 boolean
 
-
 ### getFirstItem(arrayItem)
 
 If the value passed is an array, the first item of the array is returned.
@@ -81,7 +75,6 @@ arrayItem: the array to retreive the first item from
 #### return
 
 first item in the array
-
 
 ### getLastItem(arrayItem)
 
@@ -95,7 +88,6 @@ arrayItem: the array to retreive the last item from
 
 last item in the array
 
-
 ### displayValue(variableValue)
 
 Converts the value passed into a string if it's a boolean or a date, or leaves the value alone if it's a string in order to be displayed in a component.
@@ -107,7 +99,6 @@ variableValue: the value to be displayed as a string
 #### return
 
 string
-
 
 ### displaySpaceAfterComma(text)
 
@@ -121,7 +112,6 @@ text(string): the text in which spaces are to be inserted
 
 string
 
-
 ### removeForwardSlashes(text)
 
 Removes the first forward slash(/) in the string that was passed to the function.
@@ -133,7 +123,6 @@ text(string): the text in which the forward slash(/) is to be removed
 #### return
 
 string
-
 
 ### tryParseJSON(jsonString)
 
@@ -147,7 +136,6 @@ jsonString: the value to be converted into an object
 
 Either the object created from the JSON.parse() or the boolean false that it failed.
 
-
 ### displayObjectData(ObjectData)
 
 Displays the properties of the object passed as HTML.
@@ -159,7 +147,6 @@ ObjectData: a JavaScript object
 #### return
 
 string with HTML tags
-
 
 ### displayObjectDataTable(ObjectData)
 
@@ -173,7 +160,6 @@ ObjectData: a JavaScript object
 
 string with HTML tags
 
-
 ### displayObjectDataXML(ObjectData)
 
 Displays the properties of the object passed as XML.
@@ -185,7 +171,6 @@ ObjectData: a JavaScript object
 #### return
 
 string in XML format
-
 
 ### getCurrentDay()
 
@@ -199,7 +184,6 @@ none
 
 integer
 
-
 ### getCurrentMonth()
 
 Calculates the local current month.
@@ -212,7 +196,6 @@ none
 
 integer
 
-
 ### getCurrentYear()
 
 Calculates the local current year.
@@ -224,7 +207,6 @@ none
 #### return
 
 integer
-
 
 ### displayDate(dateToDisplay, removeLeadingZeroes)
 
@@ -240,7 +222,6 @@ removeLeadingZeroes(boolean): remove the zeroes from single digit values
 
 string
 
-
 ### displayDateAndTime(dateToDisplay, removeLeadingZeroes)
 
 Converts the date object passed into the mm/dd/yyyy time format.
@@ -255,7 +236,6 @@ removeLeadingZeroes(boolean): remove the zeroes from single digit values
 
 string
 
-
 ### displayYear(dateToDisplay)
 
 Converts the date object passed into the yyyy format.
@@ -268,7 +248,6 @@ dateToDisplay(Date): Date object to be converted
 
 string
 
-
 ### daysSince(dateToCompare)
 
 Calculates the number of days between the current time and the Date object passed
@@ -280,7 +259,6 @@ dateToCompare(Date): Date object to be compared
 #### return
 
 integer
-
 
 ### hasNonEmptyProperty(objectItem, propertyName)
 
@@ -295,7 +273,6 @@ propertyName(string): the property to find in the object
 #### return
 
 boolean
-
 
 ### hasEqualsProperty(objectItem, propertyName, value)
 
@@ -313,7 +290,6 @@ value: the value that the property should be
 
 boolean
 
-
 ### hasTrueProperty(objectItem, propertyName)
 
 Determines if an object has the property specified and if that property is a boolean and true. Intended for use in ternary statements so that there aren't lines and lines of if statement structures or to see if the object has a property available with a value.
@@ -327,7 +303,6 @@ propertyName(string): the property to find in the object
 #### return
 
 boolean
-
 
 ### hasFalseProperty(objectItem, propertyName)
 
@@ -343,7 +318,6 @@ propertyName(string): the property to find in the object
 
 boolean
 
-
 ### convertSpecialCharacters(value)
 
 Converts reserved characters in an HTML string to HTML Entities.
@@ -355,7 +329,6 @@ value(string): the text in which the reserved characters are to be converted
 #### return
 
 string
-
 
 ### truncateText(text, limit)
 
@@ -371,7 +344,6 @@ limit(integer): the number of characters to return
 
 string
 
-
 ### validateMilitaryTime(timeEntered)
 
 Determines if the value passed is in correct military (24 hour) time format.
@@ -383,7 +355,6 @@ timeEntered(string): the value to verify is in military time
 #### return
 
 boolean
-
 
 ### convertTemperature(temperatureScale, temperature)
 
@@ -399,7 +370,6 @@ temperature(float): temperature to be converted
 
 float
 
-
 ### convertYesNoTrueFalse(value)
 
 Converts a string value of Yes or No into a boolean and vice versa.
@@ -411,7 +381,6 @@ value
 #### return
 
 Either the converted string or boolean value.
-
 
 ### convertNormalAbnormalTrueFalse(value)
 
@@ -425,7 +394,6 @@ value
 
 Either the converted string or boolean value.
 
-
 ### convertEnableDisableTrueFalse(value)
 
 Converts a string value of Enable or Disable into a boolean and vice versa.
@@ -437,7 +405,6 @@ value
 #### return
 
 Either the converted string or boolean value.
-
 
 ### convertNullEmptyString(value)
 
@@ -451,7 +418,6 @@ value
 
 Either the converted string or null value.
 
-
 ### isWholeNumber(value)
 
 Determines if the value passed is a whole number (integer) or not.
@@ -463,7 +429,6 @@ value
 #### return
 
 boolean
-
 
 ### hasDecimalPlaces(value, decimalPlaces)
 
@@ -479,7 +444,6 @@ decimalPlaces: number of decimal places the number should have
 
 boolean
 
-
 ### generateRandomNumber(minimumValue, maximumValue)
 
 Generates a random number between the two numbers passed to the function.
@@ -494,7 +458,6 @@ maximumValue(integer): the largest value the random number should be
 
 float
 
-
 ### generateRandomNumberDigits(digits)
 
 Generates a random number of single digits.
@@ -506,7 +469,6 @@ digits(integer): the number of integers needed in the random number
 #### return
 
 string
-
 
 ### formatPhoneNumber(phoneNumber)
 
@@ -520,7 +482,6 @@ phoneNumber(string)
 
 string
 
-
 ### formatTitle(title)
 
 Converts the value passed into title case.
@@ -532,7 +493,6 @@ title
 #### return
 
 string
-
 
 ### randomizeItems(items, randomize)
 
@@ -548,7 +508,6 @@ randomize(boolean): should the array passed be randomized
 
 Array
 
-
 ### getObjectArrayUniqueProperty(objectArray, uniqueProperty)
 
 Creates an array of the unique (distinct) values for a property of an array.
@@ -563,7 +522,6 @@ uniqueProperty(string): the property for the unique values
 
 Array
 
-
 ### removeArticlesFromBeginning(value)
 
 Removes a, an and the from the beginning of a string. Mainly used when sorting items.
@@ -575,7 +533,6 @@ value(string)
 #### return
 
 string
-
 
 ### compareItemsForSorting(itemOne, itemTwo)
 
@@ -590,7 +547,6 @@ itemTwo
 #### return
 
 boolean
-
 
 ### sortObjectArrayByProperty(objectArray, sortProperty, direction)
 
@@ -607,7 +563,6 @@ direction(string): the direction to sort (asc or desc)
 #### return
 
 Array
-
 
 ### sortObjectArrayByTwoProperties(objectArray, sortPropertyOne, sortPropertyTwo, directionOne, directionTwo)
 
@@ -629,7 +584,6 @@ directionTwo(string): the direction to sort (asc or desc) for sortPropertyTwo
 
 Array
 
-
 ### compareObjectProperties(originalObject, comparisonObject)
 
 Compares two objects to determine if the properties in both are equivalent. The order of the objects in the parameters matters because the comparison is completed based on what does or does not exist in the comparisionObject.
@@ -643,7 +597,6 @@ comparisonObject(object)
 #### return
 
 object with arrays for newProperties, removedProperties and sameProperties
-
 
 ### groupObjectArrayByProperties(objectArray, keys)
 
@@ -659,7 +612,6 @@ keys(Array): values to group the items in the array
 
 Array
 
-
 ### formatLowerCase(value)
 
 Converts the value passed to all lowercase characters. Handles the situations in which the value passed is null or undefined and converts the value to a string if needed.
@@ -671,7 +623,6 @@ value
 #### return
 
 string
-
 
 ### formatUpperCase(value)
 
@@ -685,7 +636,6 @@ value
 
 string
 
-
 ### formatTrim(value)
 
 Removes the white spaces at the beginning and end of the value passed. Handles the situations in which the value passed is null or undefined and converts the value to a string if needed.
@@ -697,7 +647,6 @@ value
 #### return
 
 string
-
 
 ### formatToString(value)
 
@@ -711,7 +660,6 @@ value
 
 string
 
-
 ### getParseInt
 
 Converts the value to an integer. Handles the situations in which the value passed is null, undefined or empty string by returning a null. Used when setting a variable's value to ensure that it's either an integer or null.
@@ -723,7 +671,6 @@ value
 #### return
 
 integer
-
 
 ### formatInt(value)
 
@@ -737,7 +684,6 @@ value
 
 integer
 
-
 ### formatFloat(value)
 
 Converts the value to an float. Handles the situations in which the value passed is null or undefined by returning an empty string.
@@ -749,7 +695,6 @@ value
 #### return
 
 float
-
 
 ### formatDate(value)
 
@@ -763,7 +708,6 @@ value
 
 string
 
-
 ### formatSearchInput(value)
 
 Removes the white spaces at the beginning and end of the value passed and converts the value passed to all lowercase characters. Handles the situations in which the value passed is null or undefined and converts the value to a string if needed.
@@ -775,7 +719,6 @@ value
 #### return
 
 string
-
 
 ### removeHTML(text)
 
@@ -789,7 +732,6 @@ text
 
 string
 
-
 ### removeNonAlphanumericCharacters(text)
 
 Removes all characters that aren't letters, numbers, spaces or a period. Handles the situations in which the value passed is null or undefined and converts the value to a string if needed.
@@ -801,7 +743,6 @@ text
 #### return
 
 string
-
 
 ### replaceSmartCharacters(jsonData)
 
@@ -815,7 +756,6 @@ jsonData(string)
 
 string
 
-
 ### getQueryStringData()
 
 Retrieves the querystring values and places them in a JavaScript object.
@@ -827,7 +767,6 @@ none
 #### return
 
 object
-
 
 ### addLog(baseURL, fetchAuthorization, databaseAvailable, allowLogging, logObject)
 
@@ -849,7 +788,6 @@ logObject(object): the object to be posted to the API
 
 string: the result of the Post request
 
-
 ### addErrorLog(baseURL, fetchAuthorization, databaseAvailable, allowLogging, errorObject)
 
 Posts to the errorLogs end point of an API.
@@ -870,7 +808,6 @@ errorObject(object): the object to be posted to the API
 
 string: the result of the Post request
 
-
 ### addComputerLog()
 
 Combines the properties of the object returned by two free geolocation APIs (https://geolocation-db.com/json/ and https://api.db-ip.com/v2/free/self) and places them in a JavaScript object.
@@ -883,7 +820,6 @@ none
 
 object
 
-
 ### parse()
 
 Provides error checking for the parseHTML function from the npm package html-react-parser to ensure that the value being converted to HTML isn't null, undefined or an empty string.
@@ -895,7 +831,6 @@ none
 #### return
 
 string
-
 
 ### displayTime()
 
@@ -911,7 +846,6 @@ removeLeadingZeroes(boolean): remove the leading zeroes from the returned value
 
 string
 
-
 ### convertMilitaryTimeToStandardTime()
 
 Converts a time in the military format into the standard time format.
@@ -924,7 +858,6 @@ timeEntered(date): the date object to be converted
 
 string
 
-
 ### convertStandardTimeToMilitaryTime()
 
 Converts a time in the standard format into the military time format.
@@ -936,7 +869,6 @@ timeEntered(date): the date object to be converted
 #### return
 
 string
-
 
 ### getNumberOfDaysBetweenDates()
 
@@ -952,7 +884,6 @@ endDate(date): the date object to end the calculation at
 
 integer
 
-
 ### convertTimeToMinutes()
 
 Converts a time into minutes.
@@ -964,7 +895,6 @@ timeEntered(date): the date object to be converted
 #### return
 
 integer
-
 
 ### generateHoursInterval()
 
@@ -982,7 +912,6 @@ interval(integer): the amount of minutes between intervals
 
 object
 
-
 ### displayCommaBetweenTwoItems(firstItem, secondItem)
 
 UPDATE: Inserts a comma and a space between two string values
@@ -996,7 +925,6 @@ secondItem(string): the second string value
 #### return
 
 string
-
 
 ### constructCSVFile(dataList, dataColumnTitles, propertyNameList)
 
@@ -1025,7 +953,6 @@ string
 ### getFilteredNames(selectedCheckbox, selectedID, optionData, nameToReturn, filteredNames)
 
 ### isValidURL(value)
-
 
 ## Developer Functions Available
 

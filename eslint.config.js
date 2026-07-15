@@ -86,7 +86,7 @@ export default [
       // General code quality rules
       "no-console": "warn",
       "prefer-const": "error",
-      "no-var": "error",
+      "no-var": "error"
     }
   }
 ];
