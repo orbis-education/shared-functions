@@ -9,6 +9,7 @@ export type SortDirection = "asc" | "desc" | string;
 export const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 export const noFunctionAvailable = (): void => {
+  // eslint-disable-next-line no-console
   console.log("A function wasn't passed as a props when it needed to be.");
 };
 
@@ -43,7 +44,7 @@ export const getDateTime = () => {
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
 
   // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
-  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 
   // return new Date().toLocaleString();
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
@@ -138,7 +139,7 @@ export const removeForwardSlashes = text => {
 export const tryParseJSON = jsonString => {
   // * https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string-in-javascript-without-using-try -- 03/06/2021 MF
   try {
-    let jsonData = JSON.parse(jsonString);
+    const jsonData = JSON.parse(jsonString);
 
     // * Handle non-exception-throwing cases: -- 03/05/2021
     // * Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking, -- 03/05/2021
@@ -147,7 +148,7 @@ export const tryParseJSON = jsonString => {
     if (jsonData && typeof jsonData === "object") {
       return jsonData;
     }
-  } catch (error) {
+  } catch (_error) {
     // * Don't display this error in the console. This function is already returning false if the JSON file is not in the correct format. -- 03/06/2021 MF
     // console.log("tryParseJSON error", error);
   }
@@ -287,7 +288,7 @@ export const getCurrentDay = () => {
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
 
   // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
-  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 
   // return new Date().toLocaleString();
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
@@ -301,7 +302,7 @@ export const getCurrentMonth = () => {
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
 
   // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
-  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 
   // return new Date().toLocaleString();
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
@@ -315,7 +316,7 @@ export const getCurrentYear = () => {
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
 
   // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local -- 08/09/2021 MF
-  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 
   // return new Date().toLocaleString();
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
@@ -329,11 +330,11 @@ export const displayDate = (dateToDisplay, removeLeadingZeroes) => {
 
   if (!isEmpty(dateToDisplay)) {
     // * Year
-    let yyyy = formatToString(dateToDisplay).substring(0, 4);
+    const yyyy = formatToString(dateToDisplay).substring(0, 4);
     // * Month
-    let mm = formatToString(dateToDisplay).substring(5, 7);
+    const mm = formatToString(dateToDisplay).substring(5, 7);
     // * Day
-    let dd = formatToString(dateToDisplay).substring(8, 10);
+    const dd = formatToString(dateToDisplay).substring(8, 10);
 
     newDisplayDate = mm + "/" + dd + "/" + yyyy;
 
@@ -350,11 +351,11 @@ export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
 
   if (!isEmpty(dateToDisplay)) {
     // * Year
-    let yyyy = formatToString(dateToDisplay).substring(0, 4);
+    const yyyy = formatToString(dateToDisplay).substring(0, 4);
     // * Month
-    let mm = formatToString(dateToDisplay).substring(5, 7);
+    const mm = formatToString(dateToDisplay).substring(5, 7);
     // * Day
-    let dd = formatToString(dateToDisplay).substring(8, 10);
+    const dd = formatToString(dateToDisplay).substring(8, 10);
 
     // // * Hour
     // let hour = formatToString(dateToDisplay).substring(11, 12);
@@ -362,7 +363,7 @@ export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
     // let minute = formatToString(dateToDisplay).substring(15, 16);
 
     // * Time
-    let time = formatToString(dateToDisplay).substring(11, 16);
+    const time = formatToString(dateToDisplay).substring(11, 16);
 
     newDisplayDateAndTime = mm + "/" + dd + "/" + yyyy + " " + time;
 
@@ -379,7 +380,7 @@ export const displayYear = dateToDisplay => {
 
   if (!isEmpty(dateToDisplay)) {
     // * Year
-    let yyyy = formatToString(dateToDisplay).substring(0, 4);
+    const yyyy = formatToString(dateToDisplay).substring(0, 4);
     // * Month
     // let mm = formatToString(dateToDisplay).substring(5, 7);
     // * Day
@@ -399,9 +400,9 @@ export const daysSince = dateToCompare => {
   let newDaysSince = 0;
 
   if (!isEmpty(dateToCompare)) {
-    let today = new Date();
-    let compareDate = new Date(dateToCompare);
-    let timeInMilliseconds = compareDate.getTime() - today.getTime();
+    const today = new Date();
+    const compareDate = new Date(dateToCompare);
+    const timeInMilliseconds = compareDate.getTime() - today.getTime();
 
     newDaysSince = Math.abs(Math.ceil(timeInMilliseconds / (1000 * 60 * 60 * 24)));
   }
@@ -584,7 +585,7 @@ export const validateMilitaryTime = timeEntered => {
 
 export const convertTemperature = (temperatureScale, temperature) => {
   // let temperatureFloat = parseFloat(formatTrim(temperature));
-  let temperatureFloat = parseFloat(temperature);
+  const temperatureFloat = parseFloat(temperature);
   let temperatureConverted = "";
 
   if (!isEmpty(temperatureFloat) && !isNaN(temperatureFloat)) {
@@ -692,7 +693,7 @@ export const hasDecimalPlaces = (value, decimalPlaces) => {
 
     // * This removes any values from the string starting at and after a non-number value in the string. -- 06/21/2021 MF
     // * Parse the value to see if it is a float. -- 06/21/2021 MF
-    let valueToTest = parseFloat(formatTrim(value));
+    const valueToTest = parseFloat(formatTrim(value));
 
     let valueDecimals = 0;
 
@@ -716,7 +717,7 @@ export const hasDecimalPlaces = (value, decimalPlaces) => {
 export const generateRandomNumber = (minimumValue, maximumValue) => {
   // * https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript -- 01/14/2022 MF
 
-  let randomNumber = Math.floor(Math.random() * (maximumValue - minimumValue + 1)) + minimumValue;
+  const randomNumber = Math.floor(Math.random() * (maximumValue - minimumValue + 1)) + minimumValue;
 
   return randomNumber;
 };
@@ -740,7 +741,7 @@ export const formatPhoneNumber = phoneNumber => {
     onlyDigits = phoneNumber.replace(/\D/g, "");
   }
 
-  let validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/);
+  const validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/);
 
   if (isNonEmptyArray(validPhoneNumber)) {
     return `${validPhoneNumber[1]}-${validPhoneNumber[2]}-${validPhoneNumber[3]}`;
@@ -834,18 +835,18 @@ export const compareItemsForSorting = (itemOne, itemTwo) => {
 };
 
 export const sortObjectArrayByProperty = (objectArray, sortProperty, direction) => {
-  let sortedArray = [...objectArray];
+  const sortedArray = [...objectArray];
 
   if (isNonEmptyArray(sortedArray)) {
     if (!isEmpty(sortProperty)) {
       // * https://typeofnan.dev/sort-array-objects-multiple-properties-javascript/ -- 01/07/2025 JH
 
       sortedArray.sort((a, b) => {
-        let aProperty =
+        const aProperty =
           typeof a[sortProperty] === "number"
             ? a[sortProperty]
             : removeArticlesFromBeginning(a[sortProperty]);
-        let bProperty =
+        const bProperty =
           typeof b[sortProperty] === "number"
             ? b[sortProperty]
             : removeArticlesFromBeginning(b[sortProperty]);
@@ -898,14 +899,14 @@ export const sortObjectArrayByTwoProperties = (
 
 export const compareObjectProperties = (originalObject, comparisonObject) => {
   // * https://stackoverflow.com/questions/14368596/how-can-i-check-that-two-objects-have-the-same-set-of-property-names -- 05/18/2022 MF
-  // * The order of the objects in the parameters matters because the comparison is completed based on what does or does not exist in the comparisionObject. -- 05/18/2022 MF
+  // * The order of the objects in the parameters matters because the comparison is completed based on what does or does not exist in the comparisonObject. -- 05/18/2022 MF
 
-  let originalObjectProperties = Object.keys(originalObject);
-  let comparisonObjectProperties = Object.keys(comparisonObject);
+  const originalObjectProperties = Object.keys(originalObject);
+  const comparisonObjectProperties = Object.keys(comparisonObject);
 
-  let newProperties = [];
-  let removedProperties = [];
-  let sameProperties = [];
+  const newProperties = [];
+  const removedProperties = [];
+  const sameProperties = [];
 
   // * Checks for object properties have been added. -- 05/16/2022 MF
   originalObjectProperties.map(property => {
@@ -971,7 +972,7 @@ export const groupObjectArrayByProperties = (objectArray, ...keys) => {
 
   return objectArray.reduce((results, item) => {
     // * Get the first instance of the key by which we're grouping. -- 04/04/2022
-    let group = getGroupFromItem(item, keys);
+    const group = getGroupFromItem(item, keys);
 
     // * Ensure that there's an array to hold our results for this group. -- 04/04/2022
     results[group] = results[group] || [];
@@ -1090,7 +1091,7 @@ export const removeNonAlphanumericCharacters = text => {
   let formatedText = "";
 
   if (!isEmpty(text)) {
-    formatedText = text.replace(/[^a-zA-Z0-9\. ]/g, "");
+    formatedText = text.replace(/[^a-zA-Z0-9. ]/g, "");
   }
 
   return formatedText;
@@ -1115,11 +1116,11 @@ export const replaceSmartCharacters = jsonData => {
 };
 
 export const getQueryStringData = () => {
-  let queryStringData = {};
+  const queryStringData = {};
 
-  // * Retreive the queryString values if there are any. -- 01/22/2023 MF
+  // * Retrieve the queryString values if there are any. -- 01/22/2023 MF
   if (typeof window !== "undefined") {
-    let queryStrings = new URLSearchParams(window.location.search);
+    const queryStrings = new URLSearchParams(window.location.search);
 
     queryStringData.parametersURL = queryStrings.toString();
 
@@ -1139,9 +1140,9 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
   let logResult = "Add log not attempted due to parameter values.";
 
   if (allowLogging === true && databaseAvailable !== false) {
-    let operation = "Add Log";
+    const operation = "Add Log";
 
-    let url = `${baseURL}logs/`;
+    const url = `${baseURL}logs/`;
     let response = "";
     let data = "";
 
@@ -1230,9 +1231,9 @@ export const addErrorLog = (
   let logErrorResult = "Add error log not attempted due to parameter values.";
 
   if (allowLogging === true && databaseAvailable !== false) {
-    let operation = "Add Error Log";
+    const operation = "Add Error Log";
 
-    let url = `${baseURL}errorLogs/`;
+    const url = `${baseURL}errorLogs/`;
     let response = "";
     // let data = "";
 
@@ -1250,7 +1251,7 @@ export const addErrorLog = (
         if (response.status === 200) {
           return response.json();
         } else {
-          logResult = `${operation}: ${response.status} ${response.statusText} ${response.url}`;
+          logErrorResult = `${operation}: ${response.status} ${response.statusText} ${response.url}`;
         }
       })
       .then(results => {
@@ -1273,7 +1274,7 @@ export const addErrorLog = (
 };
 
 export const addComputerLog = (computerLogOne, computerLogTwo) => {
-  let computerLog = { ...computerLogOne };
+  const computerLog = { ...computerLogOne };
 
   if (typeof computerLogItem === "object") {
     // * From https://geolocation-db.com/json/ -- 09/27/2021 MF
@@ -1346,7 +1347,7 @@ export const addComputerLog = (computerLogOne, computerLogTwo) => {
   return computerLog;
 };
 
-export const parse = (value, options) => {
+export const parse = (value, options: HTMLReactParserOptions) => {
   // * The parseHTML function from the npm package html-react-parser doesn't provide error handling if the value sent to it isn't a string. -- 03/09/2023 MF
 
   let newValue = value;
@@ -1367,7 +1368,7 @@ export const displayTime = (dateToDisplay, removeLeadingZeroes) => {
 
   if (!isEmpty(dateToDisplay)) {
     // * Time
-    let time = formatToString(dateToDisplay).substring(11, 16);
+    const time = formatToString(dateToDisplay).substring(11, 16);
 
     newDisplayTime = time;
 
@@ -1392,7 +1393,7 @@ export const convertMilitaryTimeToStandardTime = timeEntered => {
   let standardTime = "";
 
   // * Split the time by : -- 11/27/2023 KH
-  let newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s:]+/) : [];
+  const newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s:]+/) : [];
 
   hours = !isEmpty(newTime[0]) ? Number(newTime[0]) : "";
 
@@ -1433,7 +1434,7 @@ export const convertStandardTimeToMilitaryTime = timeEntered => {
   let militaryTime = "";
 
   // * Split the time by : and " " -- 11/27/2023 KH
-  let newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s: ]+/) : [];
+  const newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s: ]+/) : [];
 
   if (!isEmpty(newTime[0])) {
     hours = Number(newTime[0]);
@@ -1468,8 +1469,8 @@ export const getNumberOfDaysBetweenDates = (startDate, endDate) => {
   // * https://www.geeksforgeeks.org/how-to-calculate-the-number-of-days-between-two-dates-in-javascript/ -- 09/12/2023 KH
   // * https://stackoverflow.com/questions/2627473/how-to-calculate-the-number-of-days-between-two-dates/2627493#2627493 -- 09/12/2023 KH
 
-  let newStartDate = new Date(startDate);
-  let newEndDate = new Date(endDate);
+  const newStartDate = new Date(startDate);
+  const newEndDate = new Date(endDate);
   let numberOfDays = 1;
 
   // * The function getTime() converts days to milliseconds to subtract the two dates. -- 08/31/2023 KH
@@ -1484,9 +1485,9 @@ export const convertTimeToMinutes = timeEntered => {
   // * https://stackoverflow.com/questions/32885682/convert-hhmmss-into-minute-using-javascript -- 11/27/2023 KH
   // * timeEntered must be a string in HH:MM format. -- 09/18/2023 KH
 
-  let newTime = timeEntered.split(":");
+  const newTime = timeEntered.split(":");
 
-  let minutes = +newTime[0] * 60 + +newTime[1];
+  const minutes = +newTime[0] * 60 + +newTime[1];
 
   return minutes;
 };
@@ -1494,7 +1495,7 @@ export const convertTimeToMinutes = timeEntered => {
 export const generateHoursInterval = (startHourInMinutes, endHourInMinutes, interval) => {
   // * https://gist.github.com/indexzero/6261ad9292c78cf3c5aa69265e2422bf?permalink_comment_id=4003346#gistcomment-4003346 -- 11/20/2023 KH
 
-  let timesArray = [];
+  const timesArray = [];
 
   if (!isEmpty(startHourInMinutes) && isWholeNumber(startHourInMinutes)) {
     for (let i = 0; startHourInMinutes < 24 * 60; i++) {
@@ -1502,10 +1503,10 @@ export const generateHoursInterval = (startHourInMinutes, endHourInMinutes, inte
         break;
       } else {
         // * Get hours of day in 0-24 format. -- 11/20/2023 KH
-        let hh = Math.floor(startHourInMinutes / 60);
+        const hh = Math.floor(startHourInMinutes / 60);
 
         // * Get minutes of the hour in 0-55 format. -- 11/20/2023 KH
-        let mm = startHourInMinutes % 60;
+        const mm = startHourInMinutes % 60;
 
         timesArray[i] = {
           timeID: i,
@@ -1555,7 +1556,7 @@ export const constructCSVFile = (dataList, dataColumnTitles, propertyNameList) =
       for (let j = 0; j < propertyNameList.length; j++) {
         let cellData = "";
 
-        let propertyNameData = dataList[i][propertyNameList[j].propertyName];
+        const propertyNameData = dataList[i][propertyNameList[j].propertyName];
 
         if (!isEmpty(propertyNameData)) {
           // ? Will json need its own case or be passed as a string? -- 10/17/2024 EBG
@@ -1642,10 +1643,10 @@ export const convertMinutesToSeconds = time => {
   let timeInSeconds = 0;
 
   if (!isEmpty(time)) {
-    let splitTime = time.split(/[ :]/);
+    const splitTime = time.split(/[ :]/);
 
-    let minute = getParseInt(splitTime[0]) * 60;
-    let second = getParseInt(splitTime[1]);
+    const minute = getParseInt(splitTime[0]) * 60;
+    const second = getParseInt(splitTime[1]);
 
     timeInSeconds = minute + second;
   }
@@ -1701,7 +1702,7 @@ export const isFutureDate = (dateToCheck, referenceDate) => {
 
 export const formatToUSD = value => {
   if (!Number.isNaN(value)) {
-    let formattedValue = new Intl.NumberFormat("en-US", {
+    const formattedValue = new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
       maximumFractionDigits: 0
@@ -1714,7 +1715,7 @@ export const formatToUSD = value => {
 };
 
 export const getYears = months => {
-  let newValue = Number.parseFloat(months / 12).toFixed(1);
+  const newValue = Number.parseFloat(months / 12).toFixed(1);
 
   if (!isNaN(newValue)) {
     return newValue;
@@ -1776,7 +1777,7 @@ export const filterBySelectedCheckbox = (checkboxValues, selectedID, currentResu
 
   if (!isEmptyArray(checkboxValues) && !isEmptyArray(currentResults)) {
     checkboxValues.forEach(checkboxValue => {
-      let newFilteredResults = currentResults.filter(
+      const newFilteredResults = currentResults.filter(
         result => formatToString(result[selectedID]) === formatToString(checkboxValue)
       );
 

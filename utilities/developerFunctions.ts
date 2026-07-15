@@ -43,7 +43,9 @@ export const isLocalDevelopment = () => {
     //   // developmentEnvironment = process.env.NODE_ENV;
 
     // };
-  } catch (error) {}
+  } catch (_error) {
+    /* empty */
+  }
 
   if (developmentEnvironment === "development") {
     return true;

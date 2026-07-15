@@ -36,7 +36,7 @@ export default [
 
   // TypeScript / React configuration
   {
-    files: ["index.ts, utilities/**/*.ts"],
+    files: ["**/*.ts"],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: "latest",
