@@ -1209,7 +1209,7 @@ export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogg
     const operation = "Add Log";
 
     const url = `${baseURL}logs/`;
-    let response = "";
+    let response: Response;
     let data = "";
 
     fetch(url, {
@@ -1300,7 +1300,7 @@ export const addErrorLog = (
     const operation = "Add Error Log";
 
     const url = `${baseURL}errorLogs/`;
-    let response = "";
+    let response: Response;
     // let data = "";
 
     fetch(url, {
@@ -1342,7 +1342,7 @@ export const addErrorLog = (
 export const addComputerLog = (computerLogOne, computerLogTwo) => {
   const computerLog = { ...computerLogOne };
 
-  if (typeof computerLogItem === "object") {
+  if (typeof computerLog === "object") {
     // * From https://geolocation-db.com/json/ -- 09/27/2021 MF
     if (!isEmpty(computerLogTwo.country_code)) {
       computerLog.countryCode = computerLogTwo.country_code;
@@ -1420,8 +1420,10 @@ export const parse = (value, options: HTMLReactParserOptions) => {
 
   if (!isEmpty(value)) {
     if (!isEmpty(options)) {
+      // @ts-expect-error html-react-parser default import is callable at runtime but typed here as a module object
       newValue = parseHTML(value, options);
     } else {
+      // @ts-expect-error html-react-parser default import is callable at runtime but typed here as a module object
       newValue = parseHTML(value);
     }
   }
@@ -1446,90 +1448,163 @@ export const displayTime = (dateToDisplay, removeLeadingZeroes) => {
   return newDisplayTime;
 };
 
-export const convertMilitaryTimeToStandardTime = timeEntered => {
-  // * https://stackoverflow.com/questions/29206453/best-way-to-convert-military-time-to-standard-time-in-javascript -- 09/18/2023 KH
-
-  // * timeEntered must be a string in HH:MM format. -- 09/18/2023 KH
-  // * The timeEntered format is no longer a requirement. The function returns an empty string if the format isn't correct. -- 04/23/2025 MF
-
-  let hours = "";
-  let minutes = "";
-  let modifier = "";
-
-  let standardTime = "";
-
-  // * Split the time by : -- 11/27/2023 KH
-  const newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s:]+/) : [];
-
-  hours = !isEmpty(newTime[0]) ? Number(newTime[0]) : "";
-
-  minutes = !isEmpty(newTime[1]) ? Number(newTime[1]) : "";
-
-  if (hours > 0 && hours <= 12) {
-    standardTime = "" + hours;
-  } else if (hours > 12) {
-    standardTime = "" + (hours - 12);
-  } else if (hours === 0) {
-    standardTime = "12";
+export const convertMilitaryTimeToStandardTime = (timeEntered: unknown): string => {
+  if (isEmpty(timeEntered)) {
+    return "";
   }
 
-  if (hours >= 12) {
-    modifier = " PM";
-  } else if (hours > 0 && hours < 12) {
-    modifier = " AM";
+  const parts = formatTrim(formatToString(timeEntered)).split(/[\s:]+/);
+
+  if (parts.length < 2) {
+    return "";
   }
 
-  if (!isEmpty(standardTime)) {
-    standardTime +=
-      minutes > -1 && minutes < 10 ? ":0" + minutes + modifier : ":" + minutes + modifier;
+  const hours = Number(parts[0]);
+  const minutes = Number(parts[1]);
+
+  if (
+    !Number.isInteger(hours) ||
+    !Number.isInteger(minutes) ||
+    hours < 0 ||
+    hours > 23 ||
+    minutes < 0 ||
+    minutes > 59
+  ) {
+    return "";
   }
 
-  return standardTime;
+  const modifier = hours >= 12 ? " PM" : " AM";
+  const standardHours = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
+  const paddedMinutes = minutes.toString().padStart(2, "0");
+
+  return `${standardHours}:${paddedMinutes}${modifier}`;
 };
 
-export const convertStandardTimeToMilitaryTime = timeEntered => {
-  // * https://www.tutorialspoint.com/converting-12-hour-format-time-to-24-hour-format-in-javascript -- 11/27/2023 KH
+// export const convertMilitaryTimeToStandardTime = timeEntered => {
+//   // * https://stackoverflow.com/questions/29206453/best-way-to-convert-military-time-to-standard-time-in-javascript -- 09/18/2023 KH
 
-  // * timeEntered must be a string in HH:MM AM/PM format. -- 09/18/2023 KH
-  // * The timeEntered format is no longer a requirement. The function returns an empty string if the format isn't correct. -- 04/23/2025 MF
+//   // * timeEntered must be a string in HH:MM format. -- 09/18/2023 KH
+//   // * The timeEntered format is no longer a requirement. The function returns an empty string if the format isn't correct. -- 04/23/2025 MF
 
-  let hours = "";
-  let minutes = "";
-  let modifier = "";
+//   let hours = "";
+//   let minutes = "";
+//   let modifier = "";
 
-  let militaryTime = "";
+//   let standardTime = "";
 
-  // * Split the time by : and " " -- 11/27/2023 KH
-  const newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s: ]+/) : [];
+//   // * Split the time by : -- 11/27/2023 KH
+//   const newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s:]+/) : [];
 
-  if (!isEmpty(newTime[0])) {
-    hours = Number(newTime[0]);
-    hours = hours < 10 ? "0" + hours : hours;
+//   hours = !isEmpty(newTime[0]) ? Number(newTime[0]) : "";
+
+//   minutes = !isEmpty(newTime[1]) ? Number(newTime[1]) : "";
+
+//   if (hours > 0 && hours <= 12) {
+//     standardTime = "" + hours;
+//   } else if (hours > 12) {
+//     standardTime = "" + (hours - 12);
+//   } else if (hours === 0) {
+//     standardTime = "12";
+//   }
+
+//   if (hours >= 12) {
+//     modifier = " PM";
+//   } else if (hours > 0 && hours < 12) {
+//     modifier = " AM";
+//   }
+
+//   if (!isEmpty(standardTime)) {
+//     standardTime +=
+//       minutes > -1 && minutes < 10 ? ":0" + minutes + modifier : ":" + minutes + modifier;
+//   }
+
+//   return standardTime;
+// };
+
+export const convertStandardTimeToMilitaryTime = (timeEntered: unknown): string => {
+  if (isEmpty(timeEntered)) {
+    return "";
   }
 
-  if (!isEmpty(newTime[1])) {
-    minutes = Number(newTime[1]);
-    minutes = minutes < 10 ? "0" + minutes : minutes;
+  const parts = formatTrim(formatToString(timeEntered))
+    .toUpperCase()
+    .split(/[\s:]+/);
+
+  if (parts.length < 3) {
+    return "";
   }
 
-  modifier = !isEmpty(newTime[2]) ? newTime[2] : "";
+  let hours = Number(parts[0]);
+  const minutes = Number(parts[1]);
+  const modifier = parts[2];
 
-  if (hours === 12) {
-    hours = "00";
+  if (
+    !Number.isInteger(hours) ||
+    !Number.isInteger(minutes) ||
+    hours < 1 ||
+    hours > 12 ||
+    minutes < 0 ||
+    minutes > 59 ||
+    (modifier !== "AM" && modifier !== "PM")
+  ) {
+    return "";
   }
 
-  if (modifier === "PM") {
-    // * 10 indicates that the string is in base 10 (decimal notation). -- 11/27/2023 KH
-    // * + 12 converts the 12-hour format to a 24-hour format. -- 11/27/2023 KH
-    hours = getParseInt(hours, 10) + 12;
+  if (modifier === "AM" && hours === 12) {
+    hours = 0;
+  } else if (modifier === "PM" && hours !== 12) {
+    hours += 12;
   }
 
-  if (!isEmpty(hours) && !isEmpty(minutes)) {
-    militaryTime = `${hours}:${minutes}`;
-  }
+  const paddedHours = hours.toString().padStart(2, "0");
+  const paddedMinutes = minutes.toString().padStart(2, "0");
 
-  return militaryTime;
+  return `${paddedHours}:${paddedMinutes}`;
 };
+
+// export const convertStandardTimeToMilitaryTime = timeEntered => {
+//   // * https://www.tutorialspoint.com/converting-12-hour-format-time-to-24-hour-format-in-javascript -- 11/27/2023 KH
+
+//   // * timeEntered must be a string in HH:MM AM/PM format. -- 09/18/2023 KH
+//   // * The timeEntered format is no longer a requirement. The function returns an empty string if the format isn't correct. -- 04/23/2025 MF
+
+//   let hours = "";
+//   let minutes = "";
+//   let modifier = "";
+
+//   let militaryTime = "";
+
+//   // * Split the time by : and " " -- 11/27/2023 KH
+//   const newTime = !isEmpty(timeEntered) ? timeEntered.split(/[\s: ]+/) : [];
+
+//   if (!isEmpty(newTime[0])) {
+//     hours = Number(newTime[0]);
+//     hours = hours < 10 ? "0" + hours : hours;
+//   }
+
+//   if (!isEmpty(newTime[1])) {
+//     minutes = Number(newTime[1]);
+//     minutes = minutes < 10 ? "0" + minutes : minutes;
+//   }
+
+//   modifier = !isEmpty(newTime[2]) ? newTime[2] : "";
+
+//   if (hours === 12) {
+//     hours = "00";
+//   }
+
+//   if (modifier === "PM") {
+//     // * 10 indicates that the string is in base 10 (decimal notation). -- 11/27/2023 KH
+//     // * + 12 converts the 12-hour format to a 24-hour format. -- 11/27/2023 KH
+//     hours = getParseInt(hours, 10) + 12;
+//   }
+
+//   if (!isEmpty(hours) && !isEmpty(minutes)) {
+//     militaryTime = `${hours}:${minutes}`;
+//   }
+
+//   return militaryTime;
+// };
 
 export const getNumberOfDaysBetweenDates = (startDate, endDate) => {
   // * https://www.geeksforgeeks.org/how-to-calculate-the-number-of-days-between-two-dates-in-javascript/ -- 09/12/2023 KH
