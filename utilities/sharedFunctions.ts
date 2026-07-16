@@ -39,7 +39,7 @@ export const isEmpty = (value: unknown): boolean => {
   // console.log("isEmpty({test: \"test\"})", isEmpty({ test: "test" }));
 };
 
-export const getDateTime = () => {
+export const getDateTime = (): string => {
   // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
 
@@ -49,10 +49,13 @@ export const getDateTime = () => {
   // return new Date().toLocaleString();
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
   // return new Date().toISOString().slice(0, 19).replace("T", " ");
-  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ");
+  return new Date(new Date().getTime() - timezoneOffset)
+    .toISOString()
+    .slice(0, 19)
+    .replace("T", " ");
 };
 
-export const isNonEmptyArray = arrayItem => {
+export const isNonEmptyArray = (arrayItem): boolean => {
   let nonEmptyArray = false;
 
   if (Array.isArray(arrayItem) && arrayItem.length > 0) {
@@ -66,7 +69,7 @@ export const isNonEmptyArray = arrayItem => {
 // export const isEmptyArray = (arrayItem) =>
 //   Array.isArray(arrayItem) && arrayItem.length === 0;
 
-export const isEmptyArray = arrayItem => {
+export const isEmptyArray = (arrayItem): boolean => {
   let emptyArray = true;
 
   if (Array.isArray(arrayItem) && arrayItem.length > 0) {
@@ -76,7 +79,7 @@ export const isEmptyArray = arrayItem => {
   return emptyArray;
 };
 
-export const getFirstItem = arrayItem => {
+export const getFirstItem = (arrayItem): Record<string, unknown> => {
   let firstItem = {};
 
   if (isNonEmptyArray(arrayItem) && !isEmpty(arrayItem[0])) {
@@ -86,7 +89,7 @@ export const getFirstItem = arrayItem => {
   return firstItem;
 };
 
-export const getLastItem = arrayItem => {
+export const getLastItem = (arrayItem): Record<string, unknown> => {
   let lastItem = {};
 
   if (isNonEmptyArray(arrayItem) && !isEmpty(arrayItem[arrayItem.length - 1])) {
@@ -294,7 +297,7 @@ export const getCurrentDay = () => {
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
   // return new Date().toISOString().slice(0, 19).replace("T", " ");
   // return new Date().getDate();
-  return new Date(new Date() - timezoneOffset).getDate();
+  return new Date(new Date().getTime() - timezoneOffset).getDate();
 };
 
 export const getCurrentMonth = () => {
@@ -308,7 +311,7 @@ export const getCurrentMonth = () => {
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
   // return new Date().toISOString().slice(0, 19).replace("T", " ");
   // return new Date().getMonth() + 1;
-  return new Date(new Date() - timezoneOffset).getMonth() + 1;
+  return new Date(new Date().getTime() - timezoneOffset).getMonth() + 1;
 };
 
 export const getCurrentYear = () => {
@@ -322,7 +325,7 @@ export const getCurrentYear = () => {
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
   // return new Date().toISOString().slice(0, 19).replace("T", " ");
   // return new Date().getFullYear();
-  return new Date(new Date() - timezoneOffset).getFullYear();
+  return new Date(new Date().getTime() - timezoneOffset).getFullYear();
 };
 
 export const displayDate = (dateToDisplay, removeLeadingZeroes) => {
@@ -666,53 +669,83 @@ export const convertNullEmptyString = value => {
   }
 };
 
-export const isWholeNumber = value => {
-  // * Make sure that the value isn't empty. isNaN counts empty values as a number. -- 09/11/2023 MF
-  if (isEmpty(value) || isNaN(formatTrim(value))) {
+export const isWholeNumber = (value): boolean => {
+  if (isEmpty(value)) {
     return false;
-  } else {
-    // * https://www.w3resource.com/javascript-exercises/javascript-math-exercise-38.php -- 06/21/2021 MF
-    if (value - Math.floor(value) !== 0) {
-      return false;
-    } else {
-      return true;
-    }
   }
+
+  const numberValue = Number(formatTrim(value));
+
+  return Number.isInteger(numberValue);
 };
+
+// export const isWholeNumber = value => {
+//   // * Make sure that the value isn't empty. isNaN counts empty values as a number. -- 09/11/2023 MF
+//   if (isEmpty(value) || isNaN(formatTrim(value))) {
+//     return false;
+//   } else {
+//     // * https://www.w3resource.com/javascript-exercises/javascript-math-exercise-38.php -- 06/21/2021 MF
+//     if (value - Math.floor(value) !== 0) {
+//       return false;
+//     } else {
+//       return true;
+//     }
+//   }
+// };
 
 export const hasDecimalPlaces = (value, decimalPlaces) => {
-  // * Make sure that the value isn't empty. isNaN counts empty values as a number. -- 09/11/2023 MF
-  if (isEmpty(value) || isNaN(formatTrim(value))) {
+  const trimmedValue = formatTrim(value);
+
+  if (isEmpty(trimmedValue) || Number.isNaN(Number(trimmedValue))) {
     return false;
-  } else {
-    let currentDecimalPlaces = 1;
-
-    if (Number.isInteger(parseFloat(decimalPlaces))) {
-      currentDecimalPlaces = decimalPlaces;
-    }
-
-    // * This removes any values from the string starting at and after a non-number value in the string. -- 06/21/2021 MF
-    // * Parse the value to see if it is a float. -- 06/21/2021 MF
-    const valueToTest = parseFloat(formatTrim(value));
-
-    let valueDecimals = 0;
-
-    if (formatTrim(value).includes(".")) {
-      // * Remove the characters after the decimal point to be counted later if there is a decimal point. -- 06/21/2021 MF
-      valueDecimals = formatTrim(value).substring(formatTrim(value).indexOf(".") + 1);
-    }
-
-    if (
-      isEmpty(valueToTest) ||
-      isNaN(valueToTest) ||
-      (!isEmpty(currentDecimalPlaces) && valueDecimals.length > currentDecimalPlaces)
-    ) {
-      return false;
-    } else {
-      return true;
-    }
   }
+
+  let currentDecimalPlaces = 1;
+  const parsedDecimalPlaces = Number(decimalPlaces);
+
+  if (Number.isInteger(parsedDecimalPlaces)) {
+    currentDecimalPlaces = parsedDecimalPlaces;
+  }
+
+  const decimalIndex = trimmedValue.indexOf(".");
+  const valueDecimals = decimalIndex >= 0 ? trimmedValue.substring(decimalIndex + 1) : "";
+
+  return valueDecimals.length <= currentDecimalPlaces;
 };
+
+// export const hasDecimalPlaces = (value, decimalPlaces) => {
+//   // * Make sure that the value isn't empty. isNaN counts empty values as a number. -- 09/11/2023 MF
+//   if (isEmpty(value) || isNaN(formatTrim(value))) {
+//     return false;
+//   } else {
+//     let currentDecimalPlaces = 1;
+
+//     if (Number.isInteger(parseFloat(decimalPlaces))) {
+//       currentDecimalPlaces = decimalPlaces;
+//     }
+
+//     // * This removes any values from the string starting at and after a non-number value in the string. -- 06/21/2021 MF
+//     // * Parse the value to see if it is a float. -- 06/21/2021 MF
+//     const valueToTest = parseFloat(formatTrim(value));
+
+//     let valueDecimals = 0;
+
+//     if (formatTrim(value).includes(".")) {
+//       // * Remove the characters after the decimal point to be counted later if there is a decimal point. -- 06/21/2021 MF
+//       valueDecimals = formatTrim(value).substring(formatTrim(value).indexOf(".") + 1);
+//     }
+
+//     if (
+//       isEmpty(valueToTest) ||
+//       isNaN(valueToTest) ||
+//       (!isEmpty(currentDecimalPlaces) && valueDecimals.length > currentDecimalPlaces)
+//     ) {
+//       return false;
+//     } else {
+//       return true;
+//     }
+//   }
+// };
 
 export const generateRandomNumber = (minimumValue, maximumValue) => {
   // * https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript -- 01/14/2022 MF
@@ -1007,7 +1040,7 @@ export const formatUpperCase = value => {
   return upperCaseValue;
 };
 
-export const formatTrim = value => {
+export const formatTrim = (value): string => {
   let trimValue = "";
 
   if (!isEmpty(value)) {
@@ -1017,7 +1050,7 @@ export const formatTrim = value => {
   return trimValue;
 };
 
-export const formatToString = value => {
+export const formatToString = (value): string => {
   let toStringValue = "";
 
   if (!isEmpty(value)) {

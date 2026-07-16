@@ -7,7 +7,7 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     clean: true,
-    target: "es2020"
+    target: "es2022"
   },
   {
     entry: ["index.ts"],
@@ -15,7 +15,7 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     clean: false,
-    target: "es2020",
+    target: "es2022",
     transform: {
       define: {
         "import.meta": {}
