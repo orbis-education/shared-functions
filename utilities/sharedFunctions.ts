@@ -328,7 +328,7 @@ export const getCurrentYear = () => {
   return new Date(new Date().getTime() - timezoneOffset).getFullYear();
 };
 
-export const displayDate = (dateToDisplay, removeLeadingZeroes) => {
+export const displayDate = (dateToDisplay, removeLeadingZeroes = false) => {
   let newDisplayDate = "";
 
   if (!isEmpty(dateToDisplay)) {
@@ -349,7 +349,7 @@ export const displayDate = (dateToDisplay, removeLeadingZeroes) => {
   return newDisplayDate;
 };
 
-export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
+export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes = false) => {
   let newDisplayDateAndTime = "";
 
   if (!isEmpty(dateToDisplay)) {
@@ -1633,10 +1633,14 @@ export const convertTimeToMinutes = timeEntered => {
   return minutes;
 };
 
-export const generateHoursInterval = (startHourInMinutes, endHourInMinutes, interval) => {
+export const generateHoursInterval = (
+  startHourInMinutes,
+  endHourInMinutes,
+  interval
+): { timeID: number; time: string }[] => {
   // * https://gist.github.com/indexzero/6261ad9292c78cf3c5aa69265e2422bf?permalink_comment_id=4003346#gistcomment-4003346 -- 11/20/2023 KH
 
-  const timesArray = [];
+  const timesArray: { timeID: number; time: string }[] = [];
 
   if (!isEmpty(startHourInMinutes) && isWholeNumber(startHourInMinutes)) {
     for (let i = 0; startHourInMinutes < 24 * 60; i++) {
@@ -1780,20 +1784,41 @@ export const exportCSVFile = (fileData, fileTitle) => {
 
 // };
 
-export const convertMinutesToSeconds = time => {
-  let timeInSeconds = 0;
-
-  if (!isEmpty(time)) {
-    const splitTime = time.split(/[ :]/);
-
-    const minute = getParseInt(splitTime[0]) * 60;
-    const second = getParseInt(splitTime[1]);
-
-    timeInSeconds = minute + second;
+export const convertMinutesToSeconds = (time: unknown): number => {
+  if (isEmpty(time)) {
+    return 0;
   }
 
-  return timeInSeconds;
+  const splitTime = formatTrim(formatToString(time)).split(/[ :]/);
+
+  if (splitTime.length < 2) {
+    return 0;
+  }
+
+  const minutes = Number.parseInt(splitTime[0], 10);
+  const seconds = Number.parseInt(splitTime[1], 10);
+
+  if (!Number.isInteger(minutes) || !Number.isInteger(seconds) || minutes < 0 || seconds < 0) {
+    return 0;
+  }
+
+  return minutes * 60 + seconds;
 };
+
+// export const convertMinutesToSeconds = time => {
+//   let timeInSeconds = 0;
+
+//   if (!isEmpty(time)) {
+//     const splitTime = time.split(/[ :]/);
+
+//     const minute = getParseInt(splitTime[0]) * 60;
+//     const second = getParseInt(splitTime[1]);
+
+//     timeInSeconds = minute + second;
+//   }
+
+//   return timeInSeconds;
+// };
 
 // export const displaySecondsAsMinutes = (seconds) => {
 
@@ -1856,7 +1881,8 @@ export const formatToUSD = value => {
 };
 
 export const getYears = months => {
-  const newValue = Number.parseFloat(months / 12).toFixed(1);
+  const parsedMonths = Number.parseFloat(months);
+  const newValue = (parsedMonths / 12).toFixed(1);
 
   if (!isNaN(newValue)) {
     return newValue;
