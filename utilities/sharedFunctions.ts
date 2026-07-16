@@ -765,7 +765,7 @@ export const generateRandomNumberDigits = digits => {
   return randomNumber;
 };
 
-export const formatPhoneNumber = phoneNumber => {
+export const formatPhoneNumber = (phoneNumber): string => {
   // * From https://learnersbucket.com/examples/javascript/how-to-format-phone-number-in-javascript/ -- 07/22/2021 MF
 
   let onlyDigits = "";
@@ -774,7 +774,7 @@ export const formatPhoneNumber = phoneNumber => {
     onlyDigits = phoneNumber.replace(/\D/g, "");
   }
 
-  const validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/);
+  const validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/) as Array<string>;
 
   if (isNonEmptyArray(validPhoneNumber)) {
     return `${validPhoneNumber[1]}-${validPhoneNumber[2]}-${validPhoneNumber[3]}`;
@@ -937,12 +937,12 @@ export const compareObjectProperties = (originalObject, comparisonObject) => {
   const originalObjectProperties = Object.keys(originalObject);
   const comparisonObjectProperties = Object.keys(comparisonObject);
 
-  const newProperties = [];
-  const removedProperties = [];
-  const sameProperties = [];
+  const newProperties: string[] = [];
+  const removedProperties: string[] = [];
+  const sameProperties: string[] = [];
 
   // * Checks for object properties have been added. -- 05/16/2022 MF
-  originalObjectProperties.map(property => {
+  originalObjectProperties.forEach(property => {
     if (comparisonObjectProperties.indexOf(property) < 0) {
       newProperties.push(property);
     } else {
@@ -1064,15 +1064,30 @@ export const getParseInt = value => {
   return !isEmpty(value) && !Number.isNaN(value) ? parseInt(value) : null;
 };
 
-export const formatInt = value => {
-  let formatedInt = "";
-
-  if (!isEmpty(value)) {
-    formatedInt = getParseInt(formatTrim(value.replaceAll(",", ""))).toLocaleString();
+export const formatInt = (value): string => {
+  if (isEmpty(value)) {
+    return "";
   }
 
-  return formatedInt;
+  const normalizedValue = formatTrim(formatToString(value)).replace(/,/g, "");
+  const parsedValue = Number.parseInt(normalizedValue, 10);
+
+  if (Number.isNaN(parsedValue)) {
+    return "";
+  }
+
+  return parsedValue.toLocaleString();
 };
+
+// export const formatInt = (value): string => {
+//   let formatedInt = "";
+
+//   if (!isEmpty(value)) {
+//     formatedInt = getParseInt(formatTrim(value.replaceAll(",", ""))).toLocaleString();
+//   }
+
+//   return formatedInt;
+// };
 
 export const formatFloat = value => {
   let formatedFloat = "";
@@ -1148,26 +1163,44 @@ export const replaceSmartCharacters = jsonData => {
   return newJSON;
 };
 
-export const getQueryStringData = () => {
-  const queryStringData = {};
+export const getQueryStringData = (): Record<string, string> => {
+  const queryStringData: Record<string, string> = {};
 
-  // * Retrieve the queryString values if there are any. -- 01/22/2023 MF
-  if (typeof window !== "undefined") {
-    const queryStrings = new URLSearchParams(window.location.search);
-
-    queryStringData.parametersURL = queryStrings.toString();
-
-    // * From https://medium.com/swlh/urlsearchparams-in-javascript-df524f705317 -- 01/22/2023 MF
-    queryStrings.forEach(function (value, key) {
-      // console.log("key", key);
-      // console.log("value", value);
-
-      queryStringData[key] = value;
-    });
+  if (typeof window === "undefined") {
+    return queryStringData;
   }
+
+  const queryStrings = new URLSearchParams(window.location.search);
+
+  queryStringData.parametersURL = queryStrings.toString();
+
+  queryStrings.forEach((value, key) => {
+    queryStringData[key] = value;
+  });
 
   return queryStringData;
 };
+
+// export const getQueryStringData = () => {
+//   const queryStringData = {};
+
+//   // * Retrieve the queryString values if there are any. -- 01/22/2023 MF
+//   if (typeof window !== "undefined") {
+//     const queryStrings = new URLSearchParams(window.location.search);
+
+//     queryStringData.parametersURL = queryStrings.toString();
+
+//     // * From https://medium.com/swlh/urlsearchparams-in-javascript-df524f705317 -- 01/22/2023 MF
+//     queryStrings.forEach(function (value, key) {
+//       // console.log("key", key);
+//       // console.log("value", value);
+
+//       queryStringData[key] = value;
+//     });
+//   }
+
+//   return queryStringData;
+// };
 
 export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogging, logObject) => {
   let logResult = "Add log not attempted due to parameter values.";
