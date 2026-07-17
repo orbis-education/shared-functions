@@ -1880,21 +1880,18 @@ export const formatToUSD = value => {
   }
 };
 
-export const getYears = months => {
+export const getYears = (months): string => {
   const parsedMonths = Number.parseFloat(months);
-  const newValue = (parsedMonths / 12).toFixed(1);
 
-  if (!isNaN(newValue)) {
-    return newValue;
-  } else {
-    return "";
-  }
+  if (Number.isNaN(parsedMonths)) return "";
+
+  return (parsedMonths / 12).toFixed(1);
 };
 
 export const parseDescription = description => {
   // console.log("description", description.split("\\r"));
 
-  return parse(description.replace(/\\r/g, "<br />"));
+  return parse(description.replace(/\\r/g, "<br />"), {});
   // return parse(description.split("\r").join("<br />"));
 };
 
