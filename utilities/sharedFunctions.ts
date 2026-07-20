@@ -1089,7 +1089,7 @@ export const formatInt = (value): string => {
 //   return formatedInt;
 // };
 
-export const formatFloat = value => {
+export const formatFloat = (value): string => {
   let formatedFloat = "";
 
   if (!isEmpty(value)) {
@@ -1099,7 +1099,7 @@ export const formatFloat = value => {
   return formatedFloat;
 };
 
-export const formatDate = dateToFormat => {
+export const formatDate = (dateToFormat): string => {
   let formattedDate = "";
 
   if (!isEmpty(dateToFormat)) {
@@ -1111,7 +1111,7 @@ export const formatDate = dateToFormat => {
   return formattedDate;
 };
 
-export const formatSearchInput = value => {
+export const formatSearchInput = (value): string => {
   let formatedSearchInput = "";
 
   if (!isEmpty(value)) {
@@ -1121,7 +1121,7 @@ export const formatSearchInput = value => {
   return formatedSearchInput;
 };
 
-export const removeHTML = text => {
+export const removeHTML = (text): string => {
   // * https://www.geeksforgeeks.org/how-to-strip-out-html-tags-from-a-string-using-javascript/ -- 02/08/2022 MF
 
   let displayText = "";
@@ -1133,7 +1133,7 @@ export const removeHTML = text => {
   return displayText;
 };
 
-export const removeNonAlphanumericCharacters = text => {
+export const removeNonAlphanumericCharacters = (text): string => {
   // * Removes all characters that aren't letters, numbers, spaces or a period. -- 05/12/2022 MF
 
   let formatedText = "";
@@ -1202,7 +1202,13 @@ export const getQueryStringData = (): Record<string, string> => {
 //   return queryStringData;
 // };
 
-export const addLog = (baseURL, fetchAuthorization, databaseAvailable, allowLogging, logObject) => {
+export const addLog = (
+  baseURL,
+  fetchAuthorization,
+  databaseAvailable,
+  allowLogging,
+  logObject
+): string => {
   let logResult = "Add log not attempted due to parameter values.";
 
   if (allowLogging === true && databaseAvailable !== false) {
@@ -1293,7 +1299,7 @@ export const addErrorLog = (
   databaseAvailable,
   allowLogging,
   errorObject
-) => {
+): string => {
   let logErrorResult = "Add error log not attempted due to parameter values.";
 
   if (allowLogging === true && databaseAvailable !== false) {
@@ -1431,7 +1437,7 @@ export const parse = (value, options: HTMLReactParserOptions) => {
   return newValue;
 };
 
-export const displayTime = (dateToDisplay, removeLeadingZeroes) => {
+export const displayTime = (dateToDisplay, removeLeadingZeroes): string => {
   let newDisplayTime = "";
 
   if (!isEmpty(dateToDisplay)) {
@@ -1606,7 +1612,7 @@ export const convertStandardTimeToMilitaryTime = (timeEntered: unknown): string 
 //   return militaryTime;
 // };
 
-export const getNumberOfDaysBetweenDates = (startDate, endDate) => {
+export const getNumberOfDaysBetweenDates = (startDate, endDate): number => {
   // * https://www.geeksforgeeks.org/how-to-calculate-the-number-of-days-between-two-dates-in-javascript/ -- 09/12/2023 KH
   // * https://stackoverflow.com/questions/2627473/how-to-calculate-the-number-of-days-between-two-dates/2627493#2627493 -- 09/12/2023 KH
 
@@ -1668,7 +1674,7 @@ export const generateHoursInterval = (
   return timesArray;
 };
 
-export const displayCommaBetweenTwoItems = (firstItem, secondItem) => {
+export const displayCommaBetweenTwoItems = (firstItem, secondItem): string => {
   let textValue = "";
 
   if (!isEmpty(firstItem)) {
@@ -1686,7 +1692,7 @@ export const displayCommaBetweenTwoItems = (firstItem, secondItem) => {
   return textValue;
 };
 
-export const constructCSVFile = (dataList, dataColumnTitles, propertyNameList) => {
+export const constructCSVFile = (dataList, dataColumnTitles, propertyNameList): string => {
   let fileData = "";
 
   // * Initialize fileData with columns titles. -- 10/15/2024 EBG
@@ -1734,7 +1740,7 @@ export const constructCSVFile = (dataList, dataColumnTitles, propertyNameList) =
   return fileData;
 };
 
-export const exportCSVFile = (fileData, fileTitle) => {
+export const exportCSVFile = (fileData, fileTitle): void => {
   // * https://medium.com/@gb.usmanumar/how-to-export-data-to-csv-json-in-react-js-ea45d940652a -- 05/30/2024 EBG
 
   const csvData = new Blob([fileData], { type: "text/csv" });
@@ -1888,14 +1894,14 @@ export const getYears = (months): string => {
   return (parsedMonths / 12).toFixed(1);
 };
 
-export const parseDescription = description => {
+export const parseDescription = (description): string => {
   // console.log("description", description.split("\\r"));
 
   return parse(description.replace(/\\r/g, "<br />"), {});
   // return parse(description.split("\r").join("<br />"));
 };
 
-export const getBrowserData = () => ({
+export const getBrowserData = (): Partial<Navigator> => ({
   appCodeName: navigator.appCodeName,
   appName: navigator.appName,
   appVersion: navigator.appVersion,
@@ -1907,7 +1913,7 @@ export const getBrowserData = () => ({
   userAgent: navigator.userAgent
 });
 
-export const returnActiveClass = (componentName, componentToLoad, classList) => {
+export const returnActiveClass = (componentName, componentToLoad, classList): string => {
   let newClassList = !isEmpty(classList) ? classList : "";
 
   newClassList += componentName === componentToLoad ? " active" : "";
@@ -2001,7 +2007,7 @@ export const getFilteredNames = (
   return newFilteredNames;
 };
 
-export const isValidURL = value => {
+export const isValidURL = (value): boolean => {
   try {
     new URL(value);
     return true;
