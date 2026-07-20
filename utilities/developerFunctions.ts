@@ -33,6 +33,7 @@ export const isLocalDevelopment = () => {
   try {
     if (typeof import.meta !== "undefined") {
       // developmentEnvironment = import.meta?.env?.MODE; // * Does not work for some reason. -- 04/07/2025 MF
+      // @ts-expect-error the ImportMeta type is handled on the vite project side
       developmentEnvironment = import.meta.env?.MODE;
       // developmentEnvironment = import.meta.env.MODE;
     }
@@ -55,6 +56,7 @@ export const isLocalDevelopment = () => {
 };
 
 // * inElectron checks for a window object variable that is set in the Electron preload script for Electron applications. -- 10/22/2025 JW
+// @ts-expect-error the window.electronEnvironment is handled on the Electron side
 export const inElectron = () => window?.electronEnvironment?.inElectron ?? false;
 
 export const inLearningObjectEcosystem = () => {
@@ -80,6 +82,7 @@ export const showLocalDevelopment = environmentMode => {
 
 export const showDevelopment = (environmentMode, demonstrationMode) => {
   // const forceDevelopmentMode = selectEnvironmentVariable("FORCE_DEVELOPMENT_MODE");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const forceDevelopmentMode = import.meta.env?.VITE_FORCE_DEVELOPMENT_MODE;
 
   if (
@@ -98,6 +101,7 @@ export const showDevelopment = (environmentMode, demonstrationMode) => {
 
 export const showStaging = (environmentMode, demonstrationMode) => {
   // const forceStagingMode = selectEnvironmentVariable("FORCE_STAGING_MODE");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const forceStagingMode = import.meta.env?.VITE_FORCE_STAGING_MODE;
 
   if (
@@ -118,6 +122,8 @@ export const showDemonstration = demonstrationMode => {
   // * Demonstration Mode would always override the environmentMode value. -- 09/20/2023 MF
 
   // const forceDemonstrationMode = selectEnvironmentVariable("FORCE_DEMONSTRATION_MODE");
+
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const forceDemonstrationMode = import.meta.env?.VITE_FORCE_DEMONSTRATION_MODE;
 
   if (demonstrationMode === true || forceDemonstrationMode === "True") {
@@ -160,6 +166,7 @@ export const allowLogging = () => {
   // if (isLocalDevelopment() || window.location.href.includes("intranet.orbiseducation.com/test_local/") || window.location.href.includes(baseURLLOR + "1387/index.html") || window.location.href.includes(baseURLLOR + "1293/index.html")) {
 
   // const allowDevelopmentComputerLog = selectEnvironmentVariable("ALLOW_DEVELOPMENT_COMPUTERLOG");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const allowDevelopmentComputerLog = import.meta.env?.VITE_ALLOW_DEVELOPMENT_COMPUTERLOG;
 
   if (
@@ -237,12 +244,16 @@ export const getFetchAuthorization = (
 
 export const resolveBaseURL = (endPointBase, environmentMode, demonstrationMode, lorServer) => {
   // const forceLocalAPI = selectEnvironmentVariable("FORCE_LOCAL_API");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const forceLocalAPI = import.meta.env?.VITE_FORCE_LOCAL_API;
   // const forceStagingAPI = selectEnvironmentVariable("FORCE_STAGING_API");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const forceStagingAPI = import.meta.env?.VITE_FORCE_STAGING_API;
   // const forceProductionAPI = selectEnvironmentVariable("FORCE_PRODUCTION_API");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const forceProductionAPI = import.meta.env?.VITE_FORCE_PRODUCTION_API;
   // const serverPort = selectEnvironmentVariable("SERVER_PORT");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const serverPort = import.meta.env?.VITE_SERVER_PORT;
 
   const isLocalhost =
@@ -291,8 +302,10 @@ export const resolveBaseURL = (endPointBase, environmentMode, demonstrationMode,
 
 export const resolveRedirectURL = (environmentMode, demonstrationMode) => {
   // const popUpRedirectURI = selectEnvironmentVariable("POPUP_REDIRECT_URI");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const popUpRedirectURI = import.meta.env?.VITE_POPUP_REDIRECT_URI;
   // const playgroundPopUpRedirectURI = selectEnvironmentVariable("PLAYGROUND_POPUP_REDIRECT_URI");
+  // @ts-expect-error the ImportMeta type is handled on the vite project side
   const playgroundPopUpRedirectURI = import.meta.env?.VITE_PLAYGROUND_POPUP_REDIRECT_URI;
 
   if (isLocalDevelopment()) return "/";
