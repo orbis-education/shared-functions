@@ -1916,8 +1916,13 @@ export const returnActiveClass = (componentName, componentToLoad, classList): st
 };
 
 // ? removeArrayItemsByProperty -- 11/14/2025 MF
-export const filterDropdownOptions = (allItems, itemsToFilter, propertyName, currentItem) => {
-  let filteredItems = [];
+export const filterDropdownOptions = (
+  allItems,
+  itemsToFilter,
+  propertyName,
+  currentItem
+): unknown[] => {
+  let filteredItems: unknown[] = [];
 
   if (!isEmptyArray(allItems)) {
     // * https://stackoverflow.com/a/71904924 -- 07/28/2025 JH
