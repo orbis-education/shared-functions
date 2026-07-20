@@ -99,7 +99,7 @@ export const getLastItem = (arrayItem): Record<string, unknown> => {
   return lastItem;
 };
 
-export const displayValue = variableValue => {
+export const displayValue = (variableValue): string => {
   let displayValue = "";
 
   if (!isEmpty(variableValue)) {
@@ -119,7 +119,7 @@ export const displayValue = variableValue => {
   return displayValue;
 };
 
-export const displaySpaceAfterComma = text => {
+export const displaySpaceAfterComma = (text): string => {
   let displayText = text;
 
   if (!isEmpty(text)) {
@@ -129,7 +129,7 @@ export const displaySpaceAfterComma = text => {
   return displayText;
 };
 
-export const removeForwardSlashes = text => {
+export const removeForwardSlashes = (text): string => {
   let displayText = text;
 
   if (!isEmpty(text)) {
@@ -159,7 +159,7 @@ export const tryParseJSON = jsonString => {
   return false;
 };
 
-export const displayObjectData = ObjectData => {
+export const displayObjectData = (ObjectData): string => {
   let objectDataString = JSON.stringify(ObjectData);
 
   if (!isEmpty(objectDataString)) {
@@ -199,7 +199,7 @@ export const displayObjectData = ObjectData => {
 };
 
 // TODO: Account for JSON data embedded in JSON data. -- 09/18/2024 MF
-export const displayObjectDataTable = ObjectData => {
+export const displayObjectDataTable = (ObjectData): string => {
   let objectDataString = JSON.stringify(ObjectData);
 
   if (!isEmpty(objectDataString)) {
@@ -251,8 +251,8 @@ export const displayObjectDataTable = ObjectData => {
   return objectDataString;
 };
 
-export const displayObjectDataXML = ObjectData => {
-  let objectDataString = JSON.stringify(ObjectData);
+export const displayObjectDataXML = (objectData): string => {
+  let objectDataString = JSON.stringify(objectData);
 
   if (!isEmpty(objectDataString)) {
     objectDataString = objectDataString.replaceAll("\\", "");
@@ -286,7 +286,7 @@ export const displayObjectDataXML = ObjectData => {
   return objectDataString;
 };
 
-export const getCurrentDay = () => {
+export const getCurrentDay = (): number => {
   // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
 
@@ -300,7 +300,7 @@ export const getCurrentDay = () => {
   return new Date(new Date().getTime() - timezoneOffset).getDate();
 };
 
-export const getCurrentMonth = () => {
+export const getCurrentMonth = (): number => {
   // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
 
@@ -314,7 +314,7 @@ export const getCurrentMonth = () => {
   return new Date(new Date().getTime() - timezoneOffset).getMonth() + 1;
 };
 
-export const getCurrentYear = () => {
+export const getCurrentYear = (): number => {
   // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
 
@@ -328,7 +328,7 @@ export const getCurrentYear = () => {
   return new Date(new Date().getTime() - timezoneOffset).getFullYear();
 };
 
-export const displayDate = (dateToDisplay, removeLeadingZeroes = false) => {
+export const displayDate = (dateToDisplay, removeLeadingZeroes = false): string => {
   let newDisplayDate = "";
 
   if (!isEmpty(dateToDisplay)) {
@@ -341,7 +341,7 @@ export const displayDate = (dateToDisplay, removeLeadingZeroes = false) => {
 
     newDisplayDate = mm + "/" + dd + "/" + yyyy;
 
-    if (!isEmpty(newDisplayDate) && removeLeadingZeroes === true) {
+    if (!isEmpty(newDisplayDate) && removeLeadingZeroes) {
       newDisplayDate = newDisplayDate.replace(/\b0/g, "");
     }
   }
@@ -349,7 +349,7 @@ export const displayDate = (dateToDisplay, removeLeadingZeroes = false) => {
   return newDisplayDate;
 };
 
-export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes = false) => {
+export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes = false): string => {
   let newDisplayDateAndTime = "";
 
   if (!isEmpty(dateToDisplay)) {
@@ -370,7 +370,7 @@ export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes = false) =
 
     newDisplayDateAndTime = mm + "/" + dd + "/" + yyyy + " " + time;
 
-    if (!isEmpty(newDisplayDateAndTime) && removeLeadingZeroes === true) {
+    if (!isEmpty(newDisplayDateAndTime) && removeLeadingZeroes) {
       newDisplayDateAndTime = newDisplayDateAndTime.replace(/\b0/g, "");
     }
   }
@@ -378,7 +378,7 @@ export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes = false) =
   return newDisplayDateAndTime;
 };
 
-export const displayYear = dateToDisplay => {
+export const displayYear = (dateToDisplay): string => {
   let newDisplayDate = "";
 
   if (!isEmpty(dateToDisplay)) {
@@ -397,7 +397,7 @@ export const displayYear = dateToDisplay => {
   return newDisplayDate;
 };
 
-export const daysSince = dateToCompare => {
+export const daysSince = (dateToCompare): number => {
   // * https://stackoverflow.com/questions/12986068/how-to-calculate-number-of-days-between-today-and-given-date-and-code-for-gettim -- 10/18/2021 MF
 
   let newDaysSince = 0;
@@ -413,7 +413,7 @@ export const daysSince = dateToCompare => {
   return newDaysSince;
 };
 
-export const hasNonEmptyProperty = (objectItem, propertyName) => {
+export const hasNonEmptyProperty = (objectItem, propertyName): boolean => {
   // * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures or to see if the object has a property available with a value. -- 06/09/2022 MF
 
   let nonEmptyProperty = false;
@@ -427,7 +427,7 @@ export const hasNonEmptyProperty = (objectItem, propertyName) => {
   return nonEmptyProperty;
 };
 
-export const hasEqualsProperty = (objectItem, propertyName, value) => {
+export const hasEqualsProperty = (objectItem, propertyName, value): boolean => {
   // * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 
   let equalsProperty = false;
@@ -445,7 +445,7 @@ export const hasEqualsProperty = (objectItem, propertyName, value) => {
   return equalsProperty;
 };
 
-export const hasTrueProperty = (objectItem, propertyName) => {
+export const hasTrueProperty = (objectItem, propertyName): boolean => {
   // * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 
   let trueProperty = false;
@@ -459,7 +459,7 @@ export const hasTrueProperty = (objectItem, propertyName) => {
   return trueProperty;
 };
 
-export const hasFalseProperty = (objectItem, propertyName) => {
+export const hasFalseProperty = (objectItem, propertyName): boolean => {
   // * This function is intended for use in ternary statements so that there aren't lines and lines of if statement structures. -- 06/09/2022 MF
 
   let falseProperty = false;
@@ -473,7 +473,7 @@ export const hasFalseProperty = (objectItem, propertyName) => {
   return falseProperty;
 };
 
-export const convertSpecialCharacters = value => {
+export const convertSpecialCharacters = (value): string => {
   // * https://stackoverflow.com/questions/1787322/what-is-the-htmlspecialchars-equivalent-in-javascript/4835406#4835406 -- 12/28/2021 MF
 
   let newValue = value;
@@ -489,7 +489,7 @@ export const convertSpecialCharacters = value => {
   return newValue;
 };
 
-export const truncateText = (text, limit) => {
+export const truncateText = (text, limit): string => {
   // * https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript -- 03/06/2021 MF
 
   if (!isEmpty(text) && text.length > limit) {
@@ -508,7 +508,7 @@ export const truncateText = (text, limit) => {
   }
 };
 
-export const validateMilitaryTime = timeEntered => {
+export const validateMilitaryTime = (timeEntered): boolean => {
   // * Time in 24 clock, no colon -- 03/05/2021 MF
 
   // * all digits-- 03/05/2021 MF
@@ -586,7 +586,7 @@ export const validateMilitaryTime = timeEntered => {
   return validTimeFormat;
 };
 
-export const convertTemperature = (temperatureScale, temperature) => {
+export const convertTemperature = (temperatureScale, temperature): string => {
   // let temperatureFloat = parseFloat(formatTrim(temperature));
   const temperatureFloat = parseFloat(temperature);
   let temperatureConverted = "";
@@ -693,7 +693,7 @@ export const isWholeNumber = (value): boolean => {
 //   }
 // };
 
-export const hasDecimalPlaces = (value, decimalPlaces) => {
+export const hasDecimalPlaces = (value, decimalPlaces): boolean => {
   const trimmedValue = formatTrim(value);
 
   if (isEmpty(trimmedValue) || Number.isNaN(Number(trimmedValue))) {
@@ -747,7 +747,7 @@ export const hasDecimalPlaces = (value, decimalPlaces) => {
 //   }
 // };
 
-export const generateRandomNumber = (minimumValue, maximumValue) => {
+export const generateRandomNumber = (minimumValue, maximumValue): number => {
   // * https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript -- 01/14/2022 MF
 
   const randomNumber = Math.floor(Math.random() * (maximumValue - minimumValue + 1)) + minimumValue;
@@ -755,7 +755,7 @@ export const generateRandomNumber = (minimumValue, maximumValue) => {
   return randomNumber;
 };
 
-export const generateRandomNumberDigits = digits => {
+export const generateRandomNumberDigits = (digits): string => {
   let randomNumber = formatToString(Math.floor(Math.random() * 10 ** digits));
 
   while (randomNumber.length < digits) {
@@ -783,7 +783,7 @@ export const formatPhoneNumber = (phoneNumber): string => {
   }
 };
 
-export const formatTitle = title => {
+export const formatTitle = (title): string => {
   // * From https://stackoverflow.com/questions/11427759/how-to-insert-space-before-capitalize-character-in-a-word-using-replace-and-rege -- 08/10/2021 MF
   // * From https://attacomsian.com/blog/string-capitalize-javascript -- 08/10/2021 MF
   // * From https://www.codeproject.com/Articles/108996/Splitting-Pascal-Camel-Case-with-RegEx-Enhancement -- 08/10/2021 MF
@@ -1020,7 +1020,7 @@ export const groupObjectArrayByProperties = (objectArray, ...keys) => {
   }, {});
 };
 
-export const formatLowerCase = value => {
+export const formatLowerCase = (value): string => {
   let lowerCaseValue = "";
 
   if (!isEmpty(value)) {
@@ -1030,7 +1030,7 @@ export const formatLowerCase = value => {
   return lowerCaseValue;
 };
 
-export const formatUpperCase = value => {
+export const formatUpperCase = (value): string => {
   let upperCaseValue = "";
 
   if (!isEmpty(value)) {
