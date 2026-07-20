@@ -1,11 +1,5 @@
 import parseHTML, { type HTMLReactParserOptions } from "html-react-parser";
 
-export type PrimitiveValue = string | number | boolean | null | undefined;
-
-export type UnknownRecord = Record<string, unknown>;
-
-export type SortDirection = "asc" | "desc" | string;
-
 export const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 export const noFunctionAvailable = (): void => {
