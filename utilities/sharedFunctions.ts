@@ -1,5 +1,7 @@
 import parseHTML, { type HTMLReactParserOptions } from "html-react-parser";
 
+export const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 export const noFunctionAvailable = (): void => {
   // eslint-disable-next-line no-console
   console.log("A function wasn't passed as a props when it needed to be.");
