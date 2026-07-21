@@ -16,10 +16,8 @@ export default defineConfig([
     sourcemap: true,
     clean: false,
     target: "es2022",
-    transform: {
-      define: {
-        "import.meta": {}
-      }
+    define: {
+      "import.meta": "{}"
     }
   }
 ]);

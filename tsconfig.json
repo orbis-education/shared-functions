@@ -24,7 +24,9 @@
     "index.ts",
     "utilities/**/*.ts",
     "types/**/*.d.ts",
-    "tsdown.config.ts"
+    "tsdown.config.ts",
+    "vitest.config.ts",
+    "tests/**/*.ts"
   ],
   "exclude": [
     "node_modules",
