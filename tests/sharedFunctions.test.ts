@@ -19,6 +19,7 @@ import {
   isEmptyArray,
   isNonEmptyArray,
   isValidURL,
+  normalizeDate,
   removeForwardSlashes
 } from "../index.js";
 
@@ -76,6 +77,11 @@ describe("date helpers", () => {
     expect(displayDateAndTime("2026-07-21T09:05:00")).toBe("07/21/2026 09:05");
     expect(displayDateAndTime("2026-07-21T09:05:00", true)).toBe("7/21/2026 9:5");
     expect(displayYear("2026-07-21T09:05:00")).toBe("2026");
+  });
+
+  it("converts date to yyyy-mm-dd format", () => {
+    expect(normalizeDate("09-10-2026")).toBe("2026-09-10");
+    expect(normalizeDate("2026-09-10")).toBe("2026-09-10");
   });
 });
 
