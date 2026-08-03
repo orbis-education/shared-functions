@@ -73,6 +73,7 @@ export {
   isValidURL,
   isWholeNumber,
   noFunctionAvailable,
+  normalizeDate,
   parse,
   parseDescription,
   randomizeItems,

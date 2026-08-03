@@ -280,6 +280,17 @@ export const displayObjectDataXML = (objectData): string => {
   return objectDataString;
 };
 
+export const normalizeDate = dateStr => {
+  // * if it starts with YYYY, return as-is -- 07/31/2026 JW
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+
+  // * otherwise assume MM-DD-YYYY and convert -- 07/31/2026 JW
+  const [month, day, year] = dateStr.split("-");
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+};
+
 export const getCurrentDay = (): number => {
   // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF

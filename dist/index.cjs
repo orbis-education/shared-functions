@@ -160,6 +160,11 @@ const displayObjectDataXML = (objectData) => {
 	}
 	return objectDataString;
 };
+const normalizeDate = (dateStr) => {
+	if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+	const [month, day, year] = dateStr.split("-");
+	return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+};
 const getCurrentDay = () => {
 	const timezoneOffset = (/* @__PURE__ */ new Date()).getTimezoneOffset() * 60 * 1e3;
 	return new Date((/* @__PURE__ */ new Date()).getTime() - timezoneOffset).getDate();
@@ -968,6 +973,7 @@ exports.isNonEmptyArray = isNonEmptyArray;
 exports.isValidURL = isValidURL;
 exports.isWholeNumber = isWholeNumber;
 exports.noFunctionAvailable = noFunctionAvailable;
+exports.normalizeDate = normalizeDate;
 exports.parse = parse;
 exports.parseDescription = parseDescription;
 exports.randomizeItems = randomizeItems;
