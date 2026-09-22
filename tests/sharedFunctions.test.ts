@@ -6,6 +6,7 @@ import {
   convertStandardTimeToMilitaryTime,
   displayDateAndTime,
   displayYear,
+  generateHoursInterval,
   getCurrentDay,
   getCurrentMonth,
   getCurrentYear,
@@ -120,22 +121,39 @@ describe("string helpers", () => {
 
 describe("convertMilitaryTimeToStandardTime", () => {
   it("converts 24-hour times to 12-hour times", () => {
-    expect(convertMilitaryTimeToStandardTime("00:05")).toBe("12:05 AM");
-    expect(convertMilitaryTimeToStandardTime("13:30")).toBe("1:30 PM");
-    expect(convertMilitaryTimeToStandardTime("23:59")).toBe("11:59 PM");
+    expect(convertMilitaryTimeToStandardTime("0000")).toBe("12:00 AM");
+    expect(convertMilitaryTimeToStandardTime("0005")).toBe("12:05 AM");
+    expect(convertMilitaryTimeToStandardTime("1200")).toBe("12:00 PM");
+    expect(convertMilitaryTimeToStandardTime("1330")).toBe("1:30 PM");
+    expect(convertMilitaryTimeToStandardTime("2359")).toBe("11:59 PM");
   });
 
   it("returns an empty string for invalid values", () => {
-    expect(convertMilitaryTimeToStandardTime("25:00")).toBe("");
+    expect(convertMilitaryTimeToStandardTime("2500")).toBe("");
+    expect(convertMilitaryTimeToStandardTime("1260")).toBe("");
+    expect(convertMilitaryTimeToStandardTime("120")).toBe("");
+    expect(convertMilitaryTimeToStandardTime("12000")).toBe("");
+    expect(convertMilitaryTimeToStandardTime("12:00")).toBe("");
     expect(convertMilitaryTimeToStandardTime("abc")).toBe("");
+  });
+});
+
+describe("generateHoursInterval", () => {
+  it("formats interval labels across noon and at midnight", () => {
+    expect(generateHoursInterval(690, 750, 30)).toEqual([
+      { timeID: 0, time: "11:30 AM" },
+      { timeID: 1, time: "12:00 PM" },
+      { timeID: 2, time: "12:30 PM" }
+    ]);
+    expect(generateHoursInterval(0, 0, 30)).toEqual([{ timeID: 0, time: "12:00 AM" }]);
   });
 });
 
 describe("convertStandardTimeToMilitaryTime", () => {
   it("converts 12-hour times to 24-hour times", () => {
-    expect(convertStandardTimeToMilitaryTime("12:05 AM")).toBe("00:05");
-    expect(convertStandardTimeToMilitaryTime("1:30 PM")).toBe("13:30");
-    expect(convertStandardTimeToMilitaryTime("11:59 PM")).toBe("23:59");
+    expect(convertStandardTimeToMilitaryTime("12:05 AM")).toBe("0005");
+    expect(convertStandardTimeToMilitaryTime("1:30 PM")).toBe("1330");
+    expect(convertStandardTimeToMilitaryTime("11:59 PM")).toBe("2359");
   });
 
   it("returns an empty string for invalid values", () => {

@@ -1464,14 +1464,15 @@ export const convertMilitaryTimeToStandardTime = (timeEntered: unknown): string 
     return "";
   }
 
-  const parts = formatTrim(formatToString(timeEntered)).split(/[\s:]+/);
+  const time = formatTrim(formatToString(timeEntered));
 
-  if (parts.length < 2) {
+  // * Require exactly four digits in HHmm format, with no colon or other characters -- 09/22/2026 JW
+  if (!/^\d{4}$/.test(time)) {
     return "";
   }
 
-  const hours = Number(parts[0]);
-  const minutes = Number(parts[1]);
+  const hours = Number(time.slice(0, 2));
+  const minutes = Number(time.slice(2));
 
   if (
     !Number.isInteger(hours) ||
@@ -1570,7 +1571,7 @@ export const convertStandardTimeToMilitaryTime = (timeEntered: unknown): string 
   const paddedHours = hours.toString().padStart(2, "0");
   const paddedMinutes = minutes.toString().padStart(2, "0");
 
-  return `${paddedHours}:${paddedMinutes}`;
+  return `${paddedHours}${paddedMinutes}`;
 };
 
 // export const convertStandardTimeToMilitaryTime = timeEntered => {
@@ -1667,7 +1668,7 @@ export const generateHoursInterval = (
         timesArray[i] = {
           timeID: i,
           time: convertMilitaryTimeToStandardTime(
-            ("0" + (hh % 24)).slice(-2) + ":" + ("0" + mm).slice(-2)
+            ("0" + (hh % 24)).slice(-2) + ("0" + mm).slice(-2)
           )
         };
 
