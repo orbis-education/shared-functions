@@ -648,10 +648,10 @@ const displayTime = (dateToDisplay, removeLeadingZeroes) => {
 };
 const convertMilitaryTimeToStandardTime = (timeEntered) => {
 	if (isEmpty(timeEntered)) return "";
-	const parts = formatTrim(formatToString(timeEntered)).split(/[\s:]+/);
-	if (parts.length < 2) return "";
-	const hours = Number(parts[0]);
-	const minutes = Number(parts[1]);
+	const time = formatTrim(formatToString(timeEntered));
+	if (!/^\d{4}$/.test(time)) return "";
+	const hours = Number(time.slice(0, 2));
+	const minutes = Number(time.slice(2));
 	if (!Number.isInteger(hours) || !Number.isInteger(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return "";
 	const modifier = hours >= 12 ? " PM" : " AM";
 	return `${hours === 0 ? 12 : hours > 12 ? hours - 12 : hours}:${minutes.toString().padStart(2, "0")}${modifier}`;
@@ -666,7 +666,7 @@ const convertStandardTimeToMilitaryTime = (timeEntered) => {
 	if (!Number.isInteger(hours) || !Number.isInteger(minutes) || hours < 1 || hours > 12 || minutes < 0 || minutes > 59 || modifier !== "AM" && modifier !== "PM") return "";
 	if (modifier === "AM" && hours === 12) hours = 0;
 	else if (modifier === "PM" && hours !== 12) hours += 12;
-	return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+	return `${hours.toString().padStart(2, "0")}${minutes.toString().padStart(2, "0")}`;
 };
 const getNumberOfDaysBetweenDates = (startDate, endDate) => {
 	const newStartDate = new Date(startDate);
@@ -687,7 +687,7 @@ const generateHoursInterval = (startHourInMinutes, endHourInMinutes, interval) =
 		const mm = startHourInMinutes % 60;
 		timesArray[i] = {
 			timeID: i,
-			time: convertMilitaryTimeToStandardTime(("0" + hh % 24).slice(-2) + ":" + ("0" + mm).slice(-2))
+			time: convertMilitaryTimeToStandardTime(("0" + hh % 24).slice(-2) + ("0" + mm).slice(-2))
 		};
 		startHourInMinutes = startHourInMinutes + interval;
 	}
